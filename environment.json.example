@@ -1,0 +1,13 @@
+{
+    "environment" : "local",
+    "name" : "",
+    "url"  : "",
+    "driver" : "mysql",
+    "database" : "",
+    "database_user" : "",
+    "database_password" : "",
+    "cors_allowed" : [
+        "http://localhost",
+        "http://localhost:3000"
+    ]
+}
