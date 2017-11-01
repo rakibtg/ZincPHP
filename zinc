@@ -1,0 +1,25 @@
+<?php 
+  $env = json_decode( file_get_contents('./environment.json' ) );
+  if ( strtolower( $env->environment ) !== 'local' ) exit("\nZincPHP CLI can't run when it is not in local environment\n\n" );
+
+  /**
+   * The current action command.
+   */
+  $thisArg = $argv[ 1 ];
+
+  /**
+   * Serve as a localserver.
+   */
+  if( $thisArg == 'serve' ) {
+    $_host = '127.0.0.1';   // Default host
+    $_port = '8585';        // Default port
+    foreach( $argv as $index => $arg ) {
+      if( $index > 1 ) {
+        if( strtolower( trim( $arg ) ) == '--host' ) $_host = $argv[ $index + 1 ];
+        if( strtolower( trim( $arg ) ) == '--port' ) $_port = $argv[ $index + 1 ];
+      }
+    }
+    echo "\n" . 'Server is running at http://' . $_host . ':' . $_port . "\n\n";
+    chdir( $_SERVER[ 'PWD' ] . '/public' );
+    shell_exec( 'php -S ' . $_host . ':' . $_port );
+  }
