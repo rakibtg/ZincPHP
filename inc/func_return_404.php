@@ -1,7 +1,7 @@
 <?php
 
     function return_404( $msg = false ) {
-        header("HTTP/1.0 404 Not Found");
+        http_response_code( 404 );
         if( ! $msg ) $msg = 'Nothing found, 404';
         echo json_encode([
             'status' => $msg,
