@@ -1,8 +1,0 @@
-{
-    "name" : "",
-    "url"  : "",
-    "cors_allowed" : [
-        "http://localhost",
-        "http://localhost:3000"
-    ]
-}
