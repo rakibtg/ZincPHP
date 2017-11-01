@@ -3,11 +3,12 @@
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 
-    require "../inc/core/Zink.php";
-    $zink = new Zink();
+    $env = json_decode( file_get_contents( "../environment.json" ) );
+    require "../inc/core/Zinc.php";
+    $zink = new Zinc();
 
     // Setting JSON type globally.
-    header('Content-Type: application/json; charset=utf-8');
+    header( 'Content-Type: application/json; charset=utf-8' );
 
     require "../inc/func_return_404.php";
     require "../inc/func_requests.php";
@@ -25,7 +26,7 @@
     foreach( explode( '/', $component ) as $uri ) {
         $segments = $segments . $uri . '/';
     }
-    $component = '../components'.rtrim( $segments, '/' ).'.php';
+    $component = '../blocks'.rtrim( $segments, '/' ).'.php';
     if( file_exists( $component ) ) {
         require $component;
     } else {

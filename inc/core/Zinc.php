@@ -1,8 +1,8 @@
 <?php
 
-  require "../inc/core/ZinkMySQL.php";
+  require "../inc/core/ZincMySQL.php";
 
-  class Zink {
+  class Zinc {
 
     public $env; // Store environment settings.
     public $db;  // Store the db object.
@@ -18,7 +18,8 @@
      * This method will merge user environment settings with system environments.
      */
     protected function bootEnvironment() {
-      $this->env = json_decode( file_get_contents( "../environment.json" ) );
+      global $env;
+      $this->env = $env;
       // Append document root with env variable.
       $this->env->document_root = $_SERVER[ 'DOCUMENT_ROOT' ]; 
     }

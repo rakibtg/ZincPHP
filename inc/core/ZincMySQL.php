@@ -6,9 +6,9 @@ $db_config = [
 	//Localhost
 	"development" => [
 						"host" => "localhost",
-						"database" => "everydaybd",
-						"username" => "root",
-						"password" => "root"
+						"database" => $env->database,
+						"username" => $env->database_user,
+						"password" => $env->database_password
 					 ],
 	//Server
 	"production"  => [
