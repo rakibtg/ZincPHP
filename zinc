@@ -1,11 +1,56 @@
-<?php 
-  $env = json_decode( file_get_contents('./environment.json' ) );
-  if ( strtolower( $env->environment ) !== 'local' ) exit("\nZincPHP CLI can't run when it is not in local environment\n\n" );
+<?php
+
+  function trimds( $s ) {
+      return rtrim( $s, DIRECTORY_SEPARATOR );
+  }
+  function joinpaths() {
+      return implode( DIRECTORY_SEPARATOR, array_map( 'trimds', func_get_args() ) );
+  }
+
+  if( ! file_exists( './environment.json' ) ) {
+    $env = false;
+  } else {
+    $env = json_decode( file_get_contents('./environment.json' ) );
+  }
 
   /**
    * The current action command.
    */
-  $thisArg = strtolower( trim( $argv[ 1 ] ) );
+  if( isset( $argv[ 1 ] ) ) {
+    $thisArg = strtolower( trim( $argv[ 1 ] ) );
+  } else {
+    $thisArg = '';
+  }
+
+  /**
+   * Create a new environment.json file.
+   */
+  if( $thisArg == 'env:new' ) {
+    // Check if a env file already exists.
+    if( file_exists( './environment.json' ) ) {
+      echo "\nenvironment.json already exists, do you want to overwrite?(Y/n) ";
+      $handle = fopen( "php://stdin", "r" );
+      $cont   = trim( fgets( $handle ) );
+      if( strtolower( $cont ) == 'y' ) {
+        echo "\nOverwriting environment.json file ...\n\n";
+      } else {
+        echo "\nAction canceled\n\n";
+        exit();
+      }
+    }
+    // Create the new environment.json file.
+    $default_env = json_decode( file_get_contents( './inc/environment.json.example' ) );
+    $default_env->secret_keys = bin2hex( random_bytes( 64 ) );
+    file_put_contents( './environment.json', json_encode( $default_env, JSON_PRETTY_PRINT ) );
+    exit( "Environment document has created.\n\n" );
+  }
+
+  if( $env === false ) exit("
+    WARNING: No environment document was found!
+    Run this command 'php zinc env:new' to generate a new env file.
+  ");
+
+  if ( strtolower( $env->environment ) !== 'local' ) exit("\nZincPHP CLI can't run when it is not in local environment\n\n" );  if ( strtolower( $env->environment ) !== 'local' ) exit("\nZincPHP CLI can't run when it is not in local environment\n\n" );
 
   /**
    * Serve as a localserver.
@@ -20,7 +65,8 @@
       }
     }
     echo "\n" . 'Server is running at http://' . $_host . ':' . $_port . "\n\n";
-    chdir( $_SERVER[ 'PWD' ] . '/public' );
+    chdir( joinpaths( getcwd(), '/public' ) );
+    echo "\n\n".joinpaths( getcwd(), 'public' )."\n\n";
     shell_exec( 'php -S ' . $_host . ':' . $_port );
   }
 
