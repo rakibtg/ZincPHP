@@ -5,7 +5,7 @@
   /**
    * The current action command.
    */
-  $thisArg = $argv[ 1 ];
+  $thisArg = strtolower( trim( $argv[ 1 ] ) );
 
   /**
    * Serve as a localserver.
@@ -22,4 +22,14 @@
     echo "\n" . 'Server is running at http://' . $_host . ':' . $_port . "\n\n";
     chdir( $_SERVER[ 'PWD' ] . '/public' );
     shell_exec( 'php -S ' . $_host . ':' . $_port );
+  }
+
+  /**
+   * Generate a new secret token.
+   */
+  if( $thisArg == 'key:generate' ) {
+    $env->secret_keys = bin2hex( random_bytes( 64 ) );
+    file_put_contents( './environment.json', json_encode( $env, JSON_PRETTY_PRINT ) );
+    echo "\nSecrent key has generated\n\n";
+    exit();
   }
