@@ -1,10 +1,10 @@
 <?php
 
   function trimds( $s ) {
-      return rtrim( $s, DIRECTORY_SEPARATOR );
+    return rtrim( $s, DIRECTORY_SEPARATOR );
   }
   function joinpaths() {
-      return implode( DIRECTORY_SEPARATOR, array_map( 'trimds', func_get_args() ) );
+    return implode( DIRECTORY_SEPARATOR, array_map( 'trimds', func_get_args() ) );
   }
 
   if( ! file_exists( './environment.json' ) ) {
@@ -48,6 +48,7 @@
   if( $env === false ) exit("
     WARNING: No environment document was found!
     Run this command 'php zinc env:new' to generate a new env file.
+
   ");
 
   if ( strtolower( $env->environment ) !== 'local' ) exit("\nZincPHP CLI can't run when it is not in local environment\n\n" );  if ( strtolower( $env->environment ) !== 'local' ) exit("\nZincPHP CLI can't run when it is not in local environment\n\n" );
@@ -96,3 +97,43 @@
     }
     exit();
   }
+
+  /**
+   * Zinc command to create a new block.
+   */
+  if( $thisArg == 'make:block' ) {
+    if( ! isset( $argv[ 2 ] ) ) exit( 'No block was created' );
+    $blockPath = trim( $argv[ 2 ] );
+    if( empty( $blockPath ) )  exit( 'No block was created' );
+    $blockName = basename( $blockPath );
+    $blockName = rtrim( $blockName, '.php' );
+    $blockPath = ltrim( $blockPath, '/' );
+    $blockPath = rtrim( $blockPath, $blockName );
+    $blockPath = joinpaths( getcwd(), 'blocks', $blockPath );
+    if( ! file_exists( $blockPath ) ) {
+      mkdir( $blockPath, 0777, true );
+    }
+    // Check if the block already exists.
+    if( file_exists( joinpaths( $blockPath, $blockName . '.php' ) ) ) {
+      echo "\n> " . $blockName . '.php block already exists!' . "\n\n";
+      exit();
+    }
+    // chdir( $blockPath );
+    copy( './inc/core/structures/NewBlock', joinpaths( $blockPath, $blockName . '.php' ) );
+    // touch( $blockName . '.php' );
+    echo "\n> " . $blockName . ' block has created as '. $blockName .'.php' . "\n\n";
+    exit();
+  }
+
+  /**
+   * Default ZincPHP CLI welcome message.
+   */
+  echo "
+
+    Welcome to ZincPHP!
+    GitHub: https://github.com/rakibtg/ZincPHP
+
+    Run 'php zinc help' to learn more :)
+
+
+  ";
