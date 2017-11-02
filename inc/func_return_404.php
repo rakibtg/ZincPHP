@@ -1,10 +1,10 @@
 <?php
 
-    function return_404( $msg = false ) {
-        http_response_code( 404 );
-        if( ! $msg ) $msg = 'Nothing found, 404';
-        echo json_encode([
-            'status' => $msg,
-        ]);
-        exit();
-    }
+  function return_error( $msg = false, $status = 404 ) {
+    http_response_code( $status );
+    if( ! $msg ) $msg = 'Unexpected error occured';
+    echo json_encode([
+      'status' => $msg,
+    ]);
+    exit();
+  }
