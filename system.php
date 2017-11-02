@@ -4,8 +4,12 @@
     ini_set('display_errors', 1);
 
     $env = json_decode( file_get_contents( "../environment.json" ) );
+
     require "../inc/core/Zinc.php";
     $zink = new Zinc();
+
+    require "../inc/core/ZincValidator.php";
+    $validator = new ZincValidator();
 
     // Setting JSON type globally.
     header( 'Content-Type: application/json; charset=utf-8' );
@@ -17,7 +21,7 @@
     if( isset( $_GET[ 'route' ] ) ) {
         $component = trim( $_GET[ 'route' ] );
     } else {
-        return_404();
+        return_error();
     }
 
     // Check if component exist.
@@ -30,5 +34,5 @@
     if( file_exists( $component ) ) {
         require $component;
     } else {
-        return_404( 'Controller not found.' );
+        return_error( 'Controller not found.' );
     }
