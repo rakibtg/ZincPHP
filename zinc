@@ -67,7 +67,6 @@
     }
     echo "\n" . 'Server is running at http://' . $_host . ':' . $_port . "\n\n";
     chdir( joinpaths( getcwd(), '/public' ) );
-    echo "\n\n".joinpaths( getcwd(), 'public' )."\n\n";
     shell_exec( 'php -S ' . $_host . ':' . $_port );
   }
 
@@ -118,9 +117,7 @@
       echo "\n> " . $blockName . '.php block already exists!' . "\n\n";
       exit();
     }
-    // chdir( $blockPath );
     copy( './inc/core/structures/NewBlock', joinpaths( $blockPath, $blockName . '.php' ) );
-    // touch( $blockName . '.php' );
     echo "\n> " . $blockName . ' block has created as '. $blockName .'.php' . "\n\n";
     exit();
   }
