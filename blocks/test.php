@@ -7,28 +7,15 @@
       'error' => [
         'required' => '{label} is required.',
       ],
-      'value' => 'sjdhsuxbs xh'
+      'value' => 121
     ],
     'email' => [
-      'rules' => 'required|email|different:name|length:5|contains:1ew|notContains:2ew|alpha',
+      'rules' => 'required|email',
       'error' => 'Email address is not valid',
-      'value' => 'sjdhsuxbs sxh'
-    ],
-    'age' => [
-      'rules' => 'required|integer|min:18|max:20|between:20:30',
-      'value' => 31,
-    ],
-    'username' => [
-      'rules' => 'required|accepted|array|numeric|in:abc:xyz|notIn:sdsjd:sdsdsdw',
-      'value' => 'sdsjd'
-    ],
-    'dance' => [
-      'rules' => 'length:5|lengthBetween:10:20|lengthMin:100',
-      'value' => 'yeahsdssadfasfadssgdsgfhghjfghdfgasdasddasdasdasdasdsfsdssadfasfadsgdsgasdasdasdasdsfghdfgasdasdaah'
-    ],
-    'myip' => 'ip',
-    'url' => 'url'
+      'value' => 'test@mail.com'
+    ]
   ];
+  
   // Start validating.
-  print_r($validator->validate( $rules, 'get' ));
+  $validator->validate( $rules, 'get' );
 
