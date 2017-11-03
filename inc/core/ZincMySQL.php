@@ -5,18 +5,18 @@ $db_config = [
 	"env" => "development",
 	//Localhost
 	"development" => [
-						"host" => "localhost",
-						"database" => $env->database,
-						"username" => $env->database_user,
-						"password" => $env->database_password
-					 ],
+		"host" => "localhost",
+		"database" => $env->database,
+		"username" => $env->database_user,
+		"password" => $env->database_password
+	],
 	//Server
 	"production"  => [
-						"host" => "",
-						"database" => "",
-						"username" => "",
-						"password" => ""
-					 ]
+		"host" => "",
+		"database" => "",
+		"username" => "",
+		"password" => ""
+	]
 ];
 
 class DB {
