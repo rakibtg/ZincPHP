@@ -1,4 +1,5 @@
 <?php
+
   // Define rules.
   $rules = [
     'name' => [
@@ -10,7 +11,7 @@
     ],
     'email' => [
       'rules' => 'required|email|different:name|length:5|contains:1ew|notContains:2ew|alpha',
-      // 'error' => 'Email address is not valid',
+      'error' => 'Email address is not valid',
       'value' => 'sjdhsuxbs sxh'
     ],
     'age' => [
@@ -29,5 +30,5 @@
     'url' => 'url'
   ];
   // Start validating.
-  $validator->validate( $rules, 'get' );
+  print_r($validator->validate( $rules, 'get' ));
 
