@@ -47,23 +47,46 @@
     private $queryStringType = '';
 
     /**
+     * Keep a record of all the field name that are invalid.
+     * 
+     * @var array
+     */
+    private $invalidFields = [];
+
+    /**
+     * To descide if the validator should return an array or 
+     * if it would exit and outout all the errors.
+     *
+     * @var boolean
+     */
+    private $exitAfterExecution = true;
+
+    /**
      * Method to print errors and stop the script execution.
      * 
      */
-    private function _returnError() {
+    public function _returnError() {
       if( ! empty( $this->errorMessageList ) ) {
-        http_response_code( 400 );
-        echo json_encode( $this->errorMessageList );
-        exit();
+        if( $this->exitAfterExecution === true ) {
+          http_response_code( 400 );
+          echo json_encode( $this->errorMessageList );
+          exit();
+        }
       }
+      return $this->errorMessageList;
     }
 
     /**
      * Take input from block to process and validate an array of data.
      * 
-     * @param  array  $toValid
+     * @param  array      $toValid
+     * @param  string     $queryStringType
+     * @param  boolean    $exitAfterExecution
      */
-    public function validate( $toValid = [], $queryStringType = 'get' ) {
+    public function validate( $toValid = [], $queryStringType = 'get', $exitAfterExecution = true ) {
+
+      // Set how to output the error or return it.
+      $this->exitAfterExecution = $exitAfterExecution;
 
       // Set query string.
       $_qs = trim( strtolower( $queryStringType ) );
@@ -118,7 +141,7 @@
       }
 
       // Start validating.
-      $this->startValidating();
+      return $this->startValidating();
 
     }
 
@@ -128,23 +151,20 @@
      * @return array
      */
     public function startValidating() {
-
-      if( ! empty( $this->validables ) ) {
-        $this->_returnError();
-      }
-
       foreach( $this->validables as $fieldName => $validate ) {
+        // Check if this field has already detected for having invalid data.
         foreach( $validate[ 'rules' ] as $rule ) {
-          $rule = explode( ':', $rule );
-          $_callable = trim( 'validate' . ucfirst( $rule[ 0 ] ) ); // Preparing validate method name
-          $this->$_callable( $fieldName, $rule, trim( $validate[ 'value' ] ) ); // Calling each validate method.
+          if( ! in_array( $fieldName, $this->invalidFields ) ) {
+            $rule = explode( ':', $rule );
+            $_callable = trim( 'validate' . ucfirst( $rule[ 0 ] ) ); // Preparing validate method name
+            $this->$_callable( $fieldName, $rule, trim( $validate[ 'value' ] ) ); // Calling each validate method.
+          }
         }
       }
       
-    print "+=====================+";
-    // print_r($this->validables);
-    print "+=====================+";
-    print_r($this->errorMessageList);
+      // If there was any error found, then display those error and exit from the rest of the execution.
+      return $this->_returnError();
+
     }
 
     /**
@@ -155,6 +175,8 @@
      * @param string $validatorName
      */
     private function setError( $fieldName, $defaultMessage, $validatorName = false ) {
+      // Add field name to invalid Fields list
+      $this->invalidFields[] = $fieldName;
       $error = '';
       $fieldLabel = $this->dashedToCamelCase( $fieldName );
       // Check if we have a custom error message
@@ -173,7 +195,7 @@
       } else {
         $error = $defaultMessage;
       }
-      $this->errorMessageList[ $fieldName ][] = str_replace( '{label}', $fieldLabel, $error );
+      $this->errorMessageList[ $fieldName ] = str_replace( '{label}', $fieldLabel, $error );
     }
 
     /**
@@ -402,13 +424,15 @@
      * 
      */
     protected function validateIn( $fieldName, $validateValue, $value ) {
-      array_splice( $validateValue, 0, 1 );
-      if( ! in_array( $value, $validateValue ) ) {
-        $this->setError( 
-          $fieldName, 
-          '{label} contains invalid value', 
-          $validateValue[ 0 ] 
-        );
+      if( ! empty( $value ) ) {
+        array_splice( $validateValue, 0, 1 );
+        if( ! in_array( $value, $validateValue ) ) {
+          $this->setError( 
+            $fieldName, 
+            '{label} contains invalid value', 
+            $validateValue[ 0 ] 
+          );
+        }        
       }
     }
 
@@ -417,13 +441,15 @@
      * 
      */
     protected function validateNotIn( $fieldName, $validateValue, $value ) {
-      array_splice( $validateValue, 0, 1 );
-      if( in_array( $value, $validateValue ) ) {
-        $this->setError( 
-          $fieldName, 
-          '{label} contains invalid value', 
-          $validateValue[ 0 ] 
-        );
+      if( ! empty( $value ) ) {
+        array_splice( $validateValue, 0, 1 );
+        if( in_array( $value, $validateValue ) ) {
+          $this->setError( 
+            $fieldName, 
+            '{label} contains invalid value', 
+            $validateValue[ 0 ] 
+          );
+        }        
       }
     }
 
@@ -441,23 +467,35 @@
       return $isContains;
     }
 
+    /**
+     * Check if a field contains a given string
+     *
+     */
     protected function validateContains( $fieldName, $validateValue, $value ) {
-      if( ! $this->__contains( $fieldName, $validateValue, $value ) ) {
-        $this->setError( 
-          $fieldName, 
-          '{label} must contain ' . $validateValue[ 1 ], 
-          $validateValue[ 0 ] 
-        );
+      if( ! empty( $value ) ) {
+        if( ! $this->__contains( $fieldName, $validateValue, $value ) ) {
+          $this->setError( 
+            $fieldName, 
+            '{label} must contain ' . $validateValue[ 1 ], 
+            $validateValue[ 0 ] 
+          );
+        }        
       }
     }
 
+    /**
+     * Check if a field does not have a given string
+     *
+     */
     protected function validateNotContains( $fieldName, $validateValue, $value ) {
-      if( $this->__contains( $fieldName, $validateValue, $value ) ) {
-        $this->setError( 
-          $fieldName, 
-          '{label} can\'t contain ' . $validateValue[ 1 ], 
-          $validateValue[ 0 ] 
-        );
+      if( ! empty( $value ) ) {
+        if( $this->__contains( $fieldName, $validateValue, $value ) ) {
+          $this->setError( 
+            $fieldName, 
+            '{label} can\'t contain ' . $validateValue[ 1 ], 
+            $validateValue[ 0 ] 
+          );
+        }        
       }
     }
 
@@ -465,8 +503,7 @@
      * Validate that a field is a valid IP address
      * 
      */
-    protected function validateIp( $fieldName, $validateValue, $value )
-    {
+    protected function validateIp( $fieldName, $validateValue, $value ) {
       if( ! empty( $value ) ) {
         if( filter_var($value, \FILTER_VALIDATE_IP) === false ) {
           $this->setError( 
@@ -624,8 +661,7 @@
      * Validate that a field contains a boolean.
      * 
      */
-    protected function validateBoolean( $fieldName, $validateValue, $value )
-    {
+    protected function validateBoolean( $fieldName, $validateValue, $value ) {
       if( ! is_bool( $value ) ) {
         $this->setError( 
           $fieldName, 
