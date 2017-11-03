@@ -187,13 +187,6 @@
     /**
      * Required field validator
      * 
-     * Field Name: name <- $fieldName
-     * Value: Kazi Mehedi Hasan <- $value
-     * Array <- $validateValue
-     * (
-     *     [0] => max
-     *     [1] => 50
-     * )
      */
     public function validateRequired( $fieldName, $validateValue, $value ) {
       if( empty( $value ) ) {
@@ -216,13 +209,15 @@
      *
      */
     protected function validateDifferent( $fieldName, $validateValue, $value ) {
-      if( isset( $this->validables[ trim( $validateValue[ 1 ] ) ][ 'value' ] ) ) {
-        if( $value == $this->validables[ trim( $validateValue[ 1 ] ) ][ 'value' ] ) {
-          $this->setError( $fieldName, '{label} and '. $this->dashedToCamelCase( $validateValue[ 1 ] ) .' can not be same.', $validateValue[ 0 ] );
-          // $this->errorMessageList[ $fieldName ][] = 'Fields are not different';
+      if( ! empty( $value ) ) {
+        if( isset( $this->validables[ trim( $validateValue[ 1 ] ) ][ 'value' ] ) ) {
+          if( $value == $this->validables[ trim( $validateValue[ 1 ] ) ][ 'value' ] ) {
+            $this->setError( $fieldName, '{label} and '. $this->dashedToCamelCase( $validateValue[ 1 ] ) .' can not be same.', $validateValue[ 0 ] );
+            // $this->errorMessageList[ $fieldName ][] = 'Fields are not different';
+          }
+        } else {
+          $this->setError( $fieldName, 'Can\'t compare {label} with '. $this->dashedToCamelCase( $validateValue[ 1 ] ), $validateValue[ 0 ] );
         }
-      } else {
-        $this->setError( $fieldName, 'Can\'t compare {label} with '. $this->dashedToCamelCase( $validateValue[ 1 ] ), $validateValue[ 0 ] );
       }
     }
 
@@ -270,35 +265,356 @@
     {
       if( ! is_string( $value ) ) $this->setError( $fieldName, '{label} invalid length value', $validateValue[ 0 ] );
       if( strlen( $value ) != ( int ) $validateValue[ 1 ] ) {
-        $this->setError( $fieldName, '{label} length need to be '. $validateValue[ 1 ] .' charecters', $validateValue[ 0 ] );
+        $this->setError( $fieldName, '{label} length need to be '. $validateValue[ 1 ] .' characters', $validateValue[ 0 ] );
       }
     }
 
-
-
-
-
-
-
-
-
-
-
-    public function validateMax( $fieldName, $validateValue, $value ) {
-      // print "-----------------------\nFrom validateMax \n";
-      // print "Field Name: " . $fieldName . "\n";
-      // print "Value: " . $value . "\n";
-      // print_r( $validateValue );
-    }
-    public function validateEmail( $fieldName, $validateValue, $value ) {
-      // print "-----------------------\nFrom validateEmail \n";
-      // print "Value: " . $value . "\n";
-      // print_r( $validateValue );
+    /**
+     * Validate the length of a string
+     * 
+     */
+    protected function validateLengthBetween( $fieldName, $validateValue, $value ) {
+      if( ! is_string( $value ) ) $this->setError( $fieldName, '{label} invalid length value', $validateValue[ 0 ] );
+      $length = strlen( $value );
+      if( ! ( $length >= ( int ) $validateValue[ 1 ] && $length <= ( int ) $validateValue[ 2 ] ) ) {
+        $this->setError( 
+          $fieldName, 
+          '{label} length need to be in between of '. $validateValue[ 1 ] .' to '.$validateValue[ 2 ], 
+          $validateValue[ 0 ] 
+        );
+      }
     }
 
-    public function validateUnique( $fieldName, $validateValue, $value ) {
-      // print "-----------------------\nFrom validateUnique \n";
-      // print "Value: " . $value . "\n";
-      // print_r( $validateValue );
+    /**
+     * Validate the length of a string
+     * 
+     */
+    protected function validateLengthMin( $fieldName, $validateValue, $value ) {
+      if( strlen( $value ) < $validateValue[ 1 ] ) {
+        $this->setError( 
+          $fieldName, 
+          '{label} must be a minimum length of ' . $validateValue[ 1 ] . ' characters', 
+          $validateValue[ 0 ] 
+        );
+      }
     }
+
+    /**
+     * Validate the length of a string
+     * 
+     */
+    protected function validateLengthMax( $fieldName, $validateValue, $value ) {
+      if( strlen( $value ) > $validateValue[ 1 ] ) {
+        $this->setError( 
+          $fieldName, 
+          '{label} must be no more than ' . $validateValue[ 1 ] . ' characters', 
+          $validateValue[ 0 ] 
+        );
+      }
+    }
+
+    /**
+     * Validate the value of a field is greater than a minimum value.
+     * 
+     */
+    protected function validateMin( $fieldName, $validateValue, $value ) {
+        if ( ! is_numeric( $value ) ) { 
+          $this->setError( 
+            $fieldName, 
+            '{label} must be numeric value', 
+            $validateValue[ 0 ] 
+          );
+        } else {
+          if( $validateValue[ 1 ] <= $value ) {
+            $this->setError( 
+              $fieldName, 
+              '{label} must be less than ' . $validateValue[ 1 ], 
+              $validateValue[ 0 ] 
+            );
+          }
+        }
+    }
+
+    /**
+     * Validate the size of a field is less than a maximum value
+     * 
+     */
+    protected function validateMax( $fieldName, $validateValue, $value ) {
+      if ( ! is_numeric( $value ) ) { 
+        $this->setError( 
+          $fieldName, 
+          '{label} must be numeric value', 
+          $validateValue[ 0 ] 
+        );
+      } else {
+        if( $validateValue[ 1 ] >= $value ) {
+          $this->setError( 
+            $fieldName, 
+            '{label} must be greater than ' . $validateValue[ 1 ], 
+            $validateValue[ 0 ] 
+          );
+        }
+      }
+    }
+
+    /**
+     * Validate the size of a field is between min and max values
+     * 
+     */
+    protected function validateBetween( $fieldName, $validateValue, $value ) {
+      if ( ! is_numeric( $value ) ) { 
+        $this->setError( 
+          $fieldName, 
+          '{label} must be numeric value', 
+          $validateValue[ 0 ] 
+        );
+      } else {
+        if( ! ( $value >= ( int ) $validateValue[ 1 ] && $value <= ( int ) $validateValue[ 2 ] ) ) {
+          $this->setError( 
+            $fieldName, 
+            '{label} must be between ' . $validateValue[ 1 ] . ' and ' . $validateValue[ 2 ], 
+            $validateValue[ 0 ] 
+          );
+        }
+      }
+    }
+
+    /**
+     * Validate a field is contained within a list of values
+     * 
+     */
+    protected function validateIn( $fieldName, $validateValue, $value ) {
+      array_splice( $validateValue, 0, 1 );
+      if( ! in_array( $value, $validateValue ) ) {
+        $this->setError( 
+          $fieldName, 
+          '{label} contains invalid value', 
+          $validateValue[ 0 ] 
+        );
+      }
+    }
+
+    /**
+     * Validate a field is not contained within a list of values
+     * 
+     */
+    protected function validateNotIn( $fieldName, $validateValue, $value ) {
+      array_splice( $validateValue, 0, 1 );
+      if( in_array( $value, $validateValue ) ) {
+        $this->setError( 
+          $fieldName, 
+          '{label} contains invalid value', 
+          $validateValue[ 0 ] 
+        );
+      }
+    }
+
+    /**
+     * Validate a field contains a given string
+     * 
+     */
+    protected function __contains( $fieldName, $validateValue, $value ) {
+      $isContains = false;
+      if ( function_exists( 'mb_strpos' ) ) {
+        $isContains = mb_strpos( $value, $validateValue[ 1 ] ) !== false;
+      } else {
+        $isContains = strpos($value, $validateValue[ 1 ] ) !== false;
+      }
+      return $isContains;
+    }
+
+    protected function validateContains( $fieldName, $validateValue, $value ) {
+      if( ! $this->__contains( $fieldName, $validateValue, $value ) ) {
+        $this->setError( 
+          $fieldName, 
+          '{label} must contain ' . $validateValue[ 1 ], 
+          $validateValue[ 0 ] 
+        );
+      }
+    }
+
+    protected function validateNotContains( $fieldName, $validateValue, $value ) {
+      if( $this->__contains( $fieldName, $validateValue, $value ) ) {
+        $this->setError( 
+          $fieldName, 
+          '{label} can\'t contain ' . $validateValue[ 1 ], 
+          $validateValue[ 0 ] 
+        );
+      }
+    }
+
+    /**
+     * Validate that a field is a valid IP address
+     * 
+     */
+    protected function validateIp( $fieldName, $validateValue, $value )
+    {
+      if( ! empty( $value ) ) {
+        if( filter_var($value, \FILTER_VALIDATE_IP) === false ) {
+          $this->setError( 
+            $fieldName, 
+            $value.' is not a valid IP address',
+            $validateValue[ 0 ] 
+          );
+        }
+      }
+    }
+
+    /**
+     * Validate that a field is a valid e-mail address
+     * 
+     */
+    protected function validateEmail( $fieldName, $validateValue, $value ) {
+      if( ! empty( $value ) ) {
+        if( filter_var($value, \FILTER_VALIDATE_EMAIL) === false ) {
+          $this->setError( 
+            $fieldName, 
+            $value.' is not a valid email address',
+            $validateValue[ 0 ] 
+          );
+        }
+      }
+    }
+
+    /**
+     * Validate that a field is a valid URL by syntax
+     * 
+     */
+    protected function validateUrl( $fieldName, $validateValue, $value ) {
+      if( ! empty( $value ) ) {
+        $validURL = false;
+        $urlPrefixes = [ 'http://', 'https://', 'ftp://' ];
+        foreach ( $urlPrefixes as $prefix ) {
+          if (strpos($value, $prefix) !== false) {
+            $validURL = filter_var($value, \FILTER_VALIDATE_URL) != false;
+          }
+        }
+        if( ! $validURL ) {
+          $this->setError( 
+            $fieldName, 
+            $value.' is not a valid URL',
+            $validateValue[ 0 ] 
+          );
+        }
+      }
+    }
+
+    /**
+     * Validate that a field contains only alphabetic characters
+     * 
+     */
+    protected function validateAlpha( $fieldName, $validateValue, $value ) {
+      if( ! empty( $value ) ) {
+        if( ! preg_match( '/^([a-z])+$/i', $value ) ) {
+          $this->setError( 
+            $fieldName, 
+            '{label} should contain only alphabetic characters',
+            $validateValue[ 0 ] 
+          );
+        }
+      }
+    }
+
+    /**
+     * Validate that a field contains only alpha-numeric characters
+     * 
+     */
+    protected function validateAlphaNum( $fieldName, $validateValue, $value ) {
+      if( ! empty( $value ) ) {
+        if( ! preg_match( '/^([a-z0-9])+$/i', $value ) ) {
+          $this->setError( 
+            $fieldName, 
+            '{label} should contain only alpha-numeric characters',
+            $validateValue[ 0 ] 
+          );
+        }
+      }
+    }
+
+    /**
+     * Validate that a field contains only alpha-numeric characters, dashes, and underscores
+     * 
+     */
+    protected function validateSlug( $fieldName, $validateValue, $value ) {
+      if( ! empty( $value ) ) {
+        if( ! preg_match( '/^([-a-z0-9_-])+$/i', $value ) ) {
+          $this->setError( 
+            $fieldName, 
+            '{label} should contain only alpha-numeric characters, dashes, and underscores',
+            $validateValue[ 0 ] 
+          );
+        }
+      }
+    }
+
+    /**
+     * Validate that a field passes a regular expression check
+     * 
+     */
+    protected function validateRegex( $fieldName, $validateValue, $value ) {
+      if( ! empty( $value ) ) {
+        if( ! preg_match( $validateValue[ 1 ], $value ) ) {
+          $this->setError( 
+            $fieldName, 
+            '{label} contains invalid characters',
+            $validateValue[ 0 ] 
+          );
+        }
+      }
+    }
+
+    /**
+     * Validate that a field is a valid date
+     * 
+     */
+    protected function validateDate( $fieldName, $validateValue, $value ) {
+      if( ! empty( $value ) ) {
+        $isDate = false;
+        if ( $value instanceof \DateTime ) {
+            $isDate = true;
+        } else {
+            $isDate = strtotime( $value ) !== false;
+        }
+        if( ! $isDate ) {
+          $this->setError( 
+            $fieldName, 
+            '{label} contains invalid date',
+            $validateValue[ 0 ] 
+          );
+        }
+      }
+    }
+
+    /**
+     * Validate that a field matches a date format
+     * 
+     */
+    protected function validateDateFormat( $fieldName, $validateValue, $value ) {
+      if( ! empty( $value ) ) {
+        $parsed = date_parse_from_format( $validateValue[ 1 ], $value );
+        if( ! $parsed['error_count'] === 0 && $parsed['warning_count'] === 0 ) {
+          $this->setError( 
+            $fieldName, 
+            '{label} contains invalid date',
+            $validateValue[ 0 ] 
+          );
+        }
+      }
+    }
+
+    /**
+     * Validate that a field contains a boolean.
+     * 
+     */
+    protected function validateBoolean( $fieldName, $validateValue, $value )
+    {
+      if( ! is_bool( $value ) ) {
+        $this->setError( 
+          $fieldName, 
+          '{label} must be boolean',
+          $validateValue[ 0 ] 
+        );
+      }
+    }
+
   }
