@@ -9,9 +9,9 @@
       'value' => 'sjdhsuxbs xh'
     ],
     'email' => [
-      'rules' => 'required|email|different:full_name|length:5|contains:1ew|notContains:2ew|alpha',
+      'rules' => 'required|email|different:name|length:5|contains:1ew|notContains:2ew|alpha',
       // 'error' => 'Email address is not valid',
-      'value' => 'abcd'
+      'value' => 'sjdhsuxbs sxh'
     ],
     'age' => [
       'rules' => 'required|integer|min:18|max:20|between:20:30',

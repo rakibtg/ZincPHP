@@ -209,15 +209,12 @@
      *
      */
     protected function validateDifferent( $fieldName, $validateValue, $value ) {
-      if( ! empty( $value ) ) {
-        if( isset( $this->validables[ trim( $validateValue[ 1 ] ) ][ 'value' ] ) ) {
-          if( $value == $this->validables[ trim( $validateValue[ 1 ] ) ][ 'value' ] ) {
-            $this->setError( $fieldName, '{label} and '. $this->dashedToCamelCase( $validateValue[ 1 ] ) .' can not be same.', $validateValue[ 0 ] );
-            // $this->errorMessageList[ $fieldName ][] = 'Fields are not different';
-          }
-        } else {
-          $this->setError( $fieldName, 'Can\'t compare {label} with '. $this->dashedToCamelCase( $validateValue[ 1 ] ), $validateValue[ 0 ] );
+      if( isset( $this->validables[ trim( $validateValue[ 1 ] ) ][ 'value' ] ) ) {
+        if( $value == $this->validables[ trim( $validateValue[ 1 ] ) ][ 'value' ] ) {
+          $this->setError( $fieldName, '{label} and '. $this->dashedToCamelCase( $validateValue[ 1 ] ) .' can not be same.', $validateValue[ 0 ] );
         }
+      } else {
+        $this->setError( $fieldName, $this->dashedToCamelCase( $validateValue[ 1 ] ) . ' field not found to compare differences of {label}', $validateValue[ 0 ] );
       }
     }
 
@@ -227,9 +224,11 @@
      *
      */
     protected function validateAccepted( $fieldName, $validateValue, $value ) {
-      $acceptable = array( 'yes', 'on', 1, '1', true );
-      if( ! in_array( $value, $acceptable, true ) ) {
-        $this->setError( $fieldName, '{label} need to be accepted', $validateValue[ 0 ] );
+      if( ! empty( $field ) ) {
+        $acceptable = array( 'yes', 'on', 1, '1', true );
+        if( ! in_array( $value, $acceptable, true ) ) {
+          $this->setError( $fieldName, '{label} need to be accepted', $validateValue[ 0 ] );
+        }
       }
     }
 
@@ -238,7 +237,9 @@
      *
      */
     protected function validateArray( $fieldName, $validateValue, $value ) {
-      if( ! is_array( $value ) ) $this->setError( $fieldName, '{label} need to be an array', $validateValue[ 0 ] );
+      if( ! empty( $field ) ) {
+        if( ! is_array( $value ) ) $this->setError( $fieldName, '{label} need to be an array', $validateValue[ 0 ] );
+      }
     }
 
     /**
@@ -246,7 +247,9 @@
      *
      */
     protected function validateNumeric( $fieldName, $validateValue, $value ) {
-      if( ! is_numeric( $value ) ) $this->setError( $fieldName, '{label} need to be a numeric value', $validateValue[ 0 ] );
+      if( ! empty( $field ) ) {
+        if( ! is_numeric( $value ) ) $this->setError( $fieldName, '{label} need to be a numeric value', $validateValue[ 0 ] );
+      }
     }
 
     /**
@@ -254,18 +257,21 @@
      *
      */
     protected function validateInteger( $fieldName, $validateValue, $value ) {
-      if( ! preg_match( '/^-?([0-9])+$/i', $value ) ) $this->setError( $fieldName, '{label} need to be a integer value', $validateValue[ 0 ] );
+      if( ! empty( $field ) ) {
+        if( ! preg_match( '/^-?([0-9])+$/i', $value ) ) $this->setError( $fieldName, '{label} need to be a integer value', $validateValue[ 0 ] );
+      }
     }
 
     /**
      * Validate the length of a string
      *
      */
-    protected function validateLength( $fieldName, $validateValue, $value )
-    {
-      if( ! is_string( $value ) ) $this->setError( $fieldName, '{label} invalid length value', $validateValue[ 0 ] );
-      if( strlen( $value ) != ( int ) $validateValue[ 1 ] ) {
-        $this->setError( $fieldName, '{label} length need to be '. $validateValue[ 1 ] .' characters', $validateValue[ 0 ] );
+    protected function validateLength( $fieldName, $validateValue, $value ) {
+      if( ! empty( $field ) ) {
+        if( ! is_string( $value ) ) $this->setError( $fieldName, '{label} invalid length value', $validateValue[ 0 ] );
+        if( strlen( $value ) != ( int ) $validateValue[ 1 ] ) {
+          $this->setError( $fieldName, '{label} length need to be '. $validateValue[ 1 ] .' characters', $validateValue[ 0 ] );
+        }
       }
     }
 
@@ -274,14 +280,16 @@
      * 
      */
     protected function validateLengthBetween( $fieldName, $validateValue, $value ) {
-      if( ! is_string( $value ) ) $this->setError( $fieldName, '{label} invalid length value', $validateValue[ 0 ] );
-      $length = strlen( $value );
-      if( ! ( $length >= ( int ) $validateValue[ 1 ] && $length <= ( int ) $validateValue[ 2 ] ) ) {
-        $this->setError( 
-          $fieldName, 
-          '{label} length need to be in between of '. $validateValue[ 1 ] .' to '.$validateValue[ 2 ], 
-          $validateValue[ 0 ] 
-        );
+      if( ! empty( $field ) ) {
+        if( ! is_string( $value ) ) $this->setError( $fieldName, '{label} invalid length value', $validateValue[ 0 ] );
+        $length = strlen( $value );
+        if( ! ( $length >= ( int ) $validateValue[ 1 ] && $length <= ( int ) $validateValue[ 2 ] ) ) {
+          $this->setError( 
+            $fieldName, 
+            '{label} length need to be in between of '. $validateValue[ 1 ] .' to '.$validateValue[ 2 ], 
+            $validateValue[ 0 ] 
+          );
+        }
       }
     }
 
@@ -290,12 +298,14 @@
      * 
      */
     protected function validateLengthMin( $fieldName, $validateValue, $value ) {
-      if( strlen( $value ) < $validateValue[ 1 ] ) {
-        $this->setError( 
-          $fieldName, 
-          '{label} must be a minimum length of ' . $validateValue[ 1 ] . ' characters', 
-          $validateValue[ 0 ] 
-        );
+      if( ! empty( $field ) ) {
+        if( strlen( $value ) < $validateValue[ 1 ] ) {
+          $this->setError( 
+            $fieldName, 
+            '{label} must be a minimum length of ' . $validateValue[ 1 ] . ' characters', 
+            $validateValue[ 0 ] 
+          );
+        }
       }
     }
 
@@ -304,12 +314,14 @@
      * 
      */
     protected function validateLengthMax( $fieldName, $validateValue, $value ) {
-      if( strlen( $value ) > $validateValue[ 1 ] ) {
-        $this->setError( 
-          $fieldName, 
-          '{label} must be no more than ' . $validateValue[ 1 ] . ' characters', 
-          $validateValue[ 0 ] 
-        );
+      if( ! empty( $field ) ) {
+        if( strlen( $value ) > $validateValue[ 1 ] ) {
+          $this->setError( 
+            $fieldName, 
+            '{label} must be no more than ' . $validateValue[ 1 ] . ' characters', 
+            $validateValue[ 0 ] 
+          );
+        }
       }
     }
 
@@ -318,6 +330,7 @@
      * 
      */
     protected function validateMin( $fieldName, $validateValue, $value ) {
+      if( ! empty( $field ) ) {
         if ( ! is_numeric( $value ) ) { 
           $this->setError( 
             $fieldName, 
@@ -333,6 +346,7 @@
             );
           }
         }
+      }
     }
 
     /**
@@ -340,19 +354,21 @@
      * 
      */
     protected function validateMax( $fieldName, $validateValue, $value ) {
-      if ( ! is_numeric( $value ) ) { 
-        $this->setError( 
-          $fieldName, 
-          '{label} must be numeric value', 
-          $validateValue[ 0 ] 
-        );
-      } else {
-        if( $validateValue[ 1 ] >= $value ) {
+      if( ! empty( $field ) ) {
+        if ( ! is_numeric( $value ) ) { 
           $this->setError( 
             $fieldName, 
-            '{label} must be greater than ' . $validateValue[ 1 ], 
+            '{label} must be numeric value', 
             $validateValue[ 0 ] 
           );
+        } else {
+          if( $validateValue[ 1 ] >= $value ) {
+            $this->setError( 
+              $fieldName, 
+              '{label} must be greater than ' . $validateValue[ 1 ], 
+              $validateValue[ 0 ] 
+            );
+          }
         }
       }
     }
@@ -362,19 +378,21 @@
      * 
      */
     protected function validateBetween( $fieldName, $validateValue, $value ) {
-      if ( ! is_numeric( $value ) ) { 
-        $this->setError( 
-          $fieldName, 
-          '{label} must be numeric value', 
-          $validateValue[ 0 ] 
-        );
-      } else {
-        if( ! ( $value >= ( int ) $validateValue[ 1 ] && $value <= ( int ) $validateValue[ 2 ] ) ) {
+      if( ! empty( $field ) ) {
+        if ( ! is_numeric( $value ) ) { 
           $this->setError( 
             $fieldName, 
-            '{label} must be between ' . $validateValue[ 1 ] . ' and ' . $validateValue[ 2 ], 
+            '{label} must be numeric value', 
             $validateValue[ 0 ] 
           );
+        } else {
+          if( ! ( $value >= ( int ) $validateValue[ 1 ] && $value <= ( int ) $validateValue[ 2 ] ) ) {
+            $this->setError( 
+              $fieldName, 
+              '{label} must be between ' . $validateValue[ 1 ] . ' and ' . $validateValue[ 2 ], 
+              $validateValue[ 0 ] 
+            );
+          }
         }
       }
     }
