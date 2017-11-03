@@ -1,5 +1,9 @@
 <?php
 
+    function pr( $arr = [] ) {
+        print_r( $arr );
+    }
+
     function strTrim( $str ) {
         if( ! isset( $str ) ) return '';
         return trim( $str );
