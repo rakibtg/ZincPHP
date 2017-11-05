@@ -19,7 +19,7 @@
         return strTrim( $_POST[ $key ] );
     }
 
-    function _output( $data = [], $resCode = 200 ) {
+    function _output( $data = [], $resCode = 200, $prettyPrint = false ) {
 
         // Setting the reponse code of the output.
         http_response_code( $resCode );
@@ -27,7 +27,8 @@
         if( empty( $data ) ) {
             echo json_encode( [] );
         } else if ( is_array( $data ) ) {
-            echo json_encode( $data );
+            if( $prettyPrint ) echo json_encode( $data, JSON_PRETTY_PRINT );
+            else echo json_encode( $data );
         } else {
             echo json_encode( [ $data ] );
         }
