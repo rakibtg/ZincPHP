@@ -11,6 +11,9 @@
     require_once "../inc/core/ZincValidator.php";
     $validator = new ZincValidator();
 
+    require_once "../inc/core/ZincJWT.php";
+    $jwt = new ZincJWT( $env );
+
     // Setting JSON type globally.
     header( 'Content-Type: application/json; charset=utf-8' );
 
