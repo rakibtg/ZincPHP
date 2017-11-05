@@ -5,23 +5,27 @@
 
     $env = json_decode( file_get_contents( "../environment.json" ) );
 
-    require "../inc/core/Zinc.php";
+    require_once "../inc/core/Zinc.php";
     $zink = new Zinc();
 
-    require "../inc/core/ZincValidator.php";
+    require_once "../inc/core/ZincValidator.php";
     $validator = new ZincValidator();
 
     // Setting JSON type globally.
     header( 'Content-Type: application/json; charset=utf-8' );
 
-    require "../inc/func_return_404.php";
-    require "../inc/func_requests.php";
+    require_once "../inc/func_return_404.php";
+    require_once "../inc/func_requests.php";
 
     // Simple routing.
     if( isset( $_GET[ 'route' ] ) ) {
         $component = trim( $_GET[ 'route' ] );
+        if( empty( $component ) ) {
+            $component = 'index';
+        }
     } else {
-        return_error();
+        $component = 'index';
+        // return_error();
     }
 
     // Check if component exist.
@@ -32,7 +36,7 @@
     }
     $component = '../blocks'.rtrim( $segments, '/' ).'.php';
     if( file_exists( $component ) ) {
-        require $component;
+        require_once $component;
     } else {
         return_error( 'Controller not found.' );
     }
