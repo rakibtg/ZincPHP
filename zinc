@@ -13,9 +13,6 @@
     $env = json_decode( file_get_contents('./environment.json' ) );
   }
 
-  print_r( $env );
-  exit();
-
   /**
    * The current action command.
    */
