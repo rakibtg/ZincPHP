@@ -13,6 +13,9 @@
     $env = json_decode( file_get_contents('./environment.json' ) );
   }
 
+  print_r( $env );
+  exit();
+
   /**
    * The current action command.
    */
@@ -51,7 +54,7 @@
 
   ");
 
-  if ( strtolower( $env->environment ) !== 'local' ) exit("\nZincPHP CLI can't run when it is not in local environment\n\n" );  if ( strtolower( $env->environment ) !== 'local' ) exit("\nZincPHP CLI can't run when it is not in local environment\n\n" );
+  if ( strtolower( $env->environment ) !== 'local' ) exit("\nZincPHP CLI can't run when it is not in local environment\n\n" );  
 
   /**
    * Serve as a localserver.
