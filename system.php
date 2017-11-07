@@ -1,7 +1,7 @@
 <?php
 
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
+    error_reporting( E_ALL );
+    ini_set( 'display_errors', 1 );
 
     $env = json_decode( file_get_contents( "../environment.json" ) );
 
@@ -17,8 +17,7 @@
     // Setting JSON type globally.
     header( 'Content-Type: application/json; charset=utf-8' );
 
-    require_once "../inc/func_return_404.php";
-    require_once "../inc/func_requests.php";
+    require_once "../inc/core_functions.php";
 
     // Simple routing.
     if( isset( $_GET[ 'route' ] ) ) {
@@ -28,7 +27,6 @@
         }
     } else {
         $component = 'index';
-        // return_error();
     }
 
     // Check if component exist.
@@ -41,5 +39,5 @@
     if( file_exists( $component ) ) {
         require_once $component;
     } else {
-        return_error( 'Controller not found.' );
+        zp\return_error( 'Controller not found.' );
     }
