@@ -47,31 +47,19 @@
     }
 
     function url( $uri = '/' ) {
-        if(isset($_SERVER["HTTPS"]) && !empty($_SERVER["HTTPS"]) && ($_SERVER["HTTPS"] != 'on' )) {
-            $url = 'https://'.$_SERVER["SERVER_NAME"];//https url
+        if( isset( $_SERVER[ "HTTPS" ] ) && ! empty( $_SERVER[ "HTTPS" ] ) && ( $_SERVER[ "HTTPS" ] != 'on' ) ) {
+            $url = 'https://'.$_SERVER["SERVER_NAME"]; //https url
         }  else {
-            $url =  'http://'.$_SERVER["SERVER_NAME"];//http url
+            $url =  'http://'.$_SERVER["SERVER_NAME"]; //http url
         }
-        if(( $_SERVER["SERVER_PORT"] != 80 )) {
-            $url .= ':' . $_SERVER["SERVER_PORT"];
-        }
-
+        if(( $_SERVER["SERVER_PORT"] != 80 )) $url .= ':' . $_SERVER["SERVER_PORT"]; 
         if( trim( $uri ) == '/' ) return $url;
         else return $url . '/?route=' . $uri;
     }
 
 
     function current_url() {
-        if(isset($_SERVER["HTTPS"]) && !empty($_SERVER["HTTPS"]) && ($_SERVER["HTTPS"] != 'on' )) {
-            $url = 'https://'.$_SERVER["SERVER_NAME"];//https url
-        }  else {
-            $url =  'http://'.$_SERVER["SERVER_NAME"];//http url
-        }
-        if(( $_SERVER["SERVER_PORT"] != 80 )) {
-            $url .= ':' . $_SERVER["SERVER_PORT"];
-        }
-        $url .= $_SERVER["REQUEST_URI"];
-        return $url;
+        return url() . $_SERVER["REQUEST_URI"];
     }
 
     function slug( $url = '', $seperator = '_' ) {
