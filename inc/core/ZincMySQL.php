@@ -1,25 +1,10 @@
 <?php
 //====================== Marei DB Class V 1.0 ======================
-$db_config = [
-	//current development environment
-	"env" => "development",
-	//Localhost
-	"development" => [
-		"host" => "localhost",
-		"database" => $env->database,
-		"username" => $env->database_user,
-		"password" => $env->database_password
-	],
-	//Server
-	"production"  => [
-		"host" => "",
-		"database" => "",
-		"username" => "",
-		"password" => ""
-	]
-];
 
 class DB {
+
+	private $db_config;
+
 	private static $instance = null;
 	private $dbh = null, $table, $columns, $sql, $bindValues, $getSQL,
 	$where, $orWhere, $whereCount=0, $isOrWhere = false,
@@ -28,14 +13,32 @@ class DB {
 	// Initial values for pagination array
 	private $pagination = ['previousPage' => null,'currentPage' => 1,'nextPage' => null,'lastPage' => null, 'totalRows' => null];
 
-	private function __construct()
+	private function __construct( $env )
 	{
-		global $db_config;
 
-		if ($db_config['env'] == "development") {
-			$config = $db_config['development'];
-		}elseif ($db_config['env'] == "production") {
-			$config = $db_config['production'];
+		$this->db_config = [
+			//current development environment
+			"env" => "development",
+			//Localhost
+			"development" => [
+				"host" => "localhost",
+				"database" => $env->database,
+				"username" => $env->database_user,
+				"password" => $env->database_password
+			],
+			//Server
+			"production"  => [
+				"host" => "",
+				"database" => "",
+				"username" => "",
+				"password" => ""
+			]
+		];
+
+		if ($this->db_config['env'] == "development") {
+			$config = $this->db_config['development'];
+		}elseif ($this->db_config['env'] == "production") {
+			$config = $this->db_config['production'];
 		}else{
 			die("Environment must be either 'development' or 'production'.");
 		}
@@ -43,17 +46,17 @@ class DB {
 		try {
 			$this->dbh = new PDO("mysql:host=".$config['host'].";dbname=".$config['database'].";charset=utf8", $config['username'], $config['password'] );
 			$this->dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-			$db_config = null;
+			$this->db_config = null;
 		} catch (Exception $e) {
 			die("Error establishing a database connection.");
 		}
 
 	}
 
-	public static function getInstance()
+	public static function getInstance( $env )
 	{
 		if (!self::$instance) {
-			self::$instance = new DB();
+			self::$instance = new DB( $env );
 		}
 		return self::$instance;
 	}
