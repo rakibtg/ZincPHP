@@ -13,6 +13,13 @@
     public $validator;  // Handle user input validations.
 
     function __construct() {
+
+      error_reporting( E_ALL );
+      ini_set( 'display_errors', 1 );
+
+      // Setting JSON type globally.
+      header( 'Content-Type: application/json; charset=utf-8' );
+
       // Booting the framework.
       $this->bootEnvironment();
       $this->bootCors();
