@@ -3,6 +3,6 @@
   // A sample welcome page.
 
   \zp\output( [
-    'zincPHP'   => 'Welcome!',
-    'toDo'      => 'To edit this page, go to \'index.php\' inside \'blocks\' directory',
+    'ZincPHP'   => 'Welcome to ZincPHP',
+    'ToDo'      => 'To change this page, edit \'index.php\' inside \'blocks\' directory',
   ], 200, true );
