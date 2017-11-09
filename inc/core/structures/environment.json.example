@@ -3,6 +3,7 @@
     "name" : "",
     "url"  : "",
     "driver" : "mysql",
+    "host": "localhost",
     "database" : "",
     "database_user" : "",
     "database_password" : "",
