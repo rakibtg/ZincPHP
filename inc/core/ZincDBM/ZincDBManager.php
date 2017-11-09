@@ -1,9 +1,9 @@
 <?php
 
-  require_once './ColumnsTrait.php';
-  require_once './ModifiersTrait.php';
+  require_once './inc/core/ZincDBM/ColumnsTrait.php';
+  require_once './inc/core/ZincDBM/ModifiersTrait.php';
 
-  class DatabaseManager {
+  class ZincDBManager {
 
     use ColumnsTrait, ModifiersTrait;
 
@@ -57,7 +57,7 @@
       $this->tableName = '';
 
       // Get environment settings from environment document
-      $this->env = json_decode( file_get_contents( '../../../environment.json' ) );
+      $this->env = json_decode( file_get_contents( './environment.json' ) );
 
       // New mysql connection.
       $this->db = mysqli_connect(
@@ -112,12 +112,12 @@
 
   }
 
-  $dm = new DatabaseManager();
+  // $dm = new ZincDBManager();
 
-  $dm->create('usersxyzyzyzyzyzyzzy')
-    ->increments('id')
-    ->integer('age')->nullable()
-    ->string('full_name', 50)->nullable()
-  ->charset()->collation();
+  // $dm->create('usersxyzyzyzyzyzyzzy')
+  //   ->increments('id')
+  //   ->integer('age')->nullable()
+  //   ->string('full_name', 50)->nullable()
+  // ->charset()->collation();
 
-  echo $dm->executeCreateTable();
+  // echo $dm->executeCreateTable();
