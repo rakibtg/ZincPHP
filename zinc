@@ -123,6 +123,17 @@
   }
 
   /**
+   * Make a new migration file.
+   */
+  if( $thisArg == 'make:migration' ) {
+    require_once './inc/core/zinc_cli/migration/makeMigration.php';
+  }
+
+  if( $thisArg == 'migrate' ) {
+    require_once './inc/core/zinc_cli/migration/migration.php';
+  }
+
+  /**
    * Default ZincPHP CLI welcome message.
    */
   echo "
