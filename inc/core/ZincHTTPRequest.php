@@ -13,7 +13,7 @@ class ZincHTTPRequest {
    */
   public static function HTTPGet( $url, array $params ) {
     $query = http_build_query( $params ); 
-    $ch    = curl_init( $url.'?'.$query );
+    $ch    = curl_init( $url . '?' . $query );
     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
     curl_setopt( $ch, CURLOPT_HEADER, false );
     $response = curl_exec( $ch );

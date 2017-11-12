@@ -4,13 +4,15 @@
   require_once '../inc/core/ZincMySQL.php';
   require_once '../inc/core/ZincJWT.php';
   require_once '../inc/core/ZincValidator.php';
+  require_once '../inc/core/ZinkHTTPRequest.php';
 
   class Zinc {
 
-    public $env;        // Store environment settings.
-    public $db;         // Store the db object.
-    public $jwt;        // Handle JWT using this object property.
-    public $validator;  // Handle user input validations.
+    public $env;            // Store environment settings.
+    public $db;             // Store the db object.
+    public $jwt;            // Handle JWT using this object property.
+    public $validator;      // Handle user input validations.
+    public $httpRequest;    // Do HTTP requests.
 
     function __construct() {
 
@@ -80,6 +82,13 @@
      */
     public function bootJWT() {
       $this->jwt = new ZincJWT( $this->env );
+    }
+
+    /**
+     * Instantiating Zinc HTTP request module.
+     */
+    public function bootHTTPReques() {
+      $this->httpRequest = new ZinkHTTPRequest;
     }
 
     public function bootRoute() {
