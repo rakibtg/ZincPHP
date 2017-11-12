@@ -4,7 +4,7 @@
   require_once '../inc/core/ZincMySQL.php';
   require_once '../inc/core/ZincJWT.php';
   require_once '../inc/core/ZincValidator.php';
-  require_once '../inc/core/ZinkHTTPRequest.php';
+  require_once '../inc/core/ZincHTTPRequest.php';
 
   class Zinc {
 
@@ -88,7 +88,7 @@
      * Instantiating Zinc HTTP request module.
      */
     public function bootHTTPReques() {
-      $this->httpRequest = new ZinkHTTPRequest;
+      $this->httpRequest = new ZincHTTPRequest;
     }
 
     public function bootRoute() {
