@@ -2,10 +2,11 @@
 
   require_once './inc/core/ZincDBM/ColumnsTrait.php';
   require_once './inc/core/ZincDBM/ModifiersTrait.php';
+  require_once './inc/core/ZincDBM/MigrationTrait.php';
 
   class ZincDBManager {
 
-    use ColumnsTrait, ModifiersTrait;
+    use ColumnsTrait, ModifiersTrait, MigrationTrait;
 
     /**
      * The begining query of the SQL

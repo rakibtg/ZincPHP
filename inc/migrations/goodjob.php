@@ -5,6 +5,7 @@
    *
    */
   class Migration {
+
     private $zincDBManager;
     function __construct( $dbm ) { $this->zincDBManager = $dbm; }
 
@@ -17,4 +18,9 @@
         ->increments( 'id' )
       ->executeCreateTable();
     }
+
+    function down() {
+      // Drop table/index/column.
+    }
+
   }
