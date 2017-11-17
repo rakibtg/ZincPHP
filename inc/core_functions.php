@@ -51,14 +51,14 @@
      * Converts data to json then print it.
      *
      * @param array|object|string   $data           Data to output
-     * @param integer               $resCode        Set the response status code
+     * @param integer               $responseStatus Set the response status code
      * @param boolean               $prettyPrint    Pretty prints the output JSON
      * @return void
      */
-    function output( $data = [], $resCode = 200, $prettyPrint = false ) {
+    function output( $data = [], $responseStatus = 200, $prettyPrint = false ) {
 
         // Setting the reponse code of the output.
-        http_response_code( $resCode );
+        http_response_code( $responseStatus );
 
         if( empty( $data ) ) {
             echo json_encode( [] );
