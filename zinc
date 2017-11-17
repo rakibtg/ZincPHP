@@ -53,7 +53,7 @@ print "
     exit();
   }
 
-  if ( strtolower( $env->environment ) !== 'local' ) exit("\nZincPHP CLI can't run when it is not in local environment\n\n" );  
+  if ( strtolower( $env->environment ) !== 'local' ) exit( \OuputCLI\warn( "\nZincPHP CLI can't run when it is not in local environment\n\n" ) );  
 
   /**
    * Serve as a localserver.
