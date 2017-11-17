@@ -1,5 +1,5 @@
 <?php
-
+  require_once './inc/core/zinc_cli/cli_outputs.php';
   function trimds( $s ) {
     return rtrim( $s, DIRECTORY_SEPARATOR );
   }
@@ -45,11 +45,13 @@
     exit( "Environment document has created.\n\n" );
   }
 
-  if( $env === false ) exit("
-    WARNING: No environment document was found!
-    Run this command 'php zinc env:new' to generate a new env file.
-
-  ");
+  if( $env === false ) {
+print "
+  ".\OuputCLI\danger( "ERROR" )."No environment document was found!
+  ".\OuputCLI\warn( "TIPS " )."Run this command ".\OuputCLI\success( 'php zinc env:new' )." to generate a new env file.\n
+";
+    exit();
+  }
 
   if ( strtolower( $env->environment ) !== 'local' ) exit("\nZincPHP CLI can't run when it is not in local environment\n\n" );  
 
