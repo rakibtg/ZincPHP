@@ -42,7 +42,7 @@
     $default_env = json_decode( file_get_contents( './inc/core/structures/environment.json.example' ) );
     $default_env->secret_keys = bin2hex( random_bytes( 64 ) );
     file_put_contents( './environment.json', json_encode( $default_env, JSON_PRETTY_PRINT ) );
-    exit( "Environment document has created.\n\n" );
+    exit( \OuputCLI\success( "\nEnvironment document has created.\n\n" ) );
   }
 
   if( $env === false ) {
