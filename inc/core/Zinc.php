@@ -66,7 +66,9 @@
      * This method will create a instance of the simple mysql orm.
      */
     public function bootDB() {
-      $this->db = DB::getInstance( $this->env );
+      if( ! empty( $this->env->database ) ) {
+        $this->db = DB::getInstance( $this->env );
+      }
     }
 
     /**
