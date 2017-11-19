@@ -95,7 +95,13 @@
       $this->queryHead = trim( $this->queryHead );
       // Process footer
       $this->queryFoot = trim( $this->queryFoot );
-      return $this->queryHead . ' (' . $this->queryBody . ' ) ' . $this->queryFoot . ";";
+      // Final query.
+      $finalQuery =  $this->queryHead . ' (' . $this->queryBody . ' ) ' . $this->queryFoot . ";";
+      // Reset query strings.
+      $this->queryHead = '';
+      $this->queryBody = '';
+      $this->queryFoot = '';
+      return $finalQuery;
     }
 
     /**
