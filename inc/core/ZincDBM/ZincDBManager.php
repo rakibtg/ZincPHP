@@ -107,7 +107,7 @@
       if( mysqli_query( $this->db, $this->build() ) ) {
         print "Table (".$this->tableName.") created successfully\n";
       } else {
-        print "Error: Unable to execute SQL command. " . mysqli_error( $this->db ) . "\n";
+        print \OuputCLI\danger( "Error:" ) . mysqli_error( $this->db ) . "\n";
       }
     }
 
