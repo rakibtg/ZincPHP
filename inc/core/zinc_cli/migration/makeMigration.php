@@ -17,6 +17,10 @@
   }
   $migrationName = implode( $migrationName );
   $migrationFileName = joinpaths( getcwd(), 'inc/migrations', $migrationName . '.php' );
+  // If the migration folder dosent exists then create it.
+  if( ! file_exists( 'inc/migrations' ) ) {
+    mkdir( 'inc/migrations' );
+  }
   if( ! file_exists( $migrationFileName ) ) {
     // Copy new migration template to migrations directory.
     $rawMigratable = file_get_contents( './inc/core/structures/new_migration.php.example' );
