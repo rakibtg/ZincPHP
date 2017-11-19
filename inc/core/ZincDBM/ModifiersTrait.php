@@ -46,7 +46,7 @@
 
     // Specify a "default" value for the column
     function default( $val ) {
-      $this->queryBody .= ' DEFAULT `'.$val.'` ';
+      $this->queryBody .= ' DEFAULT "'.$val.'" ';
       return $this;
     }
 
