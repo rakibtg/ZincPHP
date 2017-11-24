@@ -56,6 +56,12 @@
       return $this;
     }
 
+    // Makes a field not nullable
+    function notNull() {
+      $this->queryBody .= ' NOT NULL ';
+      return $this;
+    }
+
     // Set INTEGER columns as UNSIGNED (MySQL)
     function unsigned() {
       $this->queryBody .= ' UNSIGNED ';
