@@ -17,4 +17,9 @@
         ->integer( 'author' )
       ->executeCreateTable();
     }
+
+    function down() {
+      $this->zincDBManager->drop( 'dream_posts' );
+    }
+
   }
