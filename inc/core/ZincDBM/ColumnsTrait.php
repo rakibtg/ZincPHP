@@ -108,6 +108,13 @@
       return $this;
     }
 
+
+    // UNIQUE equivalent column.
+    function unique( $name ) {
+      $this->queryBody .= ', ' . $name . ' UNIQUE ';
+      return $this;
+    }
+
     // LINESTRING equivalent column.
     function lineString( $name ) {
       $this->queryBody .= ', ' . $name . ' LINESTRING ';
