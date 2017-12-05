@@ -32,3 +32,10 @@
       return $msg;
     }
   }
+
+  /**
+   * New line; Helpful for those who using ZSH.
+   */
+  function nl() {
+    echo "\n";
+  }
