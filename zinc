@@ -53,7 +53,7 @@ print "
     exit();
   }
 
-  if ( strtolower( $env->environment ) !== 'local' ) exit( \OuputCLI\warn( "\nZincPHP CLI can't run when it is not in local environment\n\n" ) );  
+  if ( strtolower( $env->environment ) !== 'local' ) exit( \OuputCLI\warn( "\nZincPHP CLI can't run when it is not in local environment\n\n" ) );
 
   /**
    * Serve as a localserver.
@@ -103,25 +103,7 @@ print "
    * Zinc command to create a new block.
    */
   if( $thisArg == 'make:block' ) {
-    if( ! isset( $argv[ 2 ] ) ) exit( 'No block was created' );
-    $blockPath = trim( $argv[ 2 ] );
-    if( empty( $blockPath ) )  exit( 'No block was created' );
-    $blockName = basename( $blockPath );
-    $blockName = rtrim( $blockName, '.php' );
-    $blockPath = ltrim( $blockPath, '/' );
-    $blockPath = rtrim( $blockPath, $blockName );
-    $blockPath = joinpaths( getcwd(), 'blocks', $blockPath );
-    if( ! file_exists( $blockPath ) ) {
-      mkdir( $blockPath, 0777, true );
-    }
-    // Check if the block already exists.
-    if( file_exists( joinpaths( $blockPath, $blockName . '.php' ) ) ) {
-      echo "\n> " . $blockName . '.php block already exists!' . "\n\n";
-      exit();
-    }
-    copy( './inc/core/structures/NewBlock', joinpaths( $blockPath, $blockName . '.php' ) );
-    echo "\n> " . $blockName . ' block has created as '. $blockName .'.php' . "\n\n";
-    exit();
+    require_once './inc/core/zinc_cli/block/make-block.php';
   }
 
   /**
