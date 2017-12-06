@@ -5,6 +5,7 @@
   require_once '../inc/core/ZincJWT.php';
   require_once '../inc/core/ZincValidator.php';
   require_once '../inc/core/ZincHTTPRequest.php';
+  require_once '../inc/core/ZincRouter.php';
 
   class Zinc {
 
@@ -13,6 +14,7 @@
     public $jwt;            // Handle JWT using this object property.
     public $validator;      // Handle user input validations.
     public $httpRequest;    // Do HTTP requests.
+    public $router;         // Route to proper blocks.
 
     function __construct() {
 
@@ -94,7 +96,9 @@
     }
 
     public function bootRoute() {
-
+      $this->router = new ZincRouter;
+      $this->router->boot();
+      /*
       // Simple routing.
       $block = \zp\get( 'route' );
       if( empty( $block ) ) {
@@ -115,7 +119,7 @@
         // No block was found, return not found error.
         \zp\return_error( 'Block not found.' );
       }
-
+      */
     }
 
     // End of all methods of the Zinc class.
