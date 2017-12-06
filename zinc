@@ -42,13 +42,15 @@
     $default_env = json_decode( file_get_contents( './inc/core/structures/environment.json.example' ) );
     $default_env->secret_keys = bin2hex( random_bytes( 64 ) );
     file_put_contents( './environment.json', json_encode( $default_env, JSON_PRETTY_PRINT ) );
-    exit( \OuputCLI\success( "\nEnvironment document has created.\n\n" ) );
+    echo \OuputCLI\success( "Environment document has created." );
+    \OuputCLI\nl();
+    exit();
   }
 
   if( $env === false ) {
 print "
   ".\OuputCLI\danger( "ERROR" )."No environment document was found!
-  ".\OuputCLI\warn( "TIPS " )."Run this command ".\OuputCLI\success( 'php zinc env:new' )." to generate a new env file.\n
+  ".\OuputCLI\warn( "TIPS " )."Run this command ".\OuputCLI\success( 'php zinc env:new' )."to generate a new env file.\n
 ";
     exit();
   }
