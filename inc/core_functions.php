@@ -55,7 +55,7 @@
      * @param boolean               $prettyPrint    Pretty prints the output JSON
      * @return void
      */
-    function output( $data = [], $responseStatus = 200, $prettyPrint = false ) {
+    function response( $data = [], $responseStatus = 200, $prettyPrint = false ) {
 
         // Setting the reponse code of the output.
         http_response_code( $responseStatus );
