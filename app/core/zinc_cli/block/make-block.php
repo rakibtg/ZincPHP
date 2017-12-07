@@ -24,7 +24,7 @@
   $blockPath = ltrim( $blockPath, '/' );
 
   // Defining the block path.
-  $blockPath = joinpaths( getcwd(), 'blocks', $blockPath );
+  $blockPath = \OuputCLI\joinpaths( getcwd(), 'blocks', $blockPath );
 
   // Make directories for the block path, if they dont exists.
   if( ! file_exists( $blockPath ) ) {
@@ -137,12 +137,12 @@
     // Add request type with the block name.
     $blockName = $requestType . '.' .$blockName . '.php';
     // Check if the block already exists.
-    if( file_exists( joinpaths( $blockPath, $blockName ) ) ) {
+    if( file_exists( \OuputCLI\joinpaths( $blockPath, $blockName ) ) ) {
       echo \OuputCLI\danger( "> " . $rawBlockName . ' block for "'.$requestType.'" request already exists!' );
       \OuputCLI\nl();
     } else {
       // Create the block.
-      copy( './app/core/zinc_structures/NewBlock', joinpaths( $blockPath, $blockName ) );
+      copy( './app/core/zinc_structures/NewBlock', \OuputCLI\joinpaths( $blockPath, $blockName ) );
       echo \OuputCLI\success( "> " . $rawBlockName . ' block has created for "'.$requestType.'" request as ' . $blockName );
       \OuputCLI\nl();
     }
