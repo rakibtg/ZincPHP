@@ -17,8 +17,8 @@
      * Checks if a variable exists, else
      * returns null.
      *
-     * @param any $str Any variable.
-     * @return string
+     * @param    any      $str Any variable.
+     * @return   string
      */
     function strTrim( $str ) {
         if( ! isset( $str ) ) return '';
@@ -75,7 +75,7 @@
      * Returns error with custom status response.
      * If a error message was not provided then the default
      * error message will be printed.
-     * 
+     *
      * @param   string    $msg        Custom error message
      * @param   integer   $status     HTTP status code, defualt is 404 (Not found)
      * @return  void
@@ -91,7 +91,7 @@
 
     /**
      * Returns the domain and with URI if provided.
-     * 
+     *
      * @param   string  $uri    The URI to be append with the domain.
      * @return  string
      */
@@ -101,14 +101,14 @@
         }  else {
             $url =  'http://'.$_SERVER["SERVER_NAME"]; //http url
         }
-        if(( $_SERVER["SERVER_PORT"] != 80 )) $url .= ':' . $_SERVER["SERVER_PORT"]; 
+        if(( $_SERVER["SERVER_PORT"] != 80 )) $url .= ':' . $_SERVER["SERVER_PORT"];
         if( trim( $uri ) == '/' ) return $url;
         else return $url . '/?route=' . $uri;
     }
 
     /**
      * The full path of the current route.
-     * 
+     *
      * @return string
      */
     function current_url() {
@@ -118,15 +118,15 @@
     /**
      * Generates slug of a string. Supports any languages.
      * Try to avoid + as the seperator as this would break the slug.
-     * 
+     *
      * @param   string $url         Plain text
      * @param   string $seperator   The seperator of the slug
      * @return  string
      */
     function slug( $url = '', $seperator = '_' ) {
         $url = trim( $url );
-        foreach( [ 
-            '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', 
+        foreach( [
+            '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=',
             '[', '{', ']', '}', ';', ':', '"', "'", ',', '>', '.', '<', '/', '?', '\\', '|'
         ] as $del ) {
             $url = str_replace( $del, '', $url );
