@@ -9,7 +9,7 @@
   // Welcome message data.
   $welcomeMessage = [
     'ZincPHP'   => 'Welcome to ZincPHP',
-    'ToDo'      => 'To change this page, edit \'index.php\' inside \'blocks\' directory',
+    'ToDo'      => 'To change this page, edit \'get.index.php\' inside \'block\' directory',
   ];
 
   \zp\response( $data = $welcomeMessage, $responseStatus = 200, $prettyPrint = true );
