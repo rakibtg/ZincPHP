@@ -58,7 +58,7 @@
       $this->tableName = '';
 
       // Get environment settings from environment document
-      $this->env = json_decode( file_get_contents( './environment.json' ) );
+      $this->env = json_decode( file_get_contents( './app/environment.json' ) );
 
       // New mysql connection.
       $this->db = mysqli_connect(

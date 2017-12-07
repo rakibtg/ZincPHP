@@ -38,12 +38,12 @@
      */
     protected function bootEnvironment() {
       // Import and set environment variables from environment document.
-      if( ! file_exists( '../environment.json' ) ) {
+      if( ! file_exists( '../app/environment.json' ) ) {
           \zp\response_error( 'Environment document was not found! Run \'php zinc env:new\' command to create a new environment document.' );
           exit();
       }
       // Set environment settings
-      $this->env = json_decode( file_get_contents( '../environment.json' ) );
+      $this->env = json_decode( file_get_contents( '../app/environment.json' ) );
       // Append document root with env variable.
       $this->env->document_root = $_SERVER[ 'DOCUMENT_ROOT' ]; 
     }
