@@ -7,9 +7,17 @@
    */
 
   // Check valid block name.
-  if( ! isset( $argv[ 2 ] ) ) exit( 'No block was created' );
+  if( ! isset( $argv[ 2 ] ) ) {
+    echo \OuputCLI\danger( "> Error: No block was created, please provide a block name and request type." );
+    \OuputCLI\nl();
+    exit();
+  }
   $blockPath = trim( $argv[ 2 ] );
-  if( empty( $blockPath ) )  exit( 'No block was created' );
+  if( empty( $blockPath ) ) {
+    echo \OuputCLI\danger( "> Error: No block was created, please provide a block name and request type." );
+    \OuputCLI\nl();
+    exit();
+  }
 
   // Extract file name for the block.
   $blockName = makeBlockName( $blockPath );
@@ -23,6 +31,9 @@
     mkdir( $blockPath, 0777, true );
   }
 
+  // A flag for error.
+  $showError = true;
+
   // Should it create a resource(create block for all request types)
   if( in_array( '--all', $argv ) ) {
     // Create block for all requests types.
@@ -34,10 +45,8 @@
     makeBlock( $blockPath, $blockName, 'put' );
     // Make delete block
     makeBlock( $blockPath, $blockName, 'delete' );
-    exit();
+    $showError = false;
   }
-
-  $showError = true;
 
   if ( in_array( '--get', $argv ) ) {
     // Make GET block
@@ -59,6 +68,26 @@
     makeBlock( $blockPath, $blockName, 'delete' );
     $showError = false;
   }
+  if ( in_array( '--patch', $argv ) ) {
+    // Make patch block
+    makeBlock( $blockPath, $blockName, 'patch' );
+    $showError = false;
+  }
+  if ( in_array( '--copy', $argv ) ) {
+    // Make copy block
+    makeBlock( $blockPath, $blockName, 'copy' );
+    $showError = false;
+  }
+  if ( in_array( '--options', $argv ) ) {
+    // Make options block
+    makeBlock( $blockPath, $blockName, 'options' );
+    $showError = false;
+  }
+  if ( in_array( '--propfind', $argv ) ) {
+    // Make propfind block
+    makeBlock( $blockPath, $blockName, 'propfind' );
+    $showError = false;
+  }
 
   if( $showError ) {
     echo \OuputCLI\danger( "> Error: To make a block please mention the request type" );
@@ -66,11 +95,18 @@
     echo \OuputCLI\success( "> Available request types are: " );
     \OuputCLI\nl();
     echo "
-      --get      Create block for get request
-      --post     Create block for post request
-      --put      Create block for put request
-      --delete   Create block for delete request
-      --all      Create a resource block
+      --get       Creates a block that listens to get request
+      --post      Creates a block that listens to post request
+      --put       Creates a block that listens to put request
+      --delete    Creates a block that listens to delete request
+      --all       Creates a block that listens to all of the above requests
+
+      Other block types:
+      ------------------
+      --patch     Creates a block that listens to patch request
+      --copy      Creates a block that listens to copy request
+      --options   Creates a block that listens to options request
+      --propfind  Creates a block that listens to propfind request
     ";
     \OuputCLI\nl();
     exit();
