@@ -1,133 +1,25 @@
 <?php
-  require_once './app/core/zinc_cli/cli_outputs.php';
-  function trimds( $s ) {
-    return rtrim( $s, DIRECTORY_SEPARATOR );
-  }
-  function joinpaths() {
-    return implode( DIRECTORY_SEPARATOR, array_map( 'trimds', func_get_args() ) );
-  }
-
-  if( ! file_exists( './app/environment.json' ) ) {
-    $env = false;
-  } else {
-    $env = json_decode( file_get_contents('./app/environment.json' ) );
-  }
-
-  /**
-   * The current action command.
-   */
-  if( isset( $argv[ 1 ] ) ) {
-    $thisArg = strtolower( trim( $argv[ 1 ] ) );
-  } else {
-    $thisArg = '';
-  }
-
-  /**
-   * Create a new environment.json file.
-   */
-  if( $thisArg == 'env:new' ) {
-    // Check if a env file already exists.
-    if( file_exists( './app/environment.json' ) ) {
-      echo "\nenvironment.json already exists, do you want to overwrite?(Y/n) ";
-      $handle = fopen( "php://stdin", "r" );
-      $cont   = trim( fgets( $handle ) );
-      if( strtolower( $cont ) == 'y' ) {
-        echo "\nOverwriting environment.json file ...\n\n";
-      } else {
-        echo "\nAction canceled\n\n";
-        exit();
-      }
-    }
-    // Create the new environment.json file.
-    $default_env = json_decode( file_get_contents( './app/core/zinc_structures/app/environment.json.example' ) );
-    $default_env->secret_keys = bin2hex( random_bytes( 64 ) );
-    file_put_contents( './app/environment.json', json_encode( $default_env, JSON_PRETTY_PRINT ) );
-    echo \OuputCLI\success( "Environment document has created." );
-    \OuputCLI\nl();
-    exit();
-  }
-
-  if( $env === false ) {
-print "
-  ".\OuputCLI\danger( "ERROR" )."No environment document was found!
-  ".\OuputCLI\warn( "TIPS " )."Run this command ".\OuputCLI\success( 'php zinc env:new' )."to generate a new env file.\n
-";
-    exit();
-  }
-
+  require_once './app/core/zinc_cli/cli_helpers.php';
+  // The current action command.
+  if( isset( $argv[ 1 ] ) ) $thisArg = strtolower( trim( $argv[ 1 ] ) );
+  else $thisArg = '';
+  // Create a new environment.json file.
+  if( $thisArg == 'env:new' ) require_once './app/core/zinc_cli/env/new_env.php';
+  // No environment file found.
+  if( $env === false ) require_once './app/core/zinc_cli/env/no_env.php';
+  // App need to be in local environment, in production below commands wont work.
   if ( strtolower( $env->environment ) !== 'local' ) exit( \OuputCLI\warn( "\nZincPHP CLI can't run when it is not in local environment\n\n" ) );
-
-  /**
-   * Serve as a localserver.
-   */
-  if( $thisArg == 'serve' ) {
-    $_host = '127.0.0.1';   // Default host
-    $_port = '8585';        // Default port
-    foreach( $argv as $index => $arg ) {
-      if( $index > 1 ) {
-        if( strtolower( trim( $arg ) ) == '--host' ) $_host = $argv[ $index + 1 ];
-        if( strtolower( trim( $arg ) ) == '--port' ) $_port = $argv[ $index + 1 ];
-      }
-    }
-    echo "\n" . 'Server is running at http://' . $_host . ':' . $_port . "\n\n";
-    chdir( joinpaths( getcwd(), '/public' ) );
-    shell_exec( 'php -S ' . $_host . ':' . $_port );
-  }
-
-  /**
-   * Generate a new secret token.
-   */
-  if( $thisArg == 'key:generate' ) {
-    $env->secret_keys = bin2hex( random_bytes( 64 ) );
-    file_put_contents( './app/environment.json', json_encode( $env, JSON_PRETTY_PRINT ) );
-    echo "\nSecrent key has generated\n\n";
-    exit();
-  }
-
-  /**
-   * Add a new domain to allow CORS
-   */
-  if( $thisArg == 'cors:add' ) {
-    echo "\nAdding a new domain to allowed CORS list.\nType the domain name here (Example: 127.0.0.1:2010 or example.com - no http://)\n> ";
-    $handle = fopen( "php://stdin", "r" );
-    $domain = trim( fgets( $handle ) );
-    if( ! empty( $domain ) ) {
-      $env->cors_allowed[] = 'http://' . $domain;
-      file_put_contents( './app/environment.json', json_encode( $env, JSON_PRETTY_PRINT ) );
-      echo "\nDomain( " . $domain . " ) was added to allowed CORS list.\n\n";
-    } else {
-      echo "\nUnable to add a domain to allowed CORS list.\n\n";
-    }
-    exit();
-  }
-
-  /**
-   * Zinc command to create a new block.
-   */
-  if( $thisArg == 'make:block' ) {
-    require_once './app/core/zinc_cli/block/make-block.php';
-  }
-
-  /**
-   * Make a new migration file.
-   */
-  if( $thisArg == 'make:migration' ) {
-    require_once './app/core/zinc_cli/migration/makeMigration.php';
-  }
-
-  if( $thisArg == 'migrate' ) {
-    require_once './app/core/zinc_cli/migration/migration.php';
-  }
-
-  /**
-   * Default ZincPHP CLI welcome message.
-   */
-  echo "
-
-    Welcome to ZincPHP!
-    GitHub: https://github.com/rakibtg/ZincPHP
-
-    Run 'php zinc help' to learn more :)
-
-
-  ";
+  // Serve as a localserver.
+  if( $thisArg == 'serve' ) require_once './app/core/zinc_cli/dev_server/serve.php';
+  // Generate a new secret token.
+  if( $thisArg == 'key:generate' ) require_once './app/core/zinc_cli/key/key_generate.php';
+  // Add a new domain to allow CORS
+  if( $thisArg == 'cors:add' ) require_once './app/core/zinc_cli/cors/cors_add.php';
+  // Zinc command to create a new block.
+  if( $thisArg == 'make:block' ) require_once './app/core/zinc_cli/block/make-block.php';
+  // Make a new migration file.
+  if( $thisArg == 'make:migration' ) require_once './app/core/zinc_cli/migration/makeMigration.php';
+  // Migrate the database.
+  if( $thisArg == 'migrate' ) require_once './app/core/zinc_cli/migration/migration.php';
+  // Default ZincPHP CLI welcome message.
+  require_once './app/core/zinc_cli/static/default_message.php';
