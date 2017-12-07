@@ -39,7 +39,7 @@
     protected function bootEnvironment() {
       // Import and set environment variables from environment document.
       if( ! file_exists( '../environment.json' ) ) {
-          \zp\return_error( 'Environment document was not found! Run \'php zinc env:new\' command to create a new environment document.' );
+          \zp\response_error( 'Environment document was not found! Run \'php zinc env:new\' command to create a new environment document.' );
           exit();
       }
       // Set environment settings
@@ -98,28 +98,6 @@
     public function bootRoute() {
       $this->router = new ZincRouter;
       $this->router->boot();
-      /*
-      // Simple routing.
-      $block = \zp\get( 'route' );
-      if( empty( $block ) ) {
-        $block = 'index';
-      }
-      // Check if block exist.
-      $segments = '/'; 
-      // For security purposes recasting the url splitted by segments.
-      foreach( explode( '/', $block ) as $uri ) {
-        $segments = $segments . $uri . '/';
-      }
-      $block = '../blocks' . rtrim( $segments, '/' ).'.php';
-      // Search the matched block.
-      if( file_exists( $block ) ) {
-        // A block file was found.
-        require_once $block;
-      } else {
-        // No block was found, return not found error.
-        \zp\return_error( 'Block not found.' );
-      }
-      */
     }
 
     // End of all methods of the Zinc class.
