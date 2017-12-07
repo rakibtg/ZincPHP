@@ -80,7 +80,7 @@
      * @param   integer   $status     HTTP status code, defualt is 404 (Not found)
      * @return  void
      */
-    function return_error( $msg = false, $status = 404 ) {
+    function response_error( $msg = false, $status = 404 ) {
         http_response_code( $status );
         if( ! $msg ) $msg = 'Unexpected error occured';
         echo json_encode( [
@@ -133,4 +133,21 @@
         }
         $url = str_replace( ' ', $seperator, trim( $url ) );
         return preg_replace( '/'.$seperator.'+/', $seperator, $url );
+    }
+
+    /**
+     * Generates slug of a string, keep only english charecters.
+     *
+     * @param   string    $url         Plain text
+     * @param   string    $seperator   The seperator of the slug
+     * @return  boolean   $fallback    The fallback is idea because if the slug is empty then
+     *                                 instead of empty it would return a unique random string as the slug.
+     */
+    function en_slug( $url = '', $seperator = ' ', $fallback = false ) {
+      $url = trim( $url );
+      $url = preg_replace('/[^a-zA-Z0-9\s]/', '', $url);
+      $url = preg_replace('!\s+!', ' ', $url);
+      $url = str_replace( ' ', $seperator, $url );
+      if( $fallback ) $url .= mt_rand();
+      return $url;
     }
