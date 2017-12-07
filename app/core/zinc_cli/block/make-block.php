@@ -142,7 +142,7 @@
       \OuputCLI\nl();
     } else {
       // Create the block.
-      copy( './inc/core/structures/NewBlock', joinpaths( $blockPath, $blockName ) );
+      copy( './app/core/zinc_structures/NewBlock', joinpaths( $blockPath, $blockName ) );
       echo \OuputCLI\success( "> " . $rawBlockName . ' block has created for "'.$requestType.'" request as ' . $blockName );
       \OuputCLI\nl();
     }

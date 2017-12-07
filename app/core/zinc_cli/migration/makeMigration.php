@@ -17,14 +17,14 @@
     $migrationName[ $key ] = trim( ucfirst( $mn ) );
   }
   $migrationName = implode( $migrationName );
-  $migrationFileName = joinpaths( getcwd(), 'inc/migrations', $migrationName . '.php' );
+  $migrationFileName = joinpaths( getcwd(), 'app/migrations', $migrationName . '.php' );
   // If the migration folder dosent exists then create it.
-  if( ! file_exists( 'inc/migrations' ) ) {
-    mkdir( 'inc/migrations' );
+  if( ! file_exists( 'app/migrations' ) ) {
+    mkdir( 'app/migrations' );
   }
   if( ! file_exists( $migrationFileName ) ) {
     // Copy new migration template to migrations directory.
-    $rawMigratable = file_get_contents( './inc/core/structures/new_migration.php.example' );
+    $rawMigratable = file_get_contents( './app/core/zinc_structures/new_migration.php.example' );
     // Rename the class.
     $rawMigratable = str_replace( '{{Migration}}', $migrationName, $rawMigratable );
     // Add table name.

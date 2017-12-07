@@ -1,8 +1,8 @@
 <?php
 
-  require_once './inc/core/ZincDBM/ColumnsTrait.php';
-  require_once './inc/core/ZincDBM/ModifiersTrait.php';
-  require_once './inc/core/ZincDBM/MigrationTrait.php';
+  require_once './app/core/zinc_dbm/ColumnsTrait.php';
+  require_once './app/core/zinc_dbm/ModifiersTrait.php';
+  require_once './app/core/zinc_dbm/MigrationTrait.php';
 
   class ZincDBManager {
 

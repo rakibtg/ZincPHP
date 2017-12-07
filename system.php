@@ -1,5 +1,5 @@
 <?php
-    require_once "../inc/core/Zinc.php";
+    require_once "../app/core/Zinc.php";
 
     /**
      * Instantiating Zinc core class.

@@ -7,11 +7,11 @@
   trait MigrationTrait {
 
     function listAllMigrations() {
-      $migratableFiles = scandir( './inc/migrations' );
+      $migratableFiles = scandir( './app/migrations' );
       $toMigrate = [];
       foreach( $migratableFiles as $mf ) {
         if( $mf != '.' && $mf != '..' && substr( trim( $mf ), -4 ) == '.php' ) {
-          $toMigrate[] = './inc/migrations/' . $mf;
+          $toMigrate[] = './app/migrations/' . $mf;
         }
       }
       return $toMigrate;

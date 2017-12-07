@@ -1,6 +1,6 @@
 <?php
-  require_once './inc/core/ZincDBM/ZincDBManager.php';
-  // require_once './inc/migrations/goodjob.php';
+  require_once './app/core/zinc_dbm/ZincDBManager.php';
+  
   $zincDBManager = new ZincDBManager();
   // $g = new Migration( $zincDBManager );
   // $g->up();

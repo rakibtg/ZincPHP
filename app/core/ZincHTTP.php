@@ -4,7 +4,7 @@
  * Send HTTP request to an REST end-point.
  *
  */
-class ZincHTTPRequest {
+class ZincHTTP {
   /**
    * Make HTTP-GET call
    * @param       $url

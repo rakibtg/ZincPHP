@@ -1,11 +1,11 @@
 <?php
 
-  require_once '../inc/core_functions.php';
-  require_once '../inc/core/ZincMySQL.php';
-  require_once '../inc/core/ZincJWT.php';
-  require_once '../inc/core/ZincValidator.php';
-  require_once '../inc/core/ZincHTTPRequest.php';
-  require_once '../inc/core/ZincRouter.php';
+  require_once '../app/core/ZincHelpers.php';
+  require_once '../app/core/ZincMySQL.php';
+  require_once '../app/core/ZincJWT.php';
+  require_once '../app/core/ZincValidator.php';
+  require_once '../app/core/ZincHTTP.php';
+  require_once '../app/core/ZincRouter.php';
 
   class Zinc {
 
@@ -92,7 +92,7 @@
      * Instantiating Zinc HTTP request module.
      */
     public function bootHTTPReques() {
-      $this->httpRequest = new ZincHTTPRequest;
+      $this->httpRequest = new ZincHTTP;
     }
 
     public function bootRoute() {

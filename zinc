@@ -1,5 +1,5 @@
 <?php
-  require_once './inc/core/zinc_cli/cli_outputs.php';
+  require_once './app/core/zinc_cli/cli_outputs.php';
   function trimds( $s ) {
     return rtrim( $s, DIRECTORY_SEPARATOR );
   }
@@ -39,7 +39,7 @@
       }
     }
     // Create the new environment.json file.
-    $default_env = json_decode( file_get_contents( './inc/core/structures/environment.json.example' ) );
+    $default_env = json_decode( file_get_contents( './app/core/zinc_structures/environment.json.example' ) );
     $default_env->secret_keys = bin2hex( random_bytes( 64 ) );
     file_put_contents( './environment.json', json_encode( $default_env, JSON_PRETTY_PRINT ) );
     echo \OuputCLI\success( "Environment document has created." );
@@ -105,18 +105,18 @@ print "
    * Zinc command to create a new block.
    */
   if( $thisArg == 'make:block' ) {
-    require_once './inc/core/zinc_cli/block/make-block.php';
+    require_once './app/core/zinc_cli/block/make-block.php';
   }
 
   /**
    * Make a new migration file.
    */
   if( $thisArg == 'make:migration' ) {
-    require_once './inc/core/zinc_cli/migration/makeMigration.php';
+    require_once './app/core/zinc_cli/migration/makeMigration.php';
   }
 
   if( $thisArg == 'migrate' ) {
-    require_once './inc/core/zinc_cli/migration/migration.php';
+    require_once './app/core/zinc_cli/migration/migration.php';
   }
 
   /**

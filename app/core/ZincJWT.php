@@ -8,7 +8,7 @@
    * @link https://github.com/rakibtg/ZincPHP
   */
 
-  require_once '../inc/core/__JWT__/JWT.php';
+  require_once '../app/core/zinc_jwt/JWT.php';
 
   use \Firebase\JWT\JWT;
   
