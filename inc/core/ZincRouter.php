@@ -2,7 +2,7 @@
 
   /**
    * Route HTTP requests to proper block.
-   * 
+   *
    */
 
   class ZincRouter {
@@ -20,6 +20,7 @@
     public $route;
 
     function __construct() {
+      // Get the current route path.
       $this->route = \zp\get( 'route' );
     }
 
@@ -30,25 +31,40 @@
     public function boot() {
 
       if( empty( $this->route ) ) {
-        // No block was found.
+        // No block was given.
         $this->goToDefaultBlock();
       } else {
-        // Get the request type.
-        // Check if block exist.
-        $segments = '/';
-        // For security purposes recasting the url splitted by segments.
-        foreach( explode( '/', $this->route ) as $uri ) {
-          $segments = $segments . $uri . '/';
-        }
-        $this->route = '../blocks' . rtrim( $segments, '/' ).'.php';
-        // Search the matched block.
-        if( file_exists( $this->route ) ) {
-          // A block file was found.
-          require_once $this->route;
-        } else {
-          // No block was found, return not found error.
-          \zp\return_error( 'Block not found.' );
-        }
+        // Block was detected in the query string.
+        $this->goToCurrentBlock();
+      }
+    }
+
+    /**
+     * Go to the block based on its request type.
+     *
+     */
+    public function goToCurrentBlock() {
+
+      // Request method
+      $requestMethod = trim( strtolower( $_SERVER['REQUEST_METHOD'] ) );
+
+      // Check if block exist.
+      $segments = '/';
+      // For security purposes recasting the url splitted by segments.
+      foreach( explode( '/', $this->route ) as $uri ) {
+        $segments = $segments . $uri . '/';
+      }
+
+      // Add the request type with the block name (with the basename of the block path)
+      $this->blockName = '../blocks' . rtrim( $segments, '/' ).'/'.$requestMethod.'.'.basename( $segments ).'.php';
+
+      // Search the matched block.
+      if( file_exists( $this->blockName ) ) {
+        // A block file was found, load the block.
+        $this->loadBlock();
+      } else {
+        // No block was found, return not found error.
+        \zp\response_error( 'Block not found.' );
       }
     }
 
@@ -56,7 +72,7 @@
      * Load the default block.
      * @param   none
      * @return  none
-     * 
+     *
      */
     public function goToDefaultBlock() {
       // Set default block path.
@@ -69,7 +85,7 @@
      * Load a block.
      * @param   none
      * @return  none
-     * 
+     *
      */
     public function loadBlock() {
       if( file_exists( $this->blockName ) ) {
@@ -77,7 +93,7 @@
         require_once $this->blockName;
       } else {
         // No block was found, return not found error.
-        \zp\return_error( 'Block not found.' );
+        \zp\response_error( 'Block not found.' );
       }
     }
 
