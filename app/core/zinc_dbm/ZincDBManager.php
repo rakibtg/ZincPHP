@@ -61,12 +61,15 @@
       $this->env = json_decode( file_get_contents( './app/environment.json' ) );
 
       // New mysql connection.
-      $this->db = mysqli_connect(
+      if(!$this->db = mysqli_connect(
         $this->env->host,
         $this->env->database_user,
         $this->env->database_password,
         $this->env->database
-      );
+      )){
+        print \OuputCLI\danger( "Error: Unable to connect with the database. Edit environment.json file and check your database configurations." );
+        \OuputCLI\nl();
+      }
 
     }
 
@@ -110,10 +113,15 @@
      * @return void
      */
     function executeCreateTable() {
+      if(!$this->db) exit();
       if( mysqli_query( $this->db, $this->build() ) ) {
-        print "Table (".$this->tableName.") created successfully\n";
+        \OuputCLI\success("Table (".$this->tableName.") created successfully");
+        \OuputCLI\nl();
       } else {
-        print \OuputCLI\danger( "Error:" ) . mysqli_error( $this->db ) . "\n";
+        print \OuputCLI\danger( "Error occured, unable to migrate!" );
+        \OuputCLI\nl();
+        print mysqli_error( $this->db );
+        \OuputCLI\nl();
       }
     }
 

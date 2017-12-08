@@ -12,7 +12,7 @@
 
   // Migrate each file.
   foreach( $migratable as $mfile ) {
-    print \OuputCLI\success( "Migrating:" ) . basename( $mfile ) . "\n";
+    print \OuputCLI\warn( "Trying to Migrate:" ) . basename( $mfile ) . "\n";
     require_once $mfile;
     $className = trim( rtrim( basename( $mfile ), '.php' ) );
     $g = new $className( $zincDBManager );
