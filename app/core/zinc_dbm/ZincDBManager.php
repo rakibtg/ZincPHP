@@ -114,13 +114,15 @@
      */
     function executeCreateTable() {
       if(!$this->db) exit();
-      if( mysqli_query( $this->db, $this->build() ) ) {
-        \OuputCLI\success("Table (".$this->tableName.") created successfully");
-        \OuputCLI\nl();
-      } else {
+      if( ! mysqli_query( $this->db, $this->build() ) ) {
+        return false;
         print \OuputCLI\danger( "Error occured, unable to migrate!" );
         \OuputCLI\nl();
         print mysqli_error( $this->db );
+        \OuputCLI\nl();
+      } else {
+        return true;
+        \OuputCLI\success("Table (".$this->tableName.") created successfully");
         \OuputCLI\nl();
       }
     }
