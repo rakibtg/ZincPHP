@@ -10,7 +10,7 @@
 
     function up() {
       // Add new columns here.
-      $this->zincDBManager->create( 'dream_posts_1' )
+      return $this->zincDBManager->create( 'dream_posts_7' )
         ->increments( 'id' )
         ->string( 'title' )
         ->text( 'content' )
