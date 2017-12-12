@@ -10,7 +10,7 @@
 
     function up() {
       // Add new columns here.
-      $this->zincDBManager->create( 'dream_posts' )
+      $this->zincDBManager->create( 'dream_posts_1' )
         ->increments( 'id' )
         ->string( 'title' )
         ->text( 'content' )
@@ -18,8 +18,8 @@
       ->executeCreateTable();
     }
 
-    function down() {
-      $this->zincDBManager->drop( 'dream_posts' );
-    }
+    // function down() {
+    //   $this->zincDBManager->drop( 'dream_posts_1' );
+    // }
 
   }
