@@ -17,7 +17,7 @@
     $migrationName[ $key ] = trim( ucfirst( $mn ) );
   }
   $migrationName = implode( $migrationName );
-  $migrationFileName = joinpaths( getcwd(), 'app/migrations', $migrationName . '.php' );
+  $migrationFileName = \OuputCLI\joinpaths( getcwd(), 'app/migrations', $migrationName . '.php' );
   // If the migration folder dosent exists then create it.
   if( ! file_exists( 'app/migrations' ) ) {
     mkdir( 'app/migrations' );
@@ -31,7 +31,10 @@
     $rawMigratable = str_replace( '{{MigrationRawName}}', $tableName, $rawMigratable );
     // Save migration file.
     if( file_put_contents( $migrationFileName, $rawMigratable ) ) {
-      print \OuputCLI\success( "Migration file($migrationName) was created\n" ) . "Migration File Path: " . $migrationFileName . "\n";
+      print \OuputCLI\success( "Migration file($migrationName) was created" );
+      \OuputCLI\nl();
+      print "Migration File Path: " . $migrationFileName;
+      \OuputCLI\nl();
     }
   } else {
     print \OuputCLI\danger( "Error: Migration file($migrationName) already exists!\n" ) . "Migration File Path: " . $migrationFileName . "\n";
