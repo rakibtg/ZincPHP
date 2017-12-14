@@ -10,7 +10,7 @@
 
     function up() {
       // Add new columns here.
-      $this->zincDBManager->create( '{{MigrationRawName}}' )
+      return $this->zincDBManager->create( '{{MigrationRawName}}' )
         ->increments( 'id' )
       ->executeCreateTable();
     }
