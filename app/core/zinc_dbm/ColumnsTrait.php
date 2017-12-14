@@ -110,8 +110,8 @@
 
 
     // UNIQUE equivalent column.
-    function unique( $name ) {
-      $this->queryBody .= ', ' . $name . ' UNIQUE ';
+    function unique() {
+      $this->queryBody .= ' UNIQUE ';
       return $this;
     }
 
