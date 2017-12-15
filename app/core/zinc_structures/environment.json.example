@@ -3,12 +3,11 @@
     "name" : "",
     "url"  : "",
     "driver" : "mysql",
-    "host": "localhost",
+    "host": "127.0.0.1",
     "database" : "",
     "database_user" : "",
     "database_password" : "",
     "cors_allowed" : [
-        "http:\/\/localhost",
-        "http:\/\/localhost:3000"
+        "http:\/\/127.0.0.1:3000"
     ]
 }
