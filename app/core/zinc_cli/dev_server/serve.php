@@ -14,3 +14,4 @@
   \OutputCLI\nl();
   chdir( \OutputCLI\joinpaths( getcwd(), '/public' ) );
   shell_exec( 'php -S ' . $_host . ':' . $_port );
+  exit();
