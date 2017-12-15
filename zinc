@@ -20,6 +20,13 @@
   // Make a new migration file.
   if( $thisArg == 'make:migration' ) require_once './app/core/zinc_cli/migration/makeMigration.php';
   // Migrate the database.
-  if( $thisArg == 'migrate' ) require_once './app/core/zinc_cli/migration/migration.php';
+  if( $thisArg == 'migrate' ) {
+    if( isset( $argv[ 2 ] ) ) {
+      // Migrate a single table.
+    } else {
+      // Migrate all tables.
+      require_once './app/core/zinc_cli/migration/migration.php';
+    }
+  }
   // Default ZincPHP CLI welcome message.
   require_once './app/core/zinc_cli/static/default_message.php';
