@@ -67,10 +67,11 @@
         $this->env->database_password,
         $this->env->database
       )){
-        print \OutputCLI\danger( "Error: Unable to connect with the database. Edit environment.json file and check your database configurations." );
+        print \OutputCLI\danger("Error: Unable to connect with the database. Edit environment.json file and check your database configurations.");
+        \OutputCLI\nl();
+        print 'Error Message: ' . mysqli_connect_error();
         \OutputCLI\nl();
       }
-
     }
 
     /**
@@ -115,26 +116,14 @@
     function executeCreateTable() {
       if(!$this->db) exit();
       if( ! mysqli_query( $this->db, $this->build() ) ) {
-        return false;
-        print \OutputCLI\danger( "Error occured, unable to migrate!" );
+        print \OutputCLI\danger( " (Failed)" );
         \OutputCLI\nl();
-        print mysqli_error( $this->db );
+        print '> ' . mysqli_error( $this->db );
         \OutputCLI\nl();
       } else {
-        return true;
-        \OutputCLI\success("Table (".$this->tableName.") created successfully");
+        print \OutputCLI\success(" (Success)");
         \OutputCLI\nl();
       }
     }
 
   }
-
-  // $dm = new ZincDBManager();
-
-  // $dm->create('usersxyzyzyzyzyzyzzy')
-  //   ->increments('id')
-  //   ->integer('age')->nullable()
-  //   ->string('full_name', 50)->nullable()
-  // ->charset()->collation();
-
-  // echo $dm->executeCreateTable();
