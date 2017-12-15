@@ -1,6 +1,6 @@
 # About ZincPHP
 
-ZincPHP is a lightweight PHP framework specially created for REFT-ful architecture.
+ZincPHP is a lightweight PHP framework specially created for REST-ful architecture.
 
 ZincPHP has everything you will need to make a complete REST-ful API backend server.
 
