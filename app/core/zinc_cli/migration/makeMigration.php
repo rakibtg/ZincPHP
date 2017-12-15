@@ -4,8 +4,8 @@
    * Creates a new migration file.
    */
 
-  if( ! isset( $argv[ 2 ] ) ) exit( \OuputCLI\danger( "No migration name found\n" ) );
-  if( empty( $argv[ 2 ] ) ) exit( \OuputCLI\warn( "Migration name cant be empty\n" ) );
+  if( ! isset( $argv[ 2 ] ) ) exit( \OutputCLI\danger( "No migration name found\n" ) );
+  if( empty( $argv[ 2 ] ) ) exit( \OutputCLI\warn( "Migration name cant be empty\n" ) );
 
   // Process migration name.
   $tableName     = trim( $argv[ 2 ] );
@@ -17,7 +17,7 @@
     $migrationName[ $key ] = trim( ucfirst( $mn ) );
   }
   $migrationName = implode( $migrationName );
-  $migrationFileName = \OuputCLI\joinpaths( getcwd(), 'app/migrations', $migrationName . '.php' );
+  $migrationFileName = \OutputCLI\joinpaths( getcwd(), 'app/migrations', $migrationName . '.php' );
   // If the migration folder dosent exists then create it.
   if( ! file_exists( 'app/migrations' ) ) {
     mkdir( 'app/migrations' );
@@ -31,12 +31,12 @@
     $rawMigratable = str_replace( '{{MigrationRawName}}', $tableName, $rawMigratable );
     // Save migration file.
     if( file_put_contents( $migrationFileName, $rawMigratable ) ) {
-      print \OuputCLI\success( "Migration file($migrationName) was created" );
-      \OuputCLI\nl();
+      print \OutputCLI\success( "Migration file($migrationName) was created" );
+      \OutputCLI\nl();
       print "Migration File Path: " . $migrationFileName;
-      \OuputCLI\nl();
+      \OutputCLI\nl();
     }
   } else {
-    print \OuputCLI\danger( "Error: Migration file($migrationName) already exists!\n" ) . "Migration File Path: " . $migrationFileName . "\n";
+    print \OutputCLI\danger( "Error: Migration file($migrationName) already exists!\n" ) . "Migration File Path: " . $migrationFileName . "\n";
   }
   exit(); // End of the zinc cli execution

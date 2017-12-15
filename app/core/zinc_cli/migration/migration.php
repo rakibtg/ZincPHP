@@ -12,8 +12,8 @@
   $migratable = $zincDBManager->listAllMigrations();
 
   if( empty( $migratable ) ) {
-    echo \OuputCLI\warn( "Nothing to migrate." );
-    echo \OuputCLI\nl();
+    echo \OutputCLI\warn( "Nothing to migrate." );
+    echo \OutputCLI\nl();
     exit();
   } else {
     $nothingToMigrate = true;
@@ -25,17 +25,17 @@
     // echo "\n";
     
     if( $zincDBManager->addAsMigrated( $mfile ) ) {
-      print \OuputCLI\warn( "Trying to Migrate:" ) . basename( $mfile );
-      // echo \OuputCLI\nl();
+      print \OutputCLI\warn( "Trying to Migrate:" ) . basename( $mfile );
+      // echo \OutputCLI\nl();
       require_once $mfile;
       $className = trim( rtrim( basename( $mfile ), '.php' ) );
       $g = new $className( $zincDBManager );
       if( $g->up() ) {
-        echo \OuputCLI\success( ' (Success)' );
-        echo \OuputCLI\nl();
+        echo \OutputCLI\success( ' (Success)' );
+        echo \OutputCLI\nl();
       } else {
-        echo \OuputCLI\danger( ' (Failed)' );
-        echo \OuputCLI\nl();
+        echo \OutputCLI\danger( ' (Failed)' );
+        echo \OutputCLI\nl();
       }
       unset($g);
       $nothingToMigrate = false;
@@ -43,10 +43,10 @@
   }
 
   if( $nothingToMigrate ) {
-    echo \OuputCLI\warn( "Nothing to migrate." );
-    echo \OuputCLI\nl();
+    echo \OutputCLI\warn( "Nothing to migrate." );
+    echo \OutputCLI\nl();
     exit();
   }
 
-  echo \OuputCLI\nl();
+  echo \OutputCLI\nl();
   exit(); // End cli execution.

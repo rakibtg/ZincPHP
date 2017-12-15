@@ -67,8 +67,8 @@
         $this->env->database_password,
         $this->env->database
       )){
-        print \OuputCLI\danger( "Error: Unable to connect with the database. Edit environment.json file and check your database configurations." );
-        \OuputCLI\nl();
+        print \OutputCLI\danger( "Error: Unable to connect with the database. Edit environment.json file and check your database configurations." );
+        \OutputCLI\nl();
       }
 
     }
@@ -116,14 +116,14 @@
       if(!$this->db) exit();
       if( ! mysqli_query( $this->db, $this->build() ) ) {
         return false;
-        print \OuputCLI\danger( "Error occured, unable to migrate!" );
-        \OuputCLI\nl();
+        print \OutputCLI\danger( "Error occured, unable to migrate!" );
+        \OutputCLI\nl();
         print mysqli_error( $this->db );
-        \OuputCLI\nl();
+        \OutputCLI\nl();
       } else {
         return true;
-        \OuputCLI\success("Table (".$this->tableName.") created successfully");
-        \OuputCLI\nl();
+        \OutputCLI\success("Table (".$this->tableName.") created successfully");
+        \OutputCLI\nl();
       }
     }
 

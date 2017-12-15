@@ -8,7 +8,7 @@
   // No environment file found.
   if( $env === false ) require_once './app/core/zinc_cli/env/no_env.php';
   // App need to be in local environment, in production below commands wont work.
-  if ( strtolower( $env->environment ) !== 'local' ) exit( \OuputCLI\warn( "\nZincPHP CLI can't run when it is not in local environment\n\n" ) );
+  if ( strtolower( $env->environment ) !== 'local' ) exit( \OutputCLI\warn( "\nZincPHP CLI can't run when it is not in local environment\n\n" ) );
   // Serve as a localserver.
   if( $thisArg == 'serve' ) require_once './app/core/zinc_cli/dev_server/serve.php';
   // Generate a new secret token.

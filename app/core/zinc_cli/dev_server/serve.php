@@ -8,9 +8,9 @@
       if( strtolower( trim( $arg ) ) == '--port' ) $_port = $argv[ $index + 1 ];
     }
   }
-  echo \OuputCLI\success( '> ZincPHP server is running 🚀' );
-  \OuputCLI\nl();
+  echo \OutputCLI\success( '> ZincPHP server is running 🚀' );
+  \OutputCLI\nl();
   echo 'Local Server: http://' . $_host . ':' . $_port;
-  \OuputCLI\nl();
-  chdir( \OuputCLI\joinpaths( getcwd(), '/public' ) );
+  \OutputCLI\nl();
+  chdir( \OutputCLI\joinpaths( getcwd(), '/public' ) );
   shell_exec( 'php -S ' . $_host . ':' . $_port );

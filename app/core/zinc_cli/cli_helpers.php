@@ -1,5 +1,5 @@
 <?php
-  namespace OuputCLI;
+  namespace OutputCLI;
   /**
    * Outputs danger.
    */
@@ -44,7 +44,7 @@
     return rtrim( $s, DIRECTORY_SEPARATOR );
   }
   function joinpaths() {
-    return implode( DIRECTORY_SEPARATOR, array_map( '\OuputCLI\trimds', func_get_args() ) );
+    return implode( DIRECTORY_SEPARATOR, array_map( '\OutputCLI\trimds', func_get_args() ) );
   }
 
   if( ! file_exists( './app/environment.json' ) ) {
