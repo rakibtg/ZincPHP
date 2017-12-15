@@ -6,7 +6,7 @@
 
   if( empty( $migratable ) ) {
     echo \OutputCLI\warn( "Nothing to migrate." );
-    echo \OutputCLI\nl();
+    \OutputCLI\nl();
     exit();
   } else {
     $nothingToMigrate = true;
@@ -27,7 +27,7 @@
 
   if( $nothingToMigrate ) {
     echo \OutputCLI\warn( "Nothing to migrate." );
-    echo \OutputCLI\nl();
+    \OutputCLI\nl();
     exit();
   }
   exit(); // End cli execution.
