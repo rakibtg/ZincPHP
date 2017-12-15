@@ -26,7 +26,12 @@
      * 
      */
     function readMigrationList() {
-      $migrationList = file_get_contents( './app/core/zinc_cli/migration/migrationlist.json' );
+      $migrationListFilePath = './app/core/zinc_cli/migration/migrationlist.json';
+      // Check if the migration list json document exists or not, if not then create a new one.
+      if( ! file_exists( $migrationListFilePath ) ) {
+        file_put_contents( $migrationListFilePath, '' );
+      }
+      $migrationList = file_get_contents( $migrationListFilePath );
       return json_decode( $migrationList, true );
     }
 
