@@ -23,6 +23,7 @@
   if( $thisArg == 'migrate' ) {
     if( isset( $argv[ 2 ] ) ) {
       // Migrate a single table.
+      require_once './app/core/zinc_cli/migration/migrate_single.php';
     } else {
       // Migrate all tables.
       require_once './app/core/zinc_cli/migration/migrate_all.php';
