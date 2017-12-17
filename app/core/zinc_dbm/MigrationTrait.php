@@ -36,31 +36,38 @@
     }
 
     /**
+     * Check if a provided migration has already migrated or not.
+     * 
+     */
+    function ifMigrated( $filePath ) {
+      $migrationList = $this->readMigrationList();
+      $fileHash      = md5( trim( $filePath ) );
+      if( empty( $migrationList ) ) {
+        $ifMigrated = false;
+        $migrationList = []; // Added an empty array to the migration list as it is empty.
+      } else {
+        // Check if this file exists in the list.
+        if( in_array( $fileHash, $migrationList ) ) {
+          $ifMigrated = true;
+        } else {
+          $ifMigrated = false;
+        }
+      }
+      return $ifMigrated;
+    }
+
+    /**
      * This method would add a given migrated file name into the migrationlist.json file.
      * 
      */
     function addAsMigrated( $filePath ) {
-      $migrationList = $this->readMigrationList();
-      $fileHash      = md5( trim( $filePath ) );
-      if( empty( $migrationList ) ) {
-        $migratable = true;
-        $migrationList = []; // Added an empty array to the migration list as it is empty.
-      } else {
-        $migratable = false;
-        // Check if this file exists in the list.
-        if( ! in_array( $fileHash, $migrationList ) ) {
-          $migratable = true;
-        } else {
-          $migratable = false;
-        }
-      }
-      if( $migratable == true ) {
+      if( ! $this->ifMigrated( $filePath ) ) {
+        $migrationList = $this->readMigrationList();
+        if( empty( $migrationList ) ) $migrationList = [];
         // Append the new file name to the existing array.
-        $migrationList[] = $fileHash;
+        $migrationList[] = md5( trim( $filePath ) );
         // Save this data to the json file.
         file_put_contents( './app/core/zinc_cli/migration/migrationlist.json', json_encode( $migrationList ) );
       }
-      return $migratable;
     }
-
   }
