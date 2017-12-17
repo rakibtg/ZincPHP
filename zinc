@@ -25,7 +25,7 @@
       // Migrate a single table.
     } else {
       // Migrate all tables.
-      require_once './app/core/zinc_cli/migration/migration.php';
+      require_once './app/core/zinc_cli/migration/migrate_all.php';
     }
   }
   // Default ZincPHP CLI welcome message.
