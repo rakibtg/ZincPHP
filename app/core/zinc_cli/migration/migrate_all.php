@@ -13,14 +13,16 @@
   }
 
   // Migrate each file.
-  foreach( $migratable as $mfile ) {
-    if( $zincDBManager->addAsMigrated( $mfile ) ) {
-      print \OutputCLI\warn( "Trying to Migrate:" ) . basename( $mfile );
-      require_once $mfile;
-      $className = trim( rtrim( basename( $mfile ), '.php' ) );
-      $g = new $className( $zincDBManager );
-      $g->up();
-      unset($g);
+  foreach( $migratable as $migratableFile ) {
+    if( ! $zincDBManager->ifMigrated( $migratableFile ) ) {
+      print \OutputCLI\warn( "Trying to Migrate:" ) . basename( $migratableFile );
+      require_once $migratableFile;
+      $className = trim( rtrim( basename( $migratableFile ), '.php' ) );
+      $__migrate = new $className( $zincDBManager );
+      $__migrate->up();
+      unset( $__migrate );
+      // Add current migration as migrated.
+      $zincDBManager->addAsMigrated( $migratableFile );
       $nothingToMigrate = false;
     }
   }
