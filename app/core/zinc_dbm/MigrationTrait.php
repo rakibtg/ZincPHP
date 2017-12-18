@@ -22,6 +22,28 @@
     }
 
     /**
+     * Check if a single migration file exists.
+     * 
+     */
+    function isMigrationFileExists( $fileName ) {
+      if( file_exists( $this->prepareMigrationFileName( $fileName ) ) ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    /**
+     * Prepare a single file name.
+     */
+    function prepareMigrationFileName( $fileName ) {
+      $fileName = trim( $fileName );
+      $fileName = rtrim( $fileName, '.php' );
+      $fileName = ltrim( $fileName, '/' );
+      return './app/migrations/' . $fileName . '.php';
+    }
+
+    /**
      * Read the migrationlist.json json file and return its value as php array.
      * 
      */
