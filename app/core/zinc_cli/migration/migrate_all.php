@@ -3,7 +3,7 @@
   
   $zincDBManager = new ZincDBManager();
   $migratable = $zincDBManager->listAllMigrations();
-
+  
   if( empty( $migratable ) ) {
     echo \OutputCLI\warn( "Nothing to migrate." );
     \OutputCLI\nl();
