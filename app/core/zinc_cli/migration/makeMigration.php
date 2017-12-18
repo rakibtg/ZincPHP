@@ -17,7 +17,7 @@
     $migrationName[ $key ] = trim( ucfirst( $mn ) );
   }
   $migrationName = implode( $migrationName );
-  $migrationFileName = \OutputCLI\joinpaths( getcwd(), 'app/migrations', $migrationName . '.php' );
+  $migrationFileName = \OutputCLI\joinpaths( getcwd(), 'app/migrations', $tableName . '.php' );
   // If the migration folder dosent exists then create it.
   if( ! file_exists( 'app/migrations' ) ) {
     mkdir( 'app/migrations' );
