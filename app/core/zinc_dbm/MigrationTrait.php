@@ -92,4 +92,18 @@
         file_put_contents( './app/core/zinc_cli/migration/migrationlist.json', json_encode( $migrationList ) );
       }
     }
+
+    /**
+     * Remove from migration list.
+     */
+    function removeFromMigrationList( $filePath ) {
+      $fileHash = md5( trim( $filePath ) );
+      $migList  = $this->readMigrationList();
+      if( in_array( $fileHash, $migList ) ) {
+        unset( $migList[ $fileHash ] );
+        // Save updated migration list to the json file.
+        file_put_contents( './app/core/zinc_cli/migration/migrationlist.json', json_encode( $migList ) );
+      }
+    }
+
   }
