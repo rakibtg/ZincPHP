@@ -3,7 +3,7 @@
   $zincDBManager = new ZincDBManager();
   if( $zincDBManager->isMigrationFileExists( $argv[2] ) ) {
     $migratableFile = $zincDBManager->prepareMigrationFileName( $argv[2] );
-    echo \OutputCLI\warn( "Trying to Migrate:" ) . basename( $migratableFile );
+    echo \OutputCLI\warn( "Trying to eject the migrate:" ) . basename( $migratableFile );
     // Check if the file was already migrated or not.
     if( ! $zincDBManager->ifMigrated( $migratableFile ) ) {
       require_once $migratableFile;

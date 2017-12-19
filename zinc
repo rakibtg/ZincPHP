@@ -32,10 +32,10 @@
   if( $thisArg == 'migrate:down' ) {
     if( isset( $argv[ 2 ] ) ) {
       // Migrate a single table.
-      require_once './app/core/zinc_cli/migration/migrate_down_single.php';
+      require_once './app/core/zinc_cli/migration/down/migrate_down_single.php';
     } else {
       // Migrate all tables.
-      require_once './app/core/zinc_cli/migration/migrate_down_all.php';
+      require_once './app/core/zinc_cli/migration/down/migrate_down_all.php';
     }
   }
   // Default ZincPHP CLI welcome message.
