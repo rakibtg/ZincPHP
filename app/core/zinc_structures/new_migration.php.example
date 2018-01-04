@@ -14,4 +14,9 @@
         ->increments( 'id' )
       ->executeCreateTable();
     }
+
+    function down() {
+      $this->zincDBManager->dropTable( '{{MigrationRawName}}' );
+    }
+    
   }
