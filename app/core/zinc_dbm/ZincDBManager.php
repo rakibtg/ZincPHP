@@ -87,6 +87,19 @@
     }
 
     /**
+     * Make the SQL command required to rename a table.
+     * 
+     * @param   string   $old   Old name of the table, that we want to rename.
+     * @param   string   $new   New name for the table.
+     * @return  object          Current object.
+     */
+    function rename( $old, $new ) {
+      $this->tableName = $old; // Table to be affected.
+      $this->queryHead .= ' RENAME TABLE '.$old.' TO '.$new . ' ';
+      return $this;
+    }
+
+    /**
      * The final query to create a table.
      *
      * @return string
@@ -100,7 +113,11 @@
       // Process footer
       $this->queryFoot = trim( $this->queryFoot );
       // Final query.
-      $finalQuery =  $this->queryHead . ' (' . $this->queryBody . ' ) ' . $this->queryFoot . ";";
+      if( ! empty( $this->queryBody ) ) {
+        $finalQuery =  $this->queryHead . ' (' . $this->queryBody . ' ) ' . $this->queryFoot . ";";
+      } else {
+        $finalQuery =  $this->queryHead . $this->queryFoot . ';';
+      }
       // Reset query strings.
       $this->queryHead = '';
       $this->queryBody = '';
@@ -114,6 +131,10 @@
      * @return void
      */
     function executeCreateTable() {
+      echo "\n";
+      echo $this->build();
+      echo "\n";
+      // exit();
       if(!$this->db) exit();
       if( ! mysqli_query( $this->db, $this->build() ) ) {
         print \OutputCLI\danger( " (Failed)" );
