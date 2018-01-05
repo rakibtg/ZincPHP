@@ -19,7 +19,7 @@
       require_once $migratableFile;
       $className = trim( rtrim( basename( $migratableFile ), '.php' ) );
       $__migrate = new $className( $zincDBManager );
-      $__migrate->up();
+      echo gettype( $__migrate->up() );
       unset( $__migrate );
       // Add current migration as migrated.
       $zincDBManager->addAsMigrated( $migratableFile );
