@@ -100,8 +100,8 @@
      * @return    object    Current object.
      */
     function createTable( $table ) {
-      $this->tableName = $table;
-      $this->rawQuery .= 'CREATE TABLE ' . $table . '; ';
+      $this->tableName  = $table;
+      $this->queryHead .= ' CREATE TABLE ' . $table . ' ';
       return $this;
     }
 
@@ -144,18 +144,25 @@
         // Final query.
         $finalQuery =  $this->queryHead . ' (' . $this->queryBody . ' ) ' . $this->queryFoot . ";";
       }
+      return $finalQuery;
+    }
+
+    /**
+     * Destroy recent build of the SQL query.
+     * 
+     */
+    function destroyBuild() {
       // Reset query strings.
       $this->queryHead = '';
       $this->queryBody = '';
       $this->queryFoot = '';
       $this->rawQuery  = false;
-      return $finalQuery;
     }
 
     /**
      * Executes command to create the table.
      *
-     * @return void
+     * @return boolean
      */
     function executeCreateTable() {
       if(!$this->db) exit();
@@ -164,10 +171,14 @@
         \OutputCLI\nl();
         print '> ' . mysqli_error( $this->db );
         \OutputCLI\nl();
+        return false;
       } else {
         print \OutputCLI\success(" (Success)");
         \OutputCLI\nl();
+        return true;
       }
+      // Resetting the recent build.
+      $this->destroyBuild();
     }
 
   }
