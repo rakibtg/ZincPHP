@@ -10,7 +10,10 @@
 
     function up() {
       // Add new columns here.
-      $this->zincDBManager->renameTable( 'dreamy1', 'dreamy_love' )->executeCreateTable();
+      // $this->zincDBManager->renameTable( 'dreamy1', 'dreamy_love' )->executeCreateTable();
+      $this->zincDBManager->selectTable( 'dreamy_love' )
+        ->renameColumn( 'title', 'new_title', 'VARCHAR' )
+      ->executeCreateTable();
     }
 
     function down() {
