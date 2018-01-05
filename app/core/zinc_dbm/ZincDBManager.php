@@ -83,12 +83,23 @@
     }
 
     /**
+     * Sets the table name.
+     * 
+     * @param   string  $table  The table name
+     * @return  object          Current object
+     */
+    function selectTable( $table ) {
+      $this->tableName = $table;
+      return $this;
+    }
+
+    /**
      * Starts to establishing the SQL command for creating a table.
      *
      * @param     string    $table    The table name that should be affected.
      * @return    object    Current object.
      */
-    function create( $table ) {
+    function createTable( $table ) {
       $this->tableName = $table;
       $this->rawQuery .= 'CREATE TABLE ' . $table . '; ';
       return $this;
@@ -101,10 +112,17 @@
      * @param   string   $new   New name for the table.
      * @return  object          Current object.
      */
-    function rename( $old, $new ) {
+    function renameTable( $old, $new ) {
       $this->tableName = $old; // Table to be affected.
       $this->rawQuery  = 'RENAME TABLE `'.$old.'` TO `'.$new . '`; ';
       return $this;
+    }
+
+    /**
+     * Will soon work on drop table.
+     */
+    function dropTable() {
+      return false;
     }
 
     /**
