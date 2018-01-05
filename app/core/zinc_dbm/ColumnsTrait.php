@@ -199,5 +199,17 @@
       return $this;
     }
 
+    /**
+     * Renames a column.
+     * 
+     * @param   string  $oldName  Existing name of the column.
+     * @param   string  $newName  New name for the column.
+     * @return  object            Current object.
+     */
+    function renameColumn( $oldName, $newName ) {
+      
+      return $this;
+    }
+
 
   }
