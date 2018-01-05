@@ -30,6 +30,13 @@
     private $queryFoot;
 
     /**
+     * Contains a RAW SQL Query.
+     * 
+     * @var string $rawQuery;
+     */
+    private $rawQuery;
+
+    /**
      * Table to be affected.
      *
      * @var string $tableName
@@ -56,6 +63,7 @@
       $this->queryBody = '';
       $this->queryFoot = '';
       $this->tableName = '';
+      $this->rawQuery  = false; // If the value is not false then the build method will only return its value.
 
       // Get environment settings from environment document
       $this->env = json_decode( file_get_contents( './app/environment.json' ) );
@@ -82,7 +90,7 @@
      */
     function create( $table ) {
       $this->tableName = $table;
-      $this->queryHead .= 'CREATE TABLE ' . $table . ' ';
+      $this->rawQuery .= 'CREATE TABLE ' . $table . '; ';
       return $this;
     }
 
@@ -95,33 +103,34 @@
      */
     function rename( $old, $new ) {
       $this->tableName = $old; // Table to be affected.
-      $this->queryHead .= ' RENAME TABLE '.$old.' TO '.$new . ' ';
+      $this->rawQuery  = 'RENAME TABLE `'.$old.'` TO `'.$new . '`; ';
       return $this;
     }
 
     /**
      * The final query to create a table.
      *
-     * @return string
+     * @return string The queryable string.
      */
     function build() {
-      // Process body
-      $this->queryBody = trim( $this->queryBody );
-      $this->queryBody = trim( $this->queryBody, ',' );
-      // Process header
-      $this->queryHead = trim( $this->queryHead );
-      // Process footer
-      $this->queryFoot = trim( $this->queryFoot );
-      // Final query.
-      if( ! empty( $this->queryBody ) ) {
-        $finalQuery =  $this->queryHead . ' (' . $this->queryBody . ' ) ' . $this->queryFoot . ";";
+      if( $this->rawQuery ) {
+        $finalQuery = $this->rawQuery;
       } else {
-        $finalQuery =  $this->queryHead . $this->queryFoot . ';';
+        // Process body
+        $this->queryBody = trim( $this->queryBody );
+        $this->queryBody = trim( $this->queryBody, ',' );
+        // Process header
+        $this->queryHead = trim( $this->queryHead );
+        // Process footer
+        $this->queryFoot = trim( $this->queryFoot );
+        // Final query.
+        $finalQuery =  $this->queryHead . ' (' . $this->queryBody . ' ) ' . $this->queryFoot . ";";
       }
       // Reset query strings.
       $this->queryHead = '';
       $this->queryBody = '';
       $this->queryFoot = '';
+      $this->rawQuery  = false;
       return $finalQuery;
     }
 
@@ -131,12 +140,8 @@
      * @return void
      */
     function executeCreateTable() {
-      echo "\n";
-      echo $this->build();
-      echo "\n";
-      // exit();
       if(!$this->db) exit();
-      if( ! mysqli_query( $this->db, $this->build() ) ) {
+      if( ! mysqli_query( $this->db, trim( $this->build() ) ) ) {
         print \OutputCLI\danger( " (Failed)" );
         \OutputCLI\nl();
         print '> ' . mysqli_error( $this->db );

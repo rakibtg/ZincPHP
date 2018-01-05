@@ -10,11 +10,11 @@
 
     function up() {
       // Add new columns here.
-      $this->zincDBManager->rename( 'dream_posts_7', 'dreamy' )->executeCreateTable();
+      $this->zincDBManager->rename( 'dreamy1', 'dreamy_love' )->executeCreateTable();
     }
 
-    // function down() {
-    //   $this->zincDBManager->dropTable( 'RenameDreamPostsTable' );
-    // }
+    function down() {
+      $this->zincDBManager->dropTable( 'RenameDreamPostsTable' );
+    }
     
   }
