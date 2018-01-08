@@ -127,8 +127,8 @@
 
     /**
      * The final query to create a table.
-     *
-     * @return string The queryable string.
+     * 
+     * @return  string  The queryable string.
      */
     function build() {
       if( $this->rawQuery ) {
@@ -167,18 +167,12 @@
     function executeCreateTable() {
       if(!$this->db) exit();
       if( ! mysqli_query( $this->db, trim( $this->build() ) ) ) {
-        print \OutputCLI\danger( " (Failed)" );
-        \OutputCLI\nl();
-        print '> ' . mysqli_error( $this->db );
-        \OutputCLI\nl();
-        return false;
-      } else {
-        print \OutputCLI\success(" (Success)");
-        \OutputCLI\nl();
-        return true;
-      }
+        return mysqli_error( $this->db );
+      } 
       // Resetting the recent build.
       $this->destroyBuild();
+      // Everything just works.
+      return true;
     }
 
   }

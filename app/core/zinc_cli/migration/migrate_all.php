@@ -19,10 +19,20 @@
       require_once $migratableFile;
       $className = trim( rtrim( basename( $migratableFile ), '.php' ) );
       $__migrate = new $className( $zincDBManager );
-      echo gettype( $__migrate->up() );
+      $__migrateUp = $__migrate->up();
+      // print_r($__migrateUp);
+      if( $__migrateUp === true ) {
+        // Add current migration as migrated.
+        $zincDBManager->addAsMigrated( $migratableFile );
+        print \OutputCLI\success(" (Success)");
+        \OutputCLI\nl();
+      } else {
+        print \OutputCLI\danger( " (Failed)" );
+        \OutputCLI\nl();
+        print '> ' . $__migrateUp;
+        \OutputCLI\nl();
+      }
       unset( $__migrate );
-      // Add current migration as migrated.
-      $zincDBManager->addAsMigrated( $migratableFile );
       $nothingToMigrate = false;
     }
   }
