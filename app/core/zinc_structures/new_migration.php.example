@@ -10,13 +10,13 @@
 
     function up() {
       // Add new columns here.
-      $this->zincDBManager->createTable( '{{MigrationRawName}}' )
+      return $this->zincDBManager->createTable( '{{MigrationRawName}}' )
         ->increments( 'id' )
       ->executeCreateTable();
     }
 
     function down() {
-      $this->zincDBManager->dropTable( '{{MigrationRawName}}' );
+      return $this->zincDBManager->dropTable( '{{MigrationRawName}}' );
     }
     
   }
