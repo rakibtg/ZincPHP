@@ -5,18 +5,18 @@
    *
    */
   class {{Migration}} {
-    private $zincDBManager; // DO NOT CHANGE THIS LINE
-    function __construct( $dbm ) { $this->zincDBManager = $dbm; } // DO NOT CHANGE THIS LINE
+    private $db; // DO NOT CHANGE THIS LINE
+    function __construct( $dbm ) { $this->db = $dbm; } // DO NOT CHANGE THIS LINE
 
     function up() {
       // Add new columns here.
-      return $this->zincDBManager->createTable( '{{MigrationRawName}}' )
+      return $this->db->createTable( '{{MigrationRawName}}' )
         ->increments( 'id' )
-      ->executeCreateTable();
+      ->query();
     }
 
     function down() {
-      return $this->zincDBManager->dropTable( '{{MigrationRawName}}' );
+      return $this->db->dropTable( '{{MigrationRawName}}' );
     }
     
   }
