@@ -7,12 +7,21 @@
     // Check if the file was already migrated or not.
     if( ! $zincDBManager->ifMigrated( $migratableFile ) ) {
       require_once $migratableFile;
-      $className = trim( rtrim( basename( $migratableFile ), '.php' ) );
-      $__migrate = new $className( $zincDBManager );
-      $__migrate->up();
+      $className    = trim( rtrim( basename( $migratableFile ), '.php' ) );
+      $__migrate    = new $className( $zincDBManager );
+      $__migrateUp  = $__migrate->up();
+      if( $__migrateUp === true ) {
+        // Add current migration as migrated.
+        $zincDBManager->addAsMigrated( $migratableFile );
+        print \OutputCLI\success(" (Success)");
+        \OutputCLI\nl();
+      } else {
+        print \OutputCLI\danger( " (Failed)" );
+        \OutputCLI\nl();
+        print '> ' . $__migrateUp;
+        \OutputCLI\nl();
+      }
       unset( $__migrate );
-      // Add current migration as migrated.
-      $zincDBManager->addAsMigrated( $migratableFile );
     } else {
       echo \OutputCLI\nl();
       echo \OutputCLI\danger( basename( $migratableFile ) . ' was already migrated, do you want to force migrate? (y/n)' );
@@ -21,9 +30,18 @@
       if( strtolower( $cont ) == 'y' ) {
         echo \OutputCLI\warn( "Force migrating:" ) . basename( $migratableFile );
         require_once $migratableFile;
-        $className = trim( rtrim( basename( $migratableFile ), '.php' ) );
-        $__migrate = new $className( $zincDBManager );
-        $__migrate->up();
+        $className    = trim( rtrim( basename( $migratableFile ), '.php' ) );
+        $__migrate    = new $className( $zincDBManager );
+        $__migrateUp  = $__migrate->up();
+        if( $__migrateUp === true ) {
+          print \OutputCLI\success(" (Success)");
+          \OutputCLI\nl();
+        } else {
+          print \OutputCLI\danger( " (Failed)" );
+          \OutputCLI\nl();
+          print '> ' . $__migrateUp;
+          \OutputCLI\nl();
+        }
         unset( $__migrate );
       } else {
         echo \OutputCLI\warn( 'Nothing to migrate' );
