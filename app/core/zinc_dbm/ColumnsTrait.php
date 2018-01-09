@@ -209,13 +209,24 @@
      * @return  object               Current object.
      */
     function renameColumn( $oldName, $newName, $dataType, $dataLimit = false ) {
-      $_rawQuery      = "ALTER TABLE ".$this->tableName." CHANGE `".$oldName."` `".$newName."` ";
+      $_rawQuery      = "ALTER TABLE ".$this->tableName." CHANGE ".$oldName." ".$newName." ";
       if( $dataLimit ) {
         $_rawQuery .= $dataType . "(" . $dataLimit . ");";
       } else {
         $_rawQuery .= $dataType . "(200);";
       }
       $this->rawQuery = $_rawQuery;
+      return $this;
+    }
+
+    /**
+     * Make a RAW query.
+     * 
+     * @param   string   $query   RAW query to execute for a column.
+     * @return  object            Current object.
+     */
+    function rawColumn( $query ) {
+      $this->queryBody .= ', ' . $query;
       return $this;
     }
 
