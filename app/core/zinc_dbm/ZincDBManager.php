@@ -164,10 +164,11 @@
      *
      * @return boolean
      */
-    function executeCreateTable() {
+    function query() {
       if(!$this->db) exit();
-      if( ! mysqli_query( $this->db, trim( $this->build() ) ) ) {
-        return mysqli_error( $this->db );
+      $execQuery = mysqli_query( $this->db, trim( $this->build() ) );
+      if( $execQuery !== true ) {
+        return (string) mysqli_error( $this->db );
       } 
       // Resetting the recent build.
       $this->destroyBuild();
