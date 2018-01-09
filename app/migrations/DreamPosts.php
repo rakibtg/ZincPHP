@@ -15,7 +15,7 @@
         ->string( 'title' )
         ->text( 'content' )
         ->integer( 'author' )
-      ->executeCreateTable();
+      ->query();
     }
 
     // function down() {
