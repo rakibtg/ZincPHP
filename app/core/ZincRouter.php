@@ -7,6 +7,14 @@
 
   class ZincRouter {
 
+  /**
+   * The entire app object, that contains every ZincPHP methods.
+   * Zinc router(this class) will not be a part of this app object.
+   * 
+   * @var object $app
+   */
+    protected $app;
+
     /**
      * Current block name.
      * @var string
@@ -27,8 +35,15 @@
     /**
      * Get the block name from route query string.
      * If the route query string is empty then set it to default route.
+     * 
      */
-    public function boot() {
+    public function boot( $zincObject ) {
+
+      /**
+       * Initializing the Zinc object to the app protected varible.
+       * So, every features are accessible from the route.
+       */
+      $this->app = $zincObject;
 
       if( empty( $this->route ) ) {
         // No block was given.
