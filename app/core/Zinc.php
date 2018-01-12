@@ -97,7 +97,7 @@
 
     public function bootRoute() {
       $this->router = new ZincRouter;
-      $this->router->boot();
+      $this->router->boot( $this );
     }
 
     // End of all methods of the Zinc class.
