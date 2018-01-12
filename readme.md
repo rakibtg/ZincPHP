@@ -1,6 +1,6 @@
 # ZincPHP
 ## Micro RESTful Api Framework for PHP
-[![enter image description here][1]][1]
+![ZincPHP server started using ZincPHP CLI][1]
 
 ZincPHP is a lightweight and dependency free PHP framework specially created for REST-ful architecture.
 
@@ -17,8 +17,8 @@ By running the above command, Zinc CLI will create a directory called `blog` ins
 
 **Example:**
 ```
-blocks
--- blog
+blocks/
+-- blog/
 -- -- get.blog.php     // Receives GET requests
 -- -- post.blog.php    // Receives POST requests
 -- -- put.blog.php     // Receives PUT requests
