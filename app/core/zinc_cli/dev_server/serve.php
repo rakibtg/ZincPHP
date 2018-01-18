@@ -8,7 +8,9 @@
       if( strtolower( trim( $arg ) ) == '--port' ) $_port = $argv[ $index + 1 ];
     }
   }
-  echo \OutputCLI\success( '> ZincPHP server is running 🚀' );
+  \OutputCLI\nl();
+  echo \OutputCLI\success( '> ZincPHP development server is running ᕕ( ᐛ )ᕗ' );
+  \OutputCLI\nl();
   \OutputCLI\nl();
   echo 'Local Server: http://' . $_host . ':' . $_port;
   \OutputCLI\nl();
