@@ -20,18 +20,6 @@
       return $this;
     }
 
-    // Specify a character set for the table (MySQL)
-    function charset( $encoding = 'utf8' ) {
-      $this->queryFoot .= ' CHARACTER SET '.$encoding.' ';
-      return $this;
-    }
-
-    // Specify a collation for the column (MySQL/SQL Server)
-    function collation( $encoding = 'utf8_unicode_ci' ) {
-      $this->queryFoot .= ' COLLATE '.$encoding.' ';
-      return $this;
-    }
-
     // Specify a collation for the table (MySQL/SQL Server)
     function collationColumn( $encoding = 'utf8_unicode_ci' ) {
       $this->queryBody .= ' COLLATE '.$encoding.' ';
@@ -39,7 +27,7 @@
     }
 
     // Add a comment to a column (MySQL)
-    function comment( $msg = '' ) {
+    function commentColumn( $msg = '' ) {
       $this->queryBody .= ' /*'.$msg.'*/ ';
       return $this;
     }
