@@ -20,7 +20,6 @@
       $className = trim( rtrim( basename( $migratableFile ), '.php' ) );
       $__migrate = new $className( $zincDBManager );
       $__migrateUp = $__migrate->up();
-      // print_r($__migrateUp);
       if( $__migrateUp === true ) {
         // Add current migration as migrated.
         $zincDBManager->addAsMigrated( $migratableFile );
