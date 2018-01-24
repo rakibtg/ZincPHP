@@ -3,10 +3,11 @@
   require_once './app/core/zinc_dbm/ColumnsTrait.php';
   require_once './app/core/zinc_dbm/ModifiersTrait.php';
   require_once './app/core/zinc_dbm/MigrationTrait.php';
+  require_once './app/core/zinc_dbm/TablesTrait.php';
 
   class ZincDBManager {
 
-    use ColumnsTrait, ModifiersTrait, MigrationTrait;
+    use ColumnsTrait, ModifiersTrait, MigrationTrait, TablesTrait;
 
     /**
      * The begining query of the SQL
@@ -83,49 +84,6 @@
     }
 
     /**
-     * Sets the table name.
-     * 
-     * @param   string  $table  The table name
-     * @return  object          Current object
-     */
-    function selectTable( $table ) {
-      $this->tableName = $table;
-      return $this;
-    }
-
-    /**
-     * Starts to establishing the SQL command for creating a table.
-     *
-     * @param     string    $table    The table name that should be affected.
-     * @return    object    Current object.
-     */
-    function createTable( $table ) {
-      $this->tableName  = $table;
-      $this->queryHead .= ' CREATE TABLE ' . $table . ' ';
-      return $this;
-    }
-
-    /**
-     * Make the SQL command required to rename a table.
-     * 
-     * @param   string   $old   Old name of the table, that we want to rename.
-     * @param   string   $new   New name for the table.
-     * @return  object          Current object.
-     */
-    function renameTable( $old, $new ) {
-      $this->tableName = $old; // Table to be affected.
-      $this->rawQuery  = 'RENAME TABLE `'.$old.'` TO `'.$new . '`; ';
-      return $this;
-    }
-
-    /**
-     * Will soon work on drop table.
-     */
-    function dropTable() {
-      return false;
-    }
-
-    /**
      * The final query to create a table.
      * 
      * @return  string  The queryable string.
@@ -165,7 +123,7 @@
      * @return boolean
      */
     function query() {
-      if(!$this->db) exit();
+      if( ! $this->db ) exit();
       $execQuery = mysqli_query( $this->db, trim( $this->build() ) );
       if( $execQuery !== true ) {
         return (string) mysqli_error( $this->db );
