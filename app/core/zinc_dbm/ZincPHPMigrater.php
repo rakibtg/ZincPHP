@@ -15,13 +15,9 @@
     public $db;
 
     /**
-     * Contains the table name for the DB operations.
-     * @var   string   $table
-     *
+     * Construct the class.
+     * @param  object  $dbManager  The instantiated object of Zinc database manager.
      */
-    public $table;
-
-    // Assign above values.
     function __construct( $dbManager ) {
       $this->db = $dbManager;
     }
