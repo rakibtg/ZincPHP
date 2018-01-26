@@ -40,7 +40,7 @@
       $fileName = trim( $fileName );
       $fileName = rtrim( $fileName, '.php' );
       $fileName = ltrim( $fileName, '/' );
-      return './app/migrations/' . $fileName . '.php';
+      return './app/migrations/' . trim( pathinfo( basename( $fileName ), PATHINFO_FILENAME ) ) . '.php';
     }
 
     /**
@@ -121,17 +121,19 @@
      * 
      * @param     string    $migratableFile   The file need to be migrated, 
      *                                        if false then take all migratable files.
-     * @return    void
+     * @return    void      ...               ...
      */
-    function migrate ( $migratableFile = false ) {
+    function migrateUp ( $migratableFile = false ) {
 
       // Descide what migration files need to be migrated.
       if ( $migratableFile === false ) {
         // Migrate all new migration files from the migrations directory.
         $migratable = $this->listAllMigrations();
+        $migrateAll = true; // Flag
       } else {
         // Migrate a single migration file.
-        $migratable = ( array ) $migratableFile;
+        $migratable = ( array ) $this->prepareMigrationFileName( $migratableFile );
+        $migrateAll = false; // Flag
       }
 
       // Check if there is any migratables.
@@ -143,13 +145,26 @@
 
       // Start migrating files.
       foreach ( $migratable as $migratableFile ) {
-        // Check if this file is already migrated.
-        if ( ! $this->ifMigrated( $migratableFile ) ) {
-          // Run migrate
-          $this->runMigrate( $migratableFile );
-          // Change the migrations flag status to false, meaning that we migrated one or more than
-          // one migration file.
-          $nothingToMigrate = false;
+        // Check if the migration file is still available.
+        if ( $this->isMigrationFileExists( $migratableFile ) ) {
+          // Check if this file is already migrated.
+          if ( ! $this->ifMigrated( $migratableFile ) ) {
+            // Run migrate
+            $this->runMigrate( $migratableFile );
+            // Change the migrations flag status to false, meaning that we migrated one or more than
+            // one migration file.
+            $nothingToMigrate = false;
+          } else {
+            // Check if this was a single migration, then show an error.
+            // Also ask the user if he/she want to call the down() then up() to force migrate.
+            if ( $migrateAll === false ) {
+              print \OutputCLI\danger( "Error: Migration file " . basename( $migratableFile ) . " already migrated" );
+              \OutputCLI\nl();
+            }
+          }
+        } else {
+          print \OutputCLI\danger( "Error: Migration file " . basename( $migratableFile ) . " file was not found." );
+          \OutputCLI\nl();
         }
       }
 
@@ -162,11 +177,10 @@
     } // End of migrate() method.
 
     /**
-     * Method to migrate database form the migration file.
+     * Method to migrate the migration file.
      * 
-     * @param     string    $migratableFile   The file need to be migrated, 
-     *                                        if false then take all migratable files.
-     * @return    void
+     * @param     string    $migratableFile   The file need to be migrated
+     * @return    void      ...               ...
      */
 
     function runMigrate ( $migratableFile ) {
