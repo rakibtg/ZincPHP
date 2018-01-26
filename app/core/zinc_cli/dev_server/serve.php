@@ -9,7 +9,8 @@
     }
   }
   \OutputCLI\nl();
-  echo \OutputCLI\success( '> ZincPHP development server is running ᕕ( ᐛ )ᕗ' );
+  echo \OutputCLI\success( '> ZincPHP development server is running' );
+  echo \OutputCLI\warn( 'ᕕ(^.^)ᕗ ' );
   \OutputCLI\nl();
   \OutputCLI\nl();
   echo 'Local Server: http://' . $_host . ':' . $_port;
