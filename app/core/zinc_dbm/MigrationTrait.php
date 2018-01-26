@@ -106,4 +106,82 @@
       }
     }
 
+    /**
+     * Default message when there is nothing to migrate.
+     * 
+     */
+    function noMigratables() {
+      echo \OutputCLI\warn( "Nothing to migrate." );
+      \OutputCLI\nl();
+      exit();
+    }
+
+    /**
+     * Method to migrate database form the migration file.
+     * 
+     * @param     string    $migratableFile   The file need to be migrated, 
+     *                                        if false then take all migratable files.
+     * @return    void
+     */
+    function migrate ( $migratableFile = false ) {
+
+      // Descide what migration files need to be migrated.
+      if ( $migratableFile === false ) {
+        // Migrate all new migration files from the migrations directory.
+        $migratable = $this->listAllMigrations();
+      } else {
+        // Migrate a single migration file.
+        $migratable = ( array ) $migratableFile;
+      }
+
+      // Check if there is any migratables.
+      $nothingToMigrate = true; // Setting a flag to detect current status of this migration.
+      if ( empty( $migratable ) ) {
+        // No new migration file was found.
+        $this->noMigratables();
+      }
+
+      // Start migrating files.
+      foreach ( $migratable as $migratableFile ) {
+        // Check if this file is already migrated.
+        if ( ! $this->ifMigrated( $migratableFile ) ) {
+          print \OutputCLI\warn( "Trying to Migrate:" ) . basename( $migratableFile );
+          require_once $migratableFile;
+          $className = trim( rtrim( basename( $migratableFile ), '.php' ) );
+          $__migrate = new $className( $this );
+          $__migrateUp = $__migrate->up();
+          if( $__migrateUp === true ) {
+            // Add current migration as migrated.
+            $this->addAsMigrated( $migratableFile );
+            print \OutputCLI\success(" (Success)");
+            \OutputCLI\nl();
+          } else {
+            print \OutputCLI\danger( " (Failed)" );
+            \OutputCLI\nl();
+            // Check if the error message is a string.
+            if ( is_string( $__migrateUp ) ) {
+              print '> ' . $__migrateUp;
+            } else {
+              // We know why this happens
+              print \OutputCLI\danger( 'Hint: You may forgot to add the "query()" method in your migration file.' );
+            }
+            \OutputCLI\nl();
+          }
+          unset( $__migrate );
+          $nothingToMigrate = false;
+        }
+      }
+
+      // Final check of this migration status.
+      if( $nothingToMigrate ) $this->noMigratables();
+
+      // Stop CLI execution.
+      exit();
+
+    } // End of 'migrate()' method.
+
+    function runMigrate (  ) {
+
+    }
+
   }
