@@ -4,6 +4,7 @@
   require_once './app/core/zinc_dbm/ModifiersTrait.php';
   require_once './app/core/zinc_dbm/MigrationTrait.php';
   require_once './app/core/zinc_dbm/TablesTrait.php';
+  require_once './app/core/zinc_dbm/ZincPHPMigrater.php';
 
   class ZincDBManager {
 
