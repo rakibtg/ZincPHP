@@ -147,7 +147,7 @@
         if ( ! $this->ifMigrated( $migratableFile ) ) {
           print \OutputCLI\warn( "Trying to Migrate:" ) . basename( $migratableFile );
           require_once $migratableFile;
-          $className = trim( rtrim( basename( $migratableFile ), '.php' ) );
+          $className = trim( pathinfo( basename( $migratableFile ), PATHINFO_FILENAME ) );
           $__migrate = new $className( $this );
           $__migrateUp = $__migrate->up();
           if( $__migrateUp === true ) {
