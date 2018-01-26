@@ -72,10 +72,31 @@
     }
 
     /**
-     * Will soon work on drop table.
+     * SQL command required to drop a table.
+     * 
+     * @param  string  $tableName  The table name to be dropped.
+     * @param  array   $tableName  Array of tables name to be dropped.
+     * @return object  Current object.
      */
-    function dropTable() {
-      return false;
+    function dropTable( $tableName ) {
+      // Check if more than one table to drop.
+      if ( is_array( $tableName ) ) $tableName = implode( ', ', $tableName );
+      $this->rawQuery = 'DROP TABLE `' . $tableName . '`; ';
+      return $this;
+    }
+
+    /**
+     * SQL command required to drop a table if exists.
+     * 
+     * @param   string  $tableName  The table name to be dropped if exists.
+     * @param   array   $tableName  Array of tables name to be dropped if exists.
+     * @return  object  Current object.
+     */
+    function dropTableIfExists( $tableName ) {
+      // Check if more than one table to drop.
+      if ( is_array( $tableName ) ) $tableName = implode( ', ', $tableName );
+      $this->rawQuery = 'DROP TABLE IF EXISTS `' . $tableName . '`; ';
+      return $this;
     }
 
   }
