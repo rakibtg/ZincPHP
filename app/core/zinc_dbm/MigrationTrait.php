@@ -8,6 +8,7 @@
 
     /**
      * List all the migration files.
+     * @return    array    List of all PHP file in the migrations directory.
      * 
      */
     function listAllMigrations() {
@@ -23,6 +24,8 @@
 
     /**
      * Check if a single migration file exists.
+     * @param   string    $fileName    Migration file path.
+     * @return  boolean   ...          Status of migration file existense.
      * 
      */
     function isMigrationFileExists( $fileName ) {
@@ -35,6 +38,8 @@
 
     /**
      * Prepare a single file name.
+     * @param   string    $fileName    Migration file path.
+     * @return  string    ...          Proper path of the migration file.
      */
     function prepareMigrationFileName( $fileName ) {
       $fileName = trim( $fileName );
@@ -45,6 +50,7 @@
 
     /**
      * Read the migrationlist.json json file and return its value as php array.
+     * @return  array  List of migrated files.
      * 
      */
     function readMigrationList() {
@@ -59,6 +65,8 @@
 
     /**
      * Check if a provided migration has already migrated or not.
+     * @param   string    $filePath     Migration file path.
+     * @return  boolean   ...           The status of migration for the current migration file.
      * 
      */
     function ifMigrated( $filePath ) {
@@ -80,6 +88,8 @@
 
     /**
      * This method would add a given migrated file name into the migrationlist.json file.
+     * @param   string    $filePath Migration file path.
+     * @return  void      ...       ...
      * 
      */
     function addAsMigrated( $filePath ) {
@@ -95,6 +105,8 @@
 
     /**
      * Remove from migration list.
+     * @param   string    $filePath Migration file path.
+     * @return  void      ...       ...
      */
     function removeFromMigrationList( $filePath ) {
       $fileHash = md5( trim( $filePath ) );
@@ -150,7 +162,7 @@
           // Check if this file is already migrated.
           if ( ! $this->ifMigrated( $migratableFile ) ) {
             // Run migrate
-            $this->runMigrate( $migratableFile );
+            $this->runMigrateUp( $migratableFile );
             // Change the migrations flag status to false, meaning that we migrated one or more than
             // one migration file.
             $nothingToMigrate = false;
@@ -158,8 +170,23 @@
             // Check if this was a single migration, then show an error.
             // Also ask the user if he/she want to call the down() then up() to force migrate.
             if ( $migrateAll === false ) {
-              print \OutputCLI\danger( "Error: Migration file " . basename( $migratableFile ) . " already migrated" );
+              print \OutputCLI\danger( "Error: Migration file " . basename( $migratableFile ) . " already migrated." );              
               \OutputCLI\nl();
+              print \OutputCLI\warn( "Hint: Delete the table/column manually." );
+              \OutputCLI\nl();
+              // Ask the user if he want to execute the query.
+              print "Do you want to force migrate? (y/n) ";
+              $handle = fopen( "php://stdin", "r" );
+              $cont   = trim( fgets( $handle ) );
+              if( strtolower( $cont ) === 'y' ) {
+                echo \OutputCLI\warn( "Force migrating:" ) . basename( $migratableFile );
+                \OutputCLI\nl();
+                // Run the migration again.
+                $this->runMigrateUp( $migratableFile );
+              } else {
+                echo 'Force migration canceled.';
+                \OutputCLI\nl();
+              }
             }
           }
         } else {
@@ -183,7 +210,7 @@
      * @return    void      ...               ...
      */
 
-    function runMigrate ( $migratableFile ) {
+    function runMigrateUp ( $migratableFile ) {
       // Current migration file of this iteration is new, try to migrate it.
       print \OutputCLI\warn( "Trying to Migrate:" ) . basename( $migratableFile );
       // Add the migration file runtime.
@@ -191,6 +218,7 @@
       // Get the class name for this migration file.
       $className = trim( pathinfo( basename( $migratableFile ), PATHINFO_FILENAME ) );
       // Call the class with the dynamically generated name.
+      // Also, pass the current db manager object, so in the migration class we can use all the methods.
       $__migrate = new $className( $this );
       // Do migrate.
       $__migrateUp  = $__migrate->up();
@@ -219,6 +247,6 @@
       // it dont cause any issue.
       unset( $__migrate );
 
-    } // End of runMigrate() method.
+    } // End of runMigrateUp() method.
 
   }
