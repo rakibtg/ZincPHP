@@ -145,29 +145,10 @@
       foreach ( $migratable as $migratableFile ) {
         // Check if this file is already migrated.
         if ( ! $this->ifMigrated( $migratableFile ) ) {
-          print \OutputCLI\warn( "Trying to Migrate:" ) . basename( $migratableFile );
-          require_once $migratableFile;
-          $className = trim( pathinfo( basename( $migratableFile ), PATHINFO_FILENAME ) );
-          $__migrate = new $className( $this );
-          $__migrateUp = $__migrate->up();
-          if( $__migrateUp === true ) {
-            // Add current migration as migrated.
-            $this->addAsMigrated( $migratableFile );
-            print \OutputCLI\success(" (Success)");
-            \OutputCLI\nl();
-          } else {
-            print \OutputCLI\danger( " (Failed)" );
-            \OutputCLI\nl();
-            // Check if the error message is a string.
-            if ( is_string( $__migrateUp ) ) {
-              print '> ' . $__migrateUp;
-            } else {
-              // We know why this happens
-              print \OutputCLI\danger( 'Hint: You may forgot to add the "query()" method in your migration file.' );
-            }
-            \OutputCLI\nl();
-          }
-          unset( $__migrate );
+          // Run migrate
+          $this->runMigrate( $migratableFile );
+          // Change the migrations flag status to false, meaning that we migrated one or more than
+          // one migration file.
           $nothingToMigrate = false;
         }
       }
@@ -178,10 +159,52 @@
       // Stop CLI execution.
       exit();
 
-    } // End of 'migrate()' method.
+    } // End of migrate() method.
 
-    function runMigrate (  ) {
+    /**
+     * Method to migrate database form the migration file.
+     * 
+     * @param     string    $migratableFile   The file need to be migrated, 
+     *                                        if false then take all migratable files.
+     * @return    void
+     */
 
-    }
+    function runMigrate ( $migratableFile ) {
+      // Current migration file of this iteration is new, try to migrate it.
+      print \OutputCLI\warn( "Trying to Migrate:" ) . basename( $migratableFile );
+      // Add the migration file runtime.
+      require_once $migratableFile;
+      // Get the class name for this migration file.
+      $className = trim( pathinfo( basename( $migratableFile ), PATHINFO_FILENAME ) );
+      // Call the class with the dynamically generated name.
+      $__migrate = new $className( $this );
+      // Do migrate.
+      $__migrateUp  = $__migrate->up();
+      if( $__migrateUp === true ) {
+        // Migration was successfull.
+        // Add current migration as migrated.
+        $this->addAsMigrated( $migratableFile );
+        // Display success message.
+        print \OutputCLI\success(" (Success)");
+        \OutputCLI\nl();
+      } else {
+        // Migration was failed.
+        print \OutputCLI\danger( " (Failed)" );
+        \OutputCLI\nl();
+        // Check if the error message is a string.
+        if ( is_string( $__migrateUp ) ) {
+          // Error message is a string, show it.
+          print '> ' . $__migrateUp;
+        } else {
+          // We know why this happens
+          print \OutputCLI\danger( 'Hint: You may forgot to add the "query()" method in your migration file.' );
+        }
+        \OutputCLI\nl();
+      }
+      // Delete current migration object at the end of this loop iteration so later
+      // it dont cause any issue.
+      unset( $__migrate );
+
+    } // End of runMigrate() method.
 
   }
