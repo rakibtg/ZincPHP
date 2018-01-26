@@ -1,22 +1,17 @@
 <?php
 
   /**
-   * New migration schema of a table.
-   *
+   * Yet another migration class.
+   * To learn more about migrations go here: http://...
+   * 
    */
-  class {{Migration}} {
-    private $db; // DO NOT CHANGE THIS LINE
-    function __construct( $dbm ) { $this->db = $dbm; } // DO NOT CHANGE THIS LINE
 
-    function up() {
-      // Add new columns here.
+  class {{Migration}} extends ZincPHPMigrater {
+
+    function up () {
       return $this->db->createTable( '{{MigrationRawName}}' )
         ->increments( 'id' )
       ->query();
     }
 
-    function down() {
-      return $this->db->dropTable( '{{MigrationRawName}}' );
-    }
-    
   }
