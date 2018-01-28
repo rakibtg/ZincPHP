@@ -8,13 +8,13 @@
       if( strtolower( trim( $arg ) ) == '--port' ) $_port = $argv[ $index + 1 ];
     }
   }
-  \OutputCLI\nl();
-  echo \OutputCLI\success( '> ZincPHP development server is running' );
-  echo \OutputCLI\warn( 'ᕕ(^.^)ᕗ ' );
-  \OutputCLI\nl();
-  \OutputCLI\nl();
+  \ZincPHP\CLI\Helper\nl();
+  echo \ZincPHP\CLI\Helper\success( '> ZincPHP development server is running' );
+  echo \ZincPHP\CLI\Helper\warn( 'ᕕ(^.^)ᕗ ' );
+  \ZincPHP\CLI\Helper\nl();
+  \ZincPHP\CLI\Helper\nl();
   echo 'Local Server: http://' . $_host . ':' . $_port;
-  \OutputCLI\nl();
-  chdir( \OutputCLI\joinpaths( getcwd(), '/public' ) );
+  \ZincPHP\CLI\Helper\nl();
+  chdir( \ZincPHP\CLI\Helper\joinpaths( getcwd(), '/public' ) );
   shell_exec( 'php -S ' . $_host . ':' . $_port );
   exit();
