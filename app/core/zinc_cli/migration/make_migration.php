@@ -5,8 +5,8 @@
    */
 
   // Validate the migration file name.
-  if( ! isset( $argv[ 2 ] ) ) exit( \OutputCLI\danger( "No migration name found\n" ) );
-  if( empty( $argv[ 2 ] ) ) exit( \OutputCLI\warn( "Migration name cant be empty\n" ) );
+  if( ! isset( $argv[ 2 ] ) ) exit( \ZincPHP\CLI\Helper\danger( "No migration name found\n" ) );
+  if( empty( $argv[ 2 ] ) ) exit( \ZincPHP\CLI\Helper\warn( "Migration name cant be empty\n" ) );
  
   // table name flag, false means that later we need to give it a name.
   $tableName = false;
@@ -23,10 +23,10 @@
       }
       // Check if the provided table name for this migration was invalid.
       if( $tableName === false ) {
-        echo \OutputCLI\danger( "> Ops! Table name is not valid and can not be empty");
-        echo \OutputCLI\nl();
-        echo \OutputCLI\warn( "Hint: Use the argument '--table' properly. E.g: --table=users");
-        echo \OutputCLI\nl();
+        echo \ZincPHP\CLI\Helper\danger( "> Ops! Table name is not valid and can not be empty");
+        echo \ZincPHP\CLI\Helper\nl();
+        echo \ZincPHP\CLI\Helper\warn( "Hint: Use the argument '--table' properly. E.g: --table=users");
+        echo \ZincPHP\CLI\Helper\nl();
         exit();
       }
     }
@@ -47,7 +47,7 @@
     $migrationName[ $key ] = trim( ucfirst( $mn ) );
   }
   $migrationName = implode( $migrationName );
-  $migrationFileName = \OutputCLI\joinpaths( getcwd(), 'app/migrations', $migrationName . '.php' );
+  $migrationFileName = \ZincPHP\CLI\Helper\joinpaths( getcwd(), 'app/migrations', $migrationName . '.php' );
   // If the migration folder dosent exists then create it.
   if( ! file_exists( 'app/migrations' ) ) {
     mkdir( 'app/migrations' );
@@ -61,12 +61,12 @@
     $rawMigratable = str_replace( '{{MigrationRawName}}', $tableName, $rawMigratable );
     // Save migration file.
     if( file_put_contents( $migrationFileName, $rawMigratable ) ) {
-      print \OutputCLI\success( "Migration file($migrationName) was created" );
-      \OutputCLI\nl();
+      print \ZincPHP\CLI\Helper\success( "Migration file($migrationName) was created" );
+      \ZincPHP\CLI\Helper\nl();
       print "Migration File Path: " . $migrationFileName;
-      \OutputCLI\nl();
+      \ZincPHP\CLI\Helper\nl();
     }
   } else {
-    print \OutputCLI\danger( "Error: Migration file($migrationName) already exists!\n" ) . "Migration File Path: " . $migrationFileName . "\n";
+    print \ZincPHP\CLI\Helper\danger( "Error: Migration file($migrationName) already exists!\n" ) . "Migration File Path: " . $migrationFileName . "\n";
   }
   exit(); // End of the zinc cli execution
