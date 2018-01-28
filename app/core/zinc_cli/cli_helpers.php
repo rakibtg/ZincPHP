@@ -1,5 +1,5 @@
 <?php
-  namespace OutputCLI;
+  namespace ZincPHP\CLI\Helper;
   /**
    * Outputs danger.
    */
@@ -44,11 +44,5 @@
     return rtrim( $s, DIRECTORY_SEPARATOR );
   }
   function joinpaths() {
-    return implode( DIRECTORY_SEPARATOR, array_map( '\OutputCLI\trimds', func_get_args() ) );
-  }
-
-  if( ! file_exists( './app/environment.json' ) ) {
-    $env = false;
-  } else {
-    $env = json_decode( file_get_contents('./app/environment.json' ) );
+    return implode( DIRECTORY_SEPARATOR, array_map( '\ZincPHP\CLI\Helper\trimds', func_get_args() ) );
   }
