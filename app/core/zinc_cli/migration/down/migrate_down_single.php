@@ -3,7 +3,7 @@
   $zincDBManager = new ZincDBManager();
   if( $zincDBManager->isMigrationFileExists( $argv[2] ) ) {
     $migratableFile = $zincDBManager->prepareMigrationFileName( $argv[2] );
-    echo \OutputCLI\warn( "Trying to eject the migrate:" ) . basename( $migratableFile );
+    echo \ZincPHP\CLI\Helper\warn( "Trying to eject the migrate:" ) . basename( $migratableFile );
     // Check if the file was already migrated or not.
     if( ! $zincDBManager->ifMigrated( $migratableFile ) ) {
       require_once $migratableFile;
@@ -15,10 +15,10 @@
       $zincDBManager->addAsMigrated( $migratableFile );
     }
   } else {
-    echo \OutputCLI\danger( 'Migration file was not found' );
-    echo \OutputCLI\nl();
-    echo \OutputCLI\warn( 'Looking for:' );
+    echo \ZincPHP\CLI\Helper\danger( 'Migration file was not found' );
+    echo \ZincPHP\CLI\Helper\nl();
+    echo \ZincPHP\CLI\Helper\warn( 'Looking for:' );
     echo $zincDBManager->prepareMigrationFileName( $argv[2] );
-    echo \OutputCLI\nl();
+    echo \ZincPHP\CLI\Helper\nl();
   }
   exit();
