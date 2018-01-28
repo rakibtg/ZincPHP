@@ -3,7 +3,7 @@
   $zincDBManager = new ZincDBManager();
   if( $zincDBManager->isMigrationFileExists( $argv[2] ) ) {
     $migratableFile = $zincDBManager->prepareMigrationFileName( $argv[2] );
-    echo \OutputCLI\warn( "Trying to Migrate:" ) . basename( $migratableFile );
+    echo \ZincPHP\CLI\Helper\warn( "Trying to Migrate:" ) . basename( $migratableFile );
     // Check if the file was already migrated or not.
     if( ! $zincDBManager->ifMigrated( $migratableFile ) ) {
       require_once $migratableFile;
@@ -13,46 +13,46 @@
       if( $__migrateUp === true ) {
         // Add current migration as migrated.
         $zincDBManager->addAsMigrated( $migratableFile );
-        print \OutputCLI\success(" (Success)");
-        \OutputCLI\nl();
+        print \ZincPHP\CLI\Helper\success(" (Success)");
+        \ZincPHP\CLI\Helper\nl();
       } else {
-        print \OutputCLI\danger( " (Failed)" );
-        \OutputCLI\nl();
+        print \ZincPHP\CLI\Helper\danger( " (Failed)" );
+        \ZincPHP\CLI\Helper\nl();
         print '> ' . $__migrateUp;
-        \OutputCLI\nl();
+        \ZincPHP\CLI\Helper\nl();
       }
       unset( $__migrate );
     } else {
-      echo \OutputCLI\nl();
-      echo \OutputCLI\danger( basename( $migratableFile ) . ' was already migrated, do you want to force migrate? (y/n)' );
+      echo \ZincPHP\CLI\Helper\nl();
+      echo \ZincPHP\CLI\Helper\danger( basename( $migratableFile ) . ' was already migrated, do you want to force migrate? (y/n)' );
       $handle = fopen( "php://stdin", "r" );
       $cont   = trim( fgets( $handle ) );
       if( strtolower( $cont ) == 'y' ) {
-        echo \OutputCLI\warn( "Force migrating:" ) . basename( $migratableFile );
+        echo \ZincPHP\CLI\Helper\warn( "Force migrating:" ) . basename( $migratableFile );
         require_once $migratableFile;
         $className    = trim( rtrim( basename( $migratableFile ), '.php' ) );
         $__migrate    = new $className( $zincDBManager );
         $__migrateUp  = $__migrate->up();
         if( $__migrateUp === true ) {
-          print \OutputCLI\success(" (Success)");
-          \OutputCLI\nl();
+          print \ZincPHP\CLI\Helper\success(" (Success)");
+          \ZincPHP\CLI\Helper\nl();
         } else {
-          print \OutputCLI\danger( " (Failed)" );
-          \OutputCLI\nl();
+          print \ZincPHP\CLI\Helper\danger( " (Failed)" );
+          \ZincPHP\CLI\Helper\nl();
           print '> ' . $__migrateUp;
-          \OutputCLI\nl();
+          \ZincPHP\CLI\Helper\nl();
         }
         unset( $__migrate );
       } else {
-        echo \OutputCLI\warn( 'Nothing to migrate' );
-        echo \OutputCLI\nl();
+        echo \ZincPHP\CLI\Helper\warn( 'Nothing to migrate' );
+        echo \ZincPHP\CLI\Helper\nl();
       }
     }
   } else {
-    echo \OutputCLI\danger( 'Migration file was not found' );
-    echo \OutputCLI\nl();
-    echo \OutputCLI\warn( 'Looking for:' );
+    echo \ZincPHP\CLI\Helper\danger( 'Migration file was not found' );
+    echo \ZincPHP\CLI\Helper\nl();
+    echo \ZincPHP\CLI\Helper\warn( 'Looking for:' );
     echo $zincDBManager->prepareMigrationFileName( $argv[2] );
-    echo \OutputCLI\nl();
+    echo \ZincPHP\CLI\Helper\nl();
   }
   exit();
