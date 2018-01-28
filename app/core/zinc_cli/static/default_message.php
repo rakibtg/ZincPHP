@@ -9,12 +9,12 @@
   ╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝╚═╝     ╚═╝  ╚═╝╚═╝     
   ";
 
-  \OutputCLI\nl();
-  echo \OutputCLI\success("  Welcome to ZincPHP!");
-  \OutputCLI\nl();
-  \OutputCLI\nl();
+  \ZincPHP\CLI\Helper\nl();
+  echo \ZincPHP\CLI\Helper\success("  Welcome to ZincPHP!");
+  \ZincPHP\CLI\Helper\nl();
+  \ZincPHP\CLI\Helper\nl();
   echo "  GitHub: https://github.com/rakibtg/ZincPHP";
-  \OutputCLI\nl();
+  \ZincPHP\CLI\Helper\nl();
   echo "  Run 'php zinc help' to learn more :)";
-  \OutputCLI\nl();
-  \OutputCLI\nl();
+  \ZincPHP\CLI\Helper\nl();
+  \ZincPHP\CLI\Helper\nl();
