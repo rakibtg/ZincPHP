@@ -77,10 +77,10 @@
         $this->env->database_password,
         $this->env->database
       )){
-        print \OutputCLI\danger("Error: Unable to connect with the database. Edit environment.json file and check your database configurations.");
-        \OutputCLI\nl();
+        print \ZincPHP\CLI\Helper\danger("Error: Unable to connect with the database. Edit environment.json file and check your database configurations.");
+        \ZincPHP\CLI\Helper\nl();
         print 'Error Message: ' . mysqli_connect_error();
-        \OutputCLI\nl();
+        \ZincPHP\CLI\Helper\nl();
       }
     }
 
