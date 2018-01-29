@@ -200,15 +200,31 @@
     }
 
     /**
+     * Add an index for one or more than one columns.
+     * 
+     * @param   string        $indexName  Index name, if not provided then the first column 
+     *                                    name will be the default name for the index.
+     * @param   string|array  $columns    If string then it is a single column, for
+     *                                    multiple coloumns we can use an array.
+     * @return  object        ...         Current object.
+     */
+    function index( $columns, $indexName = '' ) {
+      $columns = ( array ) $columns;
+      $this->queryBody .= ', INDEX ' . $indexName . ' ( ' . implode( ',', $columns ) . ' ) ';
+      return $this;
+    }
+
+    /**
      * Renames a column.
      * 
      * @param   string   $oldName    Existing name of the column.
-     * @param   string   $newName    New name for the column.
+     * @param   string   $newName    New name for the column(optional)
      * @param   string   $dataType   Datatype for the column.
      * @param   integer  $dataLimit  Max limit of the data, if not provided then it would set to 200 by default.
      * @return  object   ...         Current object.
      */
-    function renameColumn( $oldName, $newName, $dataType, $dataLimit = false ) {
+    function alterColumn( $oldName, $newName = false, $dataType, $dataLimit = false ) {
+      if ( $newName === false ) $newName = $oldName;
       $_rawQuery = "ALTER TABLE ".$this->tableName." CHANGE ".$oldName." ".$newName." ";
       if( $dataLimit ) {
         $_rawQuery .= $dataType . "(" . $dataLimit . ");";
@@ -230,5 +246,27 @@
       return $this;
     }
 
+    /**
+     * Drop a column.
+     * 
+     * @param   string  $columnName   The column name need to drop.
+     * @return  object  ...           Current object.
+     */
+    function dropColumn ( $columnName = false ) {
+      if( $columnName ) {
+        $this->rawQuery = 'ALTER TABLE '.$this->tableName.' DROP COLUMN '.$columnName.';';
+      }
+      return $this;
+    }
+
+    /**
+     * Add a new column.
+     * 
+     * @return  object  ...  Current object.
+     */
+    function addNewColumn () {
+      $this->queryHead = ' ALTER TABLE '.$this->tableName.' ADD ';
+      return $this;
+    }
 
   }
