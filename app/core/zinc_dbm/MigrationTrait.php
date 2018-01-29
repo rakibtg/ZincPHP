@@ -201,7 +201,7 @@
       // Stop CLI execution.
       exit();
 
-    } // End of migrate() method.
+    } // End of migrateUp() method.
 
     /**
      * Method to migrate the migration file.
