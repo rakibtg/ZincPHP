@@ -206,10 +206,10 @@
      * @param   string   $newName    New name for the column.
      * @param   string   $dataType   Datatype for the column.
      * @param   integer  $dataLimit  Max limit of the data, if not provided then it would set to 200 by default.
-     * @return  object               Current object.
+     * @return  object   ...         Current object.
      */
     function renameColumn( $oldName, $newName, $dataType, $dataLimit = false ) {
-      $_rawQuery      = "ALTER TABLE ".$this->tableName." CHANGE ".$oldName." ".$newName." ";
+      $_rawQuery = "ALTER TABLE ".$this->tableName." CHANGE ".$oldName." ".$newName." ";
       if( $dataLimit ) {
         $_rawQuery .= $dataType . "(" . $dataLimit . ");";
       } else {
@@ -223,7 +223,7 @@
      * Make a RAW query.
      * 
      * @param   string   $query   RAW query to execute for a column.
-     * @return  object            Current object.
+     * @return  object   ...      Current object.
      */
     function rawColumn( $query ) {
       $this->queryBody .= ', ' . $query;
