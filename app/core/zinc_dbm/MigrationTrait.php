@@ -43,8 +43,6 @@
      */
     function prepareMigrationFileName( $fileName ) {
       $fileName = trim( $fileName );
-      $fileName = rtrim( $fileName, '.php' );
-      $fileName = ltrim( $fileName, '/' );
       return './app/migrations/' . trim( pathinfo( basename( $fileName ), PATHINFO_FILENAME ) ) . '.php';
     }
 
