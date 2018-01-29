@@ -21,7 +21,7 @@
      */
     function createTable( $table ) {
       $this->tableName  = $table;
-      $this->queryHead .= ' CREATE TABLE ' . $table . ' ';
+      $this->queryHead .= ' CREATE TABLE `' . $table . '` ';
       return $this;
     }
 
