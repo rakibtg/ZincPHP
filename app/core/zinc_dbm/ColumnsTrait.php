@@ -202,15 +202,34 @@
     /**
      * Add an index for one or more than one columns.
      * 
-     * @param   string        $indexName  Index name, if not provided then the first column 
-     *                                    name will be the default name for the index.
      * @param   string|array  $columns    If string then it is a single column, for
      *                                    multiple coloumns we can use an array.
+     * @param   string        $indexName  Index name, if not provided then the first column 
+     *                                    name will be the default name for the index.
      * @return  object        ...         Current object.
      */
     function index( $columns, $indexName = '' ) {
       $columns = ( array ) $columns;
-      $this->queryBody .= ', INDEX ' . $indexName . ' ( ' . implode( ',', $columns ) . ' ) ';
+      $this->queryBody .= ', INDEX `' . $indexName . '` ( ' . implode( ',', $columns ) . ' ) ';
+      return $this;
+    }
+
+    /**
+     * Add an index to an existing table for one or more than one columns.
+     * 
+     * @param   string|array  $columns    If string then it is a single column, for
+     *                                    multiple coloumns we can use an array.
+     * @param   string        $indexName  Index name, if not provided then the first column 
+     *                                    name will be the default name for the index.
+     * @return  object        ...         Current object.
+     */
+    function addNewIndex( $columns, $indexName = false ) {
+      $columns = ( array ) $columns;
+      if( $indexName === false ) {
+        // No index name found, take the first column name as the index name.
+        $indexName = $columns[ 0 ];
+      }
+      $this->rawQuery = 'CREATE INDEX `'.$indexName.'` ON `'.$this->tableName.'`('.implode(',',$columns).');';
       return $this;
     }
 
