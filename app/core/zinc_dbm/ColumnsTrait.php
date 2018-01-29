@@ -234,6 +234,19 @@
     }
 
     /**
+     * Add an index to an existing table for one or more than one columns.
+     * 
+     * @param   string   $indexName  Index name to be dropped.
+     * @return  object   ...         Current object.
+     */
+    function dropIndex( $indexName = false ) {
+      if( $indexName !== false ) {
+        $this->rawQuery = 'ALTER TABLE `'.$this->tableName.'` DROP INDEX `'.$indexName.'`;';
+      }
+      return $this;
+    }
+
+    /**
      * Renames a column.
      * 
      * @param   string   $oldName    Existing name of the column.
