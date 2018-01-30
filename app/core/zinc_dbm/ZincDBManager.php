@@ -33,7 +33,7 @@
 
     /**
      * Contains a RAW SQL Query.
-     * 
+     *
      * @var string $rawQuery;
      */
     private $rawQuery;
@@ -85,8 +85,19 @@
     }
 
     /**
+     * Run a plain raw sql query in the migration.
+     *
+     * @param   string  $sqlQuery  The sql query as a string.
+     * @return  object  ...        Current object.
+     */
+    function rawQuery( $sqlQuery ) {
+      $this->rawQuery = $sqlQuery;
+      return $this;
+    }
+
+    /**
      * The final query to create a table.
-     * 
+     *
      * @return  string  The queryable string.
      */
     function build() {
@@ -108,7 +119,7 @@
 
     /**
      * Destroy recent build of the SQL query.
-     * 
+     *
      */
     function destroyBuild() {
       // Reset query strings.
@@ -128,7 +139,7 @@
       $execQuery = mysqli_query( $this->db, trim( $this->build() ) );
       if( $execQuery !== true ) {
         return (string) mysqli_error( $this->db );
-      } 
+      }
       // Resetting the recent build.
       $this->destroyBuild();
       // Everything just works.
