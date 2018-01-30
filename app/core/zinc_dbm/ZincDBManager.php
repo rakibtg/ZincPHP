@@ -15,49 +15,49 @@
      *
      * @var string $queryHead
      */
-    private $queryHead;
+    protected $queryHead;
 
     /**
      * The body the SQL query, contains all the columns query.
      *
      * @var string $queryBody
      */
-    private $queryBody;
+    protected $queryBody;
 
     /**
      * The ending of the SQL query, contains table config related.
      *
      * @var string $queryFoot
      */
-    private $queryFoot;
+    protected $queryFoot;
 
     /**
      * Contains a RAW SQL Query.
      *
      * @var string $rawQuery;
      */
-    private $rawQuery;
+    protected $rawQuery;
 
     /**
      * Table to be affected.
      *
      * @var string $tableName
      */
-    private $tableName;
+    protected $tableName;
 
     /**
      * Application environment settings.
      *
      * @var object $env
      */
-    private $env;
+    protected $env;
 
     /**
      * Connection variable for MySQL.
      *
      * @var object $db
      */
-    private $db;
+    protected $db;
 
     function __construct() {
 
@@ -135,6 +135,7 @@
      * @return boolean
      */
     function query() {
+      // print "\n".$this->build()."\n";
       if( ! $this->db ) exit();
       $execQuery = mysqli_query( $this->db, trim( $this->build() ) );
       if( $execQuery !== true ) {
