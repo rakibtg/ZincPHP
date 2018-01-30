@@ -52,6 +52,7 @@
     if( $thisArg == 'migrate' || $thisArg == 'migrate:up' ) {
       require_once './app/core/zinc_cli/migration/migrate_up.php';
     }
+
     if( $thisArg == 'migrate:down' ) {
       if( isset( $argv[ 2 ] ) ) {
         // Migrate a single table.
@@ -61,6 +62,8 @@
         require_once './app/core/zinc_cli/migration/down/migrate_down_all.php';
       }
     }
+
+    if ( $thisArg === 'migrate:refresh' ) require_once './app/core/zinc_cli/migration/MigrateRefresh.php';
 
     // Default ZincPHP CLI welcome message.
     require_once './app/core/zinc_cli/static/default_message.php';
