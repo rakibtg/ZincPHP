@@ -9,7 +9,7 @@
     /**
      * List all the migration files.
      * @return    array    List of all PHP file in the migrations directory.
-     * 
+     *
      */
     function listAllMigrations() {
       $migratableFiles = scandir( './app/migrations' );
@@ -26,7 +26,7 @@
      * Check if a single migration file exists.
      * @param   string    $fileName    Migration file path.
      * @return  boolean   ...          Status of migration file existense.
-     * 
+     *
      */
     function isMigrationFileExists( $fileName ) {
       if( file_exists( $this->prepareMigrationFileName( $fileName ) ) ) {
@@ -49,7 +49,7 @@
     /**
      * Read the migrationlist.json json file and return its value as php array.
      * @return  array  List of migrated files.
-     * 
+     *
      */
     function readMigrationList() {
       $migrationListFilePath = './app/core/zinc_cli/migration/migrationlist.json';
@@ -65,7 +65,7 @@
      * Check if a provided migration has already migrated or not.
      * @param   string    $filePath     Migration file path.
      * @return  boolean   ...           The status of migration for the current migration file.
-     * 
+     *
      */
     function ifMigrated( $filePath ) {
       $migrationList = $this->readMigrationList();
@@ -88,7 +88,7 @@
      * This method would add a given migrated file name into the migrationlist.json file.
      * @param   string    $filePath Migration file path.
      * @return  void      ...       ...
-     * 
+     *
      */
     function addAsMigrated( $filePath ) {
       if( ! $this->ifMigrated( $filePath ) ) {
@@ -118,7 +118,7 @@
 
     /**
      * Default message when there is nothing to migrate.
-     * 
+     *
      */
     function noMigratables() {
       echo \ZincPHP\CLI\Helper\warn( "Nothing to migrate." );
@@ -126,10 +126,15 @@
       exit();
     }
 
+    function useDatabase() {
+      $this->rawQuery = 'USE `'.$this->env->database.'`';
+      return $this;
+    }
+
     /**
      * Method to migrate database form the migration file.
-     * 
-     * @param     string    $migratableFile   The file need to be migrated, 
+     *
+     * @param     string    $migratableFile   The file need to be migrated,
      *                                        if false then take all migratable files.
      * @return    void      ...               ...
      */
@@ -168,7 +173,7 @@
             // Check if this was a single migration, then show an error.
             // Also ask the user if he/she want to call the down() then up() to force migrate.
             if ( $migrateAll === false ) {
-              print \ZincPHP\CLI\Helper\danger( "Error: Migration file " . basename( $migratableFile ) . " already migrated." );              
+              print \ZincPHP\CLI\Helper\danger( "Error: Migration file " . basename( $migratableFile ) . " already migrated." );
               \ZincPHP\CLI\Helper\nl();
               print \ZincPHP\CLI\Helper\warn( "Hint: Delete the table/column manually." );
               \ZincPHP\CLI\Helper\nl();
@@ -203,7 +208,7 @@
 
     /**
      * Method to migrate the migration file.
-     * 
+     *
      * @param     string    $migratableFile   The file need to be migrated
      * @return    void      ...               ...
      */
