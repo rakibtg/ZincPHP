@@ -204,12 +204,12 @@
      * @param  string  $columnName        Column that has the relation.
      * @param  string  $referencedColumn  Dependent column.
      * @param  string  $referencedTable   Dependent table.
-     * @param  string  $constraint        Constraint name of the foreign key.
+     * @param  string  $constraint        Constraint name of the foreign key constraint.
      * @return object  ...                Current object.
      *
      */
     function foreignKey( $columnName, $referencedTable, $referencedColumn = false, $constraint = false ) {
-      if( $constraint === false ) {
+      if ( $constraint === false ) {
         $constraint = 'FK_'.$columnName.'_'.$referencedTable.'_'.$referencedColumn;
       }
       $this->queryBody .= ',
@@ -225,7 +225,7 @@
      * @param  string  $columnName        Column that has the relation.
      * @param  string  $referencedColumn  Dependent column.
      * @param  string  $referencedTable   Dependent table.
-     * @param  string  $constraint        Constraint name of the foreign key.
+     * @param  string  $constraint        Constraint name of the foreign key constraint.
      * @return object  ...                Current object.
      *
      */
