@@ -1,0 +1,19 @@
+<?php
+
+  /**
+   * {{SEED_NAME}} Database Seeder
+   * To learn more about seeding data go here: http://...
+   * 
+   */
+
+  class {{SEED_NAME}} extends ZincPHPMigrater {
+
+    function run () {
+
+      $db->table( '{{SEED_TABLE}}' )->insert( [
+
+      ] );
+
+    }
+
+  }
