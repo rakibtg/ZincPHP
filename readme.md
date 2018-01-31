@@ -13,9 +13,9 @@ ZincPHP introduces `block`, which is a combination of Route, Controller and Mode
 
 Assuming that we are going to create a new block for blog posts CRUD, so we will create a block for blog using the ZincCLI command,
 ```
-php zinc make:block blog -all
+php zinc make:block blog --all
 ```
-By running the above command, Zinc CLI will create a directory called `blog` inside the `blocks` directory and as we have passed the `-all` argument parameter with the command it will add individual files for general requests.
+By running the above command, Zinc CLI will create a directory called `blog` inside the `blocks` directory and as we have passed the `--all` argument parameter with the command it will add individual files for general requests.
 
 **Example:**
 ```
@@ -39,7 +39,7 @@ Here is how the block will response to each requests:
 
 If we want a custom API for example we want to highlight the API version in the path, we can achive this by creating the block with the expected version no. like this:
 ```
-php zinc make:block v1/blog -all
+php zinc make:block v1/blog --all
 ```
 This would create the block file inside the `/blocks/v1/blog/` and the API endpoint would be `/api/v1/blog/`
 
