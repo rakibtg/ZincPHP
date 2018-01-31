@@ -5,10 +5,11 @@
   require_once './app/core/zinc_dbm/MigrationTrait.php';
   require_once './app/core/zinc_dbm/TablesTrait.php';
   require_once './app/core/zinc_dbm/ZincPHPMigrater.php';
+  require_once './app/core/zinc_dbm/SeedsTrait.php';
 
   class ZincDBManager {
 
-    use ColumnsTrait, ModifiersTrait, MigrationTrait, TablesTrait;
+    use ColumnsTrait, ModifiersTrait, MigrationTrait, TablesTrait, SeedsTrait;
 
     /**
      * The begining query of the SQL
