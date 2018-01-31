@@ -63,7 +63,10 @@
       }
     }
 
+    // Clean the database and migrate again.
     if ( $thisArg === 'migrate:refresh' ) require_once './app/core/zinc_cli/migration/MigrateRefresh.php';
+
+    if ( $thisArg === 'make:seed' ) require_once './app/core/zinc_cli/seed/make_seeder.php';
 
     // Default ZincPHP CLI welcome message.
     require_once './app/core/zinc_cli/static/default_message.php';
