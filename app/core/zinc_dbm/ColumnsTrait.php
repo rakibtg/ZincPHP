@@ -204,11 +204,19 @@
      * @param  string  $columnName        Column that has the relation.
      * @param  string  $referencedColumn  Dependent column.
      * @param  string  $referencedTable   Dependent table.
+     * @param  string  $constraint        Constraint name of the foreign key.
      * @return object  ...                Current object.
      *
      */
-    function foreignKey( $columnName, $referencedTable, $referencedColumn = false ) {
-      $this->queryBody .= ', CONSTRAINT FK_'.$columnName.' FOREIGN KEY (`'.$columnName.'`) REFERENCES `'.$referencedTable.'`(`'.$referencedColumn.'`)';
+    function foreignKey( $columnName, $referencedTable, $referencedColumn = false, $constraint = false ) {
+      if( $constraint === false ) {
+        $constraint = 'FK_'.$columnName.'_'.$referencedTable.'_'.$referencedColumn;
+      }
+      $this->queryBody .= ',
+        CONSTRAINT '.$constraint.'
+        FOREIGN KEY (`'.$columnName.'`)
+        REFERENCES `'.$referencedTable.'`(`'.$referencedColumn.'`)
+      ';
       return $this;
     }
 
@@ -217,13 +225,18 @@
      * @param  string  $columnName        Column that has the relation.
      * @param  string  $referencedColumn  Dependent column.
      * @param  string  $referencedTable   Dependent table.
+     * @param  string  $constraint        Constraint name of the foreign key.
      * @return object  ...                Current object.
      *
      */
-    function addNewForeignKey( $columnName, $referencedTable, $referencedColumn = false ) {
+    function addNewForeignKey( $columnName, $referencedTable, $referencedColumn = false, $constraint = false ) {
+      if( $constraint === false ) {
+        $constraint = 'FK_'.$columnName.'_'.$referencedTable.'_'.$referencedColumn;
+      }
       $this->rawQuery .= '
         ALTER TABLE `'.$this->tableName.'`
-        ADD FOREIGN KEY (`'.$columnName.'`)
+        ADD CONSTRAINT '.$constraint.'
+        FOREIGN KEY (`'.$columnName.'`)
         REFERENCES `'.$referencedTable.'`(`'.$referencedColumn.'`);
       ';
       return $this;
