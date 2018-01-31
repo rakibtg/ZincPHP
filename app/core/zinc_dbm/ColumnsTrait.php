@@ -208,7 +208,7 @@
      *
      */
     function foreignKey( $columnName, $referencedTable, $referencedColumn = false ) {
-      $this->queryBody .= ', FOREIGN KEY (`'.$columnName.'`) REFERENCES `'.$referencedTable.'`(`'.$referencedColumn.'`)';
+      $this->queryBody .= ', CONSTRAINT FK_'.$columnName.' FOREIGN KEY (`'.$columnName.'`) REFERENCES `'.$referencedTable.'`(`'.$referencedColumn.'`)';
       return $this;
     }
 
