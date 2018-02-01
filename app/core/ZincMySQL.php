@@ -307,6 +307,19 @@ class DB {
 		return $this->lastIDInserted;
 	}//End insert function
 
+
+	public function insertMany( $table_name, $manyFields = [] )
+	{
+		$lastIDInserted = [];
+		$fieldsCount    = count( $manyFields );
+		foreach( $manyFields as $index => $fields ) {
+			$_id = $this->insert( $table_name, $fields );
+			$lastIDInserted[] = $_id;
+			if( $index === $fieldsCount ) $this->lastIDInserted = $_id;
+		}
+		return $lastIDInserted;
+	}//End insertMany function
+
 	public function lastId()
 	{
 		return $this->lastIDInserted;
