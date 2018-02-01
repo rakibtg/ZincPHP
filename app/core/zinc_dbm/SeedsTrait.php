@@ -93,7 +93,7 @@
             $seedResponse = ( new $className() )->run( DB::getInstance( $this->env ) );
             print \ZincPHP\CLI\Helper\warn( "Trying to seed:" );
             print $className;
-            if ( $seedResponse ) {
+            if ( $seedResponse !== false ) {
               print \ZincPHP\CLI\Helper\success( ' (✔ Success)' );
               \ZincPHP\CLI\Helper\nl();
             } else {
