@@ -6,6 +6,7 @@
   require_once './app/core/zinc_dbm/TablesTrait.php';
   require_once './app/core/zinc_dbm/ZincPHPMigrater.php';
   require_once './app/core/zinc_dbm/SeedsTrait.php';
+  require_once './app/core/ZincMySQL.php';
 
   class ZincDBManager {
 
