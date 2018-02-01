@@ -6,9 +6,13 @@
    * 
    */
 
-  class {{SEED_NAME}} extends ZincPHPMigrater {
+  class {{SEED_NAME}} extends ZincDBManager {
 
-    function run () {
+    /**
+     * Run the seeder.
+     * @param   object  $db   ZincPHP MySQL database instance.
+     */
+    function run ( $db ) {
 
       $db->table( '{{SEED_TABLE}}' )->insert( [
 
