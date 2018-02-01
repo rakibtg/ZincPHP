@@ -2,4 +2,3 @@ app/environment.json
 blocks/test/
 .DS_Store
 migrationlist.json
-seed_count.db
