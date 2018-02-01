@@ -2,7 +2,7 @@
   require_once './app/core/zinc_dbm/ZincDBManager.php';
 
   class MigrateRefresh extends ZincDBManager {
-    function ask() {
+    function ask( $argv ) {
       // Show user warning message.
       echo \ZincPHP\CLI\Helper\danger( 'Are you sure you want to empty the database "'.$this->env->database.'"? (y/n)' );
       $handle = fopen( "php://stdin", "r" );
@@ -44,16 +44,25 @@
           if( file_exists( './app/core/zinc_cli/migration/migrationlist.json' ) ) {
             file_put_contents( './app/core/zinc_cli/migration/migrationlist.json', '[]' );
           }
-          echo \ZincPHP\CLI\Helper\success( 'Successfully cleaned the database.' );
+          echo \ZincPHP\CLI\Helper\success( '✔ Successfully cleaned the database.' );
           echo \ZincPHP\CLI\Helper\nl();
 
           // Use current database.
           $this->useDatabase();
           echo '➤ Using database ' . $this->env->database;
           echo \ZincPHP\CLI\Helper\nl();
+          echo '➤ Migrating the database';
+          echo \ZincPHP\CLI\Helper\nl();
 
           // Migrate again.
           $this->migrateUp();
+
+          // Check do we have to seed too.
+          if( in_array( '--seed', $argv ) ) {
+            echo '➤ Trying to seed data.';
+            echo \ZincPHP\CLI\Helper\nl();
+            $this->seed( false );
+          }
 
         } else {
           echo \ZincPHP\CLI\Helper\danger( 'Failed to clean the database.' );
@@ -66,6 +75,9 @@
     }
   }
 
-  ( new MigrateRefresh() )->ask();
+  // Ask the user if he/she want to really empty the database.
+  ( new MigrateRefresh() )->ask( $argv );
+
+  
 
   exit();
