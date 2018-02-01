@@ -201,9 +201,6 @@
       // Final check of this migration status.
       if( $nothingToMigrate ) $this->noMigratables();
 
-      // Stop CLI execution.
-      exit();
-
     } // End of migrateUp() method.
 
     /**
@@ -230,7 +227,7 @@
         // Add current migration as migrated.
         $this->addAsMigrated( $migratableFile );
         // Display success message.
-        print \ZincPHP\CLI\Helper\success(" (Success)");
+        print \ZincPHP\CLI\Helper\success(" (✔ Success)");
         \ZincPHP\CLI\Helper\nl();
       } else {
         // Migration was failed.
