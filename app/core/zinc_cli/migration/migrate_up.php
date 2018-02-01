@@ -10,3 +10,5 @@
     // Migrate all new migration files that are not migrated yet.
     ( new ZincDBManager() )->migrateUp();
   }
+
+  exit();
