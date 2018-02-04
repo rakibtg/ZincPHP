@@ -26,14 +26,31 @@
     }
 
     /**
+     * Returns the request type.
+     * 
+     * @return string Request type.
+     * 
+     */
+    function requestType() {
+        return trim( strtolower( $_SERVER[ 'REQUEST_METHOD' ] ) );
+    }
+
+    /**
      * Get input data from GET requests.
      *
      * @param string $key Input field key name.
      * @return string
      */
-    function get( $key ) {
-        if( ! isset( $_GET[ $key ] ) ) return '';
-        return strTrim( $_GET[ $key ] );
+    function get( $key = false ) {
+        if( $key === false ) {
+            return $_GET;
+        } else {
+            if ( isset( $_GET[ $key ] ) ) {
+                return strTrim( $_GET[ $key ] );
+            } else {
+                return '';
+            }
+        }
     }
 
     /**
@@ -46,6 +63,96 @@
         if( ! isset( $_POST[ $key ] ) ) return '';
         return strTrim( $_POST[ $key ] );
     }
+
+    /**
+     * Get input data form PUT requests.
+     *
+     * @param string $key Input field key name.
+     * @return string
+     */
+    function put( $key ) {
+        if( \zp\requestType() === 'put' ) {
+            if( ! isset( $_POST[ $key ] ) ) return '';
+            return strTrim( $_POST[ $key ] );
+        }
+        return '';
+    }
+
+
+    /**
+     * Get input data form DELETE requests.
+     *
+     * @param string $key Input field key name.
+     * @return string
+     */
+    function delete( $key ) {
+        if( \zp\requestType() === 'delete' ) {
+            if( ! isset( $_POST[ $key ] ) ) return '';
+            return strTrim( $_POST[ $key ] );
+        }
+        return '';
+    }
+
+
+    /**
+     * Get input data form COPY requests.
+     *
+     * @param string $key Input field key name.
+     * @return string
+     */
+    function copy( $key ) {
+        if( \zp\requestType() === 'copy' ) {
+            if( ! isset( $_POST[ $key ] ) ) return '';
+            return strTrim( $_POST[ $key ] );
+        }
+        return '';
+    }
+
+
+    /**
+     * Get input data form OPTIONS requests.
+     *
+     * @param string $key Input field key name.
+     * @return string
+     */
+    function options( $key ) {
+        if( \zp\requestType() === 'options' ) {
+            if( ! isset( $_POST[ $key ] ) ) return '';
+            return strTrim( $_POST[ $key ] );
+        }
+        return '';
+    }    
+
+
+    /**
+     * Get input data form PROPFIND requests.
+     *
+     * @param string $key Input field key name.
+     * @return string
+     */
+    function propfind( $key ) {
+        if( \zp\requestType() === 'propfind' ) {
+            if( ! isset( $_POST[ $key ] ) ) return '';
+            return strTrim( $_POST[ $key ] );
+        }
+        return '';
+    }   
+    
+
+    /**
+     * Get input data form PATCH requests.
+     *
+     * @param string $key Input field key name.
+     * @return string
+     */
+    function patch( $key ) {
+        if( \zp\requestType() === 'patch' ) {
+            if( ! isset( $_POST[ $key ] ) ) return '';
+            return strTrim( $_POST[ $key ] );
+        }
+        return '';
+    }   
+
 
     /**
      * Converts data to json then print it.
