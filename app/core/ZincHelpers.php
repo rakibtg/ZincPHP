@@ -59,9 +59,16 @@
      * @param string $key Input field key name.
      * @return string
      */
-    function post( $key ) {
-        if( ! isset( $_POST[ $key ] ) ) return '';
-        return strTrim( $_POST[ $key ] );
+    function post( $key = false ) {
+        if( $key === false ) {
+            return $_POST;
+        } else {
+            if ( isset( $_POST[ $key ] ) ) {
+                return strTrim( $_POST[ $key ] );
+            } else {
+                return '';
+            }
+        }
     }
 
     /**
