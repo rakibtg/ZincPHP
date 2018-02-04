@@ -115,7 +115,7 @@
             // Get data from requests aka user input.
             if( $this->queryStringType == 'get' ) {
               // Get user inputs from query string.
-              $this->validables[ $fieldName ][ 'value' ] = _get( $fieldName );
+              $this->validables[ $fieldName ][ 'value' ] = \zp\get( $fieldName );
             } else if ( $this->queryStringType == 'post' ) {
               // Get user inputs from post data.
               $this->validables[ $fieldName ][ 'value' ] = _post( $fieldName );
