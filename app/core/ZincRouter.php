@@ -61,7 +61,7 @@
     public function goToCurrentBlock() {
 
       // Request method
-      $requestMethod = trim( strtolower( $_SERVER[ 'REQUEST_METHOD' ] ) );
+      $requestMethod = \zp\requestType();
 
       // Check if block exist.
       $segments = '/';
