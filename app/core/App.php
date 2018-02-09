@@ -1,10 +1,12 @@
 <?php
 
   require_once __DIR__ . '/app_traits/HelperTraits.php';
+  require_once __DIR__ . '/app_traits/InputTraits.php';
+  require_once __DIR__ . '/app_traits/ResponseTraits.php';
 
   class App {
 
-    use HelperTraits;
+    use HelperTraits, InputTraits, ResponseTraits;
 
     /**
     * Alias to Validator class validate() method.
