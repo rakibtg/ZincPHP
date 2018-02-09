@@ -1,5 +1,6 @@
 <?php
 
+  require_once '../app/core/App.php';
   require_once '../app/core/ZincHelpers.php';
   require_once '../app/core/ZincMySQL.php';
   require_once '../app/core/ZincJWT.php';
