@@ -2,38 +2,40 @@
 
     namespace zp;
 
-    /**
-     * Shortcut to print_r method.
-     *
-     * @param array $arr
-     *
-     * @return void
-     */
-    function pr( $arr = [] ) {
-        print_r( $arr );
-    }
+    // /**
+    //  * Shortcut to print_r method.
+    //  *
+    //  * @param array $arr
+    //  *
+    //  * @return void
+    //  * done
+    //  */
+    // function pr( $arr = [] ) {
+    //     print_r( $arr );
+    // }
 
-    /**
-     * Checks if a variable exists, else
-     * returns null.
-     *
-     * @param    any      $str Any variable.
-     * @return   string
-     */
-    function strTrim( $str ) {
-        if( ! isset( $str ) ) return '';
-        return trim( $str );
-    }
+    // /**
+    //  * Checks if a variable exists, else
+    //  * returns null.
+    //  *
+    //  * @param    any      $str Any variable.
+    //  * @return   string
+    //  * done
+    //  */
+    // function strTrim( $str ) {
+    //     if( ! isset( $str ) ) return '';
+    //     return trim( $str );
+    // }
 
-    /**
-     * Returns the request type.
-     * 
-     * @return string Request type.
-     * 
-     */
-    function requestType() {
-        return trim( strtolower( $_SERVER[ 'REQUEST_METHOD' ] ) );
-    }
+    // /**
+    //  * Returns the request type.
+    //  * 
+    //  * @return string Request type.
+    //  * done
+    //  */
+    // function requestType() {
+    //     return trim( strtolower( $_SERVER[ 'REQUEST_METHOD' ] ) );
+    // }
 
     /**
      * Get input data from GET requests.
@@ -203,65 +205,68 @@
         exit();
     }
 
-    /**
-     * Returns the domain and with URI if provided.
-     *
-     * @param   string  $uri    The URI to be append with the domain.
-     * @return  string
-     */
-    function url( $uri = '/' ) {
-        if( isset( $_SERVER[ "HTTPS" ] ) && ! empty( $_SERVER[ "HTTPS" ] ) && ( $_SERVER[ "HTTPS" ] != 'on' ) ) {
-            $url = 'https://'.$_SERVER["SERVER_NAME"]; //https url
-        }  else {
-            $url =  'http://'.$_SERVER["SERVER_NAME"]; //http url
-        }
-        if(( $_SERVER["SERVER_PORT"] != 80 )) $url .= ':' . $_SERVER["SERVER_PORT"];
-        if( trim( $uri ) == '/' ) return $url;
-        else return $url . '/?route=' . $uri;
-    }
+    // /**
+    //  * Returns the domain and with URI if provided.
+    //  *
+    //  * @param   string  $uri    The URI to be append with the domain.
+    //  * @return  string
+    //  * done
+    //  */
+    // function url( $uri = '/' ) {
+    //     if( isset( $_SERVER[ "HTTPS" ] ) && ! empty( $_SERVER[ "HTTPS" ] ) && ( $_SERVER[ "HTTPS" ] != 'on' ) ) {
+    //         $url = 'https://'.$_SERVER["SERVER_NAME"]; //https url
+    //     }  else {
+    //         $url =  'http://'.$_SERVER["SERVER_NAME"]; //http url
+    //     }
+    //     if(( $_SERVER["SERVER_PORT"] != 80 )) $url .= ':' . $_SERVER["SERVER_PORT"];
+    //     if( trim( $uri ) == '/' ) return $url;
+    //     else return $url . '/?route=' . $uri;
+    // }
 
-    /**
-     * The full path of the current route.
-     *
-     * @return string
-     */
-    function current_url() {
-        return url() . $_SERVER["REQUEST_URI"];
-    }
+    // /**
+    //  * The full path of the current route.
+    //  *
+    //  * @return string
+    //  * done
+    //  */
+    // function current_url() {
+    //     return url() . $_SERVER["REQUEST_URI"];
+    // }
 
-    /**
-     * Generates slug of a string. Supports any languages.
-     * Try to avoid + as the seperator as this would break the slug.
-     *
-     * @param   string $url         Plain text
-     * @param   string $seperator   The seperator of the slug
-     * @return  string
-     */
-    function slug( $url = '', $seperator = '_' ) {
-        $url = trim( $url );
-        foreach( [
-            '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=',
-            '[', '{', ']', '}', ';', ':', '"', "'", ',', '>', '.', '<', '/', '?', '\\', '|'
-        ] as $del ) {
-            $url = str_replace( $del, '', $url );
-        }
-        $url = str_replace( ' ', $seperator, trim( $url ) );
-        return preg_replace( '/'.$seperator.'+/', $seperator, $url );
-    }
+    // /**
+    //  * Generates slug of a string. Supports any languages.
+    //  * Try to avoid + as the seperator as this would break the slug.
+    //  *
+    //  * @param   string $url         Plain text
+    //  * @param   string $seperator   The seperator of the slug
+    //  * @return  string
+    //  * done
+    //  */
+    // function slug( $url = '', $seperator = '_' ) {
+    //     $url = trim( $url );
+    //     foreach( [
+    //         '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=',
+    //         '[', '{', ']', '}', ';', ':', '"', "'", ',', '>', '.', '<', '/', '?', '\\', '|'
+    //     ] as $del ) {
+    //         $url = str_replace( $del, '', $url );
+    //     }
+    //     $url = str_replace( ' ', $seperator, trim( $url ) );
+    //     return preg_replace( '/'.$seperator.'+/', $seperator, $url );
+    // }
 
-    /**
-     * Generates slug of a string, keep only english charecters.
-     *
-     * @param   string    $url         Plain text
-     * @param   string    $seperator   The seperator of the slug
-     * @return  boolean   $fallback    The fallback is idea because if the slug is empty then
-     *                                 instead of empty it would return a unique random string as the slug.
-     */
-    function en_slug( $url = '', $seperator = ' ', $fallback = false ) {
-      $url = trim( $url );
-      $url = preg_replace('/[^a-zA-Z0-9\s]/', '', $url);
-      $url = preg_replace('!\s+!', ' ', $url);
-      $url = str_replace( ' ', $seperator, $url );
-      if( $fallback ) $url .= mt_rand();
-      return $url;
-    }
+    // /**
+    //  * Generates slug of a string, keep only english charecters.
+    //  *
+    //  * @param   string    $url         Plain text
+    //  * @param   string    $seperator   The seperator of the slug
+    //  * @return  boolean   $fallback    The fallback is idea because if the slug is empty then
+    //  *                                 instead of empty it would return a unique random string as the slug.
+    //  */
+    // function en_slug( $url = '', $seperator = ' ', $fallback = false ) {
+    //   $url = trim( $url );
+    //   $url = preg_replace('/[^a-zA-Z0-9\s]/', '', $url);
+    //   $url = preg_replace('!\s+!', ' ', $url);
+    //   $url = str_replace( ' ', $seperator, $url );
+    //   if( $fallback ) $url .= mt_rand();
+    //   return $url;
+    // }
