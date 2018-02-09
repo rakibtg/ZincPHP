@@ -1,4 +1,7 @@
 <?php
+
+  require_once './app/core/App.php';
+
   // Check if a env file already exists.
   if( file_exists( './app/environment.json' ) ) {
     echo "environment.json already exists, do you want to overwrite?(Y/n) ";
@@ -15,7 +18,7 @@
   }
   // Create the new environment.json file.
   $default_env = json_decode( file_get_contents( './app/core/zinc_structures/environment.json.example' ) );
-  $default_env->secret_keys = bin2hex( random_bytes( 64 ) );
+  $default_env->secret_keys = bin2hex( App::randomString( 64 ) );
   file_put_contents( './app/environment.json', json_encode( $default_env, JSON_PRETTY_PRINT ) );
   echo \ZincPHP\CLI\Helper\success( "Environment document has created." );
   \ZincPHP\CLI\Helper\nl();
