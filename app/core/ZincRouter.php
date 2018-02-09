@@ -29,7 +29,7 @@
 
     function __construct() {
       // Get the current route path.
-      $this->route = \zp\get( 'route' );
+      $this->route = App::get( 'route' );
     }
 
     /**
@@ -61,7 +61,7 @@
     public function goToCurrentBlock() {
 
       // Request method
-      $requestMethod = \zp\requestType();
+      $requestMethod = App::requestType();
 
       // Check if block exist.
       $segments = '/';
@@ -79,7 +79,7 @@
         $this->loadBlock();
       } else {
         // No block was found, return not found error.
-        \zp\response_error( 'Block not found.' );
+        App::response_error( 'Block not found.' );
       }
     }
 
@@ -108,7 +108,7 @@
         require_once $this->blockName;
       } else {
         // No block was found, return not found error.
-        \zp\response_error( 'Block not found.' );
+        App::response_error( 'Block not found.' );
       }
     }
 
