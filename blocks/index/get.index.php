@@ -12,4 +12,4 @@
     'ToDo'      => 'To change this page, edit \'get.index.php\' inside \'block\' directory',
   ];
 
-  \zp\response( $data = $welcomeMessage, $responseStatus = 200, $prettyPrint = true );
+  App::response( $data = $welcomeMessage, $responseStatus = 200, $prettyPrint = true );
