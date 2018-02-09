@@ -114,12 +114,46 @@
             // No value found from block.
             // Get data from requests aka user input.
             if( $this->queryStringType == 'get' ) {
+
               // Get user inputs from query string.
-              $this->validables[ $fieldName ][ 'value' ] = \zp\get( $fieldName );
+              $this->validables[ $fieldName ][ 'value' ] = App::get( $fieldName );
+
             } else if ( $this->queryStringType == 'post' ) {
+
               // Get user inputs from post data.
-              $this->validables[ $fieldName ][ 'value' ] = _post( $fieldName );
-            }
+              $this->validables[ $fieldName ][ 'value' ] = App::post( $fieldName );
+
+            } else if ( $this->queryStringType == 'put' ) {
+
+              // Get user inputs from put data.
+              $this->validables[ $fieldName ][ 'value' ] = App::put( $fieldName );
+
+            } else if ( $this->queryStringType == 'delete' ) {
+
+              // Get user inputs from delete data.
+              $this->validables[ $fieldName ][ 'value' ] = App::delete( $fieldName );
+
+            } else if ( $this->queryStringType == 'patch' ) {
+
+              // Get user inputs from patch data.
+              $this->validables[ $fieldName ][ 'value' ] = App::patch( $fieldName );
+
+            } else if ( $this->queryStringType == 'options' ) {
+
+              // Get user inputs from options data.
+              $this->validables[ $fieldName ][ 'value' ] = App::options( $fieldName );
+
+            } else if ( $this->queryStringType == 'propfind' ) {
+
+              // Get user inputs from propfind data.
+              $this->validables[ $fieldName ][ 'value' ] = App::propfind( $fieldName );
+
+            } else if ( $this->queryStringType == 'copy' ) {
+
+              // Get user inputs from copy data.
+              $this->validables[ $fieldName ][ 'value' ] = App::copy( $fieldName );
+              
+            } 
           }
 
           // Work with custom error messages.
