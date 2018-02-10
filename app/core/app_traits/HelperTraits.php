@@ -10,7 +10,7 @@
     public static function environment() {
       // Import and set environment variables from environment document.
       if( ! file_exists( '../app/environment.json' ) ) {
-        \zp\response_error( 'Environment document was not found! Run \'php zinc env:new\' command to create a new environment document.' );
+        App::response_error( 'Environment document was not found! Run \'php zinc env:new\' command to create a new environment document.' );
         exit();
       }
       // Set environment settings
@@ -66,9 +66,9 @@
      * @return  any     ...      Available data from request.
      */
     public static function requestFormula( $method = 'put', $key = false ) {
-      if ( \zp\requestType() === $method ) {
-          if ( $key === false ) return \zp\restRequests();
-          $_data = \zp\restRequests();
+      if ( App::requestType() === $method ) {
+          if ( $key === false ) return App::restRequests();
+          $_data = App::restRequests();
           if ( isset( $_data[ $key ] ) ) return strTrim( $_data[ $key ] );
       }
       return '';
