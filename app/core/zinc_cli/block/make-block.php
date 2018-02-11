@@ -115,8 +115,6 @@
     exit();
   }
 
-
-
   /**
    * Make block name from the user defined make:block argument value.
    *
@@ -142,7 +140,7 @@
       \ZincPHP\CLI\Helper\nl();
     } else {
       // Create the block.
-      copy( './app/core/zinc_structures/new_block', \ZincPHP\CLI\Helper\joinpaths( $blockPath, $blockName ) );
+      copy( './app/core/zinc_structures/new_block.php.example', \ZincPHP\CLI\Helper\joinpaths( $blockPath, $blockName ) );
       echo \ZincPHP\CLI\Helper\success( "> " . $rawBlockName . ' block has created for "'.$requestType.'" request as ' . $blockName );
       \ZincPHP\CLI\Helper\nl();
     }
