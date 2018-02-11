@@ -17,7 +17,7 @@
         return $_GET;
       } else {
           if ( isset( $_GET[ $key ] ) ) {
-            return strTrim( $_GET[ $key ] );
+            return App::strTrim( $_GET[ $key ] );
           } else {
             return '';
           }
@@ -35,7 +35,7 @@
         return $_POST;
       } else {
         if ( isset( $_POST[ $key ] ) ) {
-          return strTrim( $_POST[ $key ] );
+          return App::strTrim( $_POST[ $key ] );
         } else {
           return '';
         }
@@ -51,7 +51,7 @@
     public static function put( $key ) {
       if( App::requestType() === 'put' ) {
         if( ! isset( $_POST[ $key ] ) ) return '';
-        return strTrim( $_POST[ $key ] );
+        return App::strTrim( $_POST[ $key ] );
       }
       return '';
     }
@@ -66,7 +66,7 @@
     public static function delete( $key ) {
       if( App::requestType() === 'delete' ) {
         if( ! isset( $_POST[ $key ] ) ) return '';
-        return strTrim( $_POST[ $key ] );
+        return App::strTrim( $_POST[ $key ] );
       }
       return '';
     }
@@ -81,7 +81,7 @@
     public static function copy( $key ) {
       if( App::requestType() === 'copy' ) {
         if( ! isset( $_POST[ $key ] ) ) return '';
-        return strTrim( $_POST[ $key ] );
+        return App::strTrim( $_POST[ $key ] );
       }
       return '';
     }
@@ -96,7 +96,7 @@
     public static function options( $key ) {
       if( App::requestType() === 'options' ) {
         if( ! isset( $_POST[ $key ] ) ) return '';
-        return strTrim( $_POST[ $key ] );
+        return App::strTrim( $_POST[ $key ] );
       }
       return '';
     }    
@@ -111,7 +111,7 @@
     public static function propfind( $key ) {
       if( App::requestType() === 'propfind' ) {
         if( ! isset( $_POST[ $key ] ) ) return '';
-        return strTrim( $_POST[ $key ] );
+        return App::strTrim( $_POST[ $key ] );
       }
       return '';
     }   
@@ -126,7 +126,7 @@
     public static function patch( $key ) {
       if( App::requestType() === 'patch' ) {
         if( ! isset( $_POST[ $key ] ) ) return '';
-        return strTrim( $_POST[ $key ] );
+        return App::strTrim( $_POST[ $key ] );
       }
       return '';
     }   
