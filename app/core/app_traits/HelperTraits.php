@@ -165,4 +165,23 @@
       return $url;
     }
 
+    /**
+     * Sort a associative array ascending or descending by its key(index).
+     *
+     * @param   string    $field            Name of the key.
+     * @param   array     $objectSortable   Associative array to sort.
+     * @param   string    $direction        Sort by asc or desc. Default is asc order.
+     * 
+     * @return  boolean   On successful sort it will return a boolean true.
+     */
+    function sortBy( $field, &$objectSortable, $direction = 'asc' ) {
+      usort( $objectSortable, create_function( '$a, $b', '
+        $a = $a["' . $field . '"];
+        $b = $b["' . $field . '"];
+        if ($a == $b) { return 0; }
+        return ($a ' . ( $direction == 'desc' ? '>' : '<' ) .' $b) ? -1 : 1;
+      ') );
+      return true;
+    }
+
   }
