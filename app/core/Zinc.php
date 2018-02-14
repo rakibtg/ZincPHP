@@ -13,6 +13,7 @@
 
     function __construct() {
 
+      // Error reporting will be re-thinked later.
       error_reporting( E_ALL );
       ini_set( 'display_errors', 1 );
 
