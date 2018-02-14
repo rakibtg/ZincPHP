@@ -1,0 +1,16 @@
+{
+    "name": "rakibtg/zincphp",
+    "description": "A RESTful micro framework for PHP",
+    "keywords": ["framework", "zincphp", "php", "rest", "api", "micro"],
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "rakibtg",
+            "email": "rakibtg@gmail.com"
+        }
+    ],
+    "require": {
+      "php": ">=5.6"
+    }
+}
