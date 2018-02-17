@@ -70,6 +70,9 @@
     
     if ( $thisArg === 'seeder' || $thisArg === 'seed' ) require_once './app/core/zinc_cli/seed/seeder.php';
 
+    // Run test command
+    if ( $thisArg === 'run:test' ) require_once './app/core/zincphp_tester/runTest.php';
+
 
     // Default ZincPHP CLI welcome message.
     require_once './app/core/zinc_cli/static/default_message.php';
