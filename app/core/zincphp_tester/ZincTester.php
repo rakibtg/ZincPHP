@@ -11,6 +11,14 @@
       $this->testables      = [];
     }
 
+    function makeTestClassName( $blockName ) {
+      $blockName = trim( str_replace( '_', '', $blockName ) );
+      $blockName = str_replace( '-', '', $blockName );
+      $blockName = str_replace( '.test.php', '', $blockName );
+      $blockName = str_replace( '.', '', $blockName );
+      return ucfirst( $blockName );
+    }
+
     function getTestDirectories( $dir = false, &$results = [] ) {
       if ( $dir === false ) $dir = './blocks';
       $files = scandir( $dir );
@@ -51,8 +59,12 @@
           foreach ( $testBlock[ 'files' ] as $testFile ) {
             // Importing the test file.
             require_once $testBlock[ 'path' ] . DIRECTORY_SEPARATOR . $testFile;
-            // Call the test.
-            // ...
+            // Start the test.
+            $_className = $this->makeTestClassName( $testFile ); // Generate the class name of the test class.
+            $blockTester = new $_className(); // Dynamically create a new instance of the test class.
+            $blockTester->generateUrlFromPath( $testBlock[ 'path' ] ); // Passing the block name into the block tester class.
+            $blockTester->makeTest();
+            $blockTester->runTest();
           }
         }
       }
