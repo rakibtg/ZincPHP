@@ -3,11 +3,16 @@
   require_once __DIR__ . '/ZincTester.php';
   $tester = new ZincTester();
   $testables = $tester->getTestDirectories();
-  echo "\n";
-  echo $tester->blocksCount . " blocks and " . ( $tester->testFilesCount + 1 ) . " files to test.";
-  echo "\n";
-  print_r( $testables );
+  if ( $tester->blocksCount > 0 ) {
+    echo \ZincPHP\CLI\Helper\success( $tester->blocksCount . " blocks and " . ( $tester->testFilesCount + 1 ) . " files to test." );
+    \ZincPHP\CLI\Helper\nl();
+    echo $tester->run();
+    // print_r( $testables );
+    echo "\n";
+  } else {
+    echo \ZincPHP\CLI\Helper\danger( "No tests found!" );
+    \ZincPHP\CLI\Helper\nl();
+  }
 
-  echo "\n";
   // Exit the CLI execution.
   exit();
