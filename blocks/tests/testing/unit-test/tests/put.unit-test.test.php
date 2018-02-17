@@ -1,7 +1,7 @@
 <?php
 
   // A test file.
-  class Puttestmakerequest extends BlockTester {
+  class Putunittest extends BlockTester {
 
     public function makeTest() {
 
