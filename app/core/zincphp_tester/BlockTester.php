@@ -16,6 +16,12 @@
     public $expectedContentType;
     public $requestMethod;
 
+    public $testSuccess;
+
+    function __construct() {
+      $this->testSuccess = true;
+    }
+
     private function makeRequest( $requester ) {
       $_funcName = "HTTP" . ucfirst( $this->requestMethod );
       $this->fetchedResponse = $requester->$_funcName( $this->requestUrl, $this->parameters );
@@ -40,6 +46,8 @@
 
     public function runTest( $requester ) {
       $this->makeRequest( $requester );
+      $this->testStatus();
+      $this->testContentType();
       // print_r( $this->parameters );
       // echo "\n";
       // print_r( $this->expectedResponseStatus );
