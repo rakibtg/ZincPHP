@@ -7,7 +7,9 @@
 
       $this->parameters = [];
 
-      $this->expectedResponseStatus = '200';
+      $this->expectedResponseStatus = 200;
+
+      $this->expectedContentType = 'application/json';
 
       $this->expectEmptyResponse = false;
 
