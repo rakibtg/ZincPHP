@@ -8,13 +8,14 @@
      * @return array App settings; JSON document as array.
      */
     public static function environment() {
+      $envPath = __DIR__ . '/../../environment.json';
       // Import and set environment variables from environment document.
-      if( ! file_exists( '../app/environment.json' ) ) {
+      if( ! file_exists( $envPath ) ) {
         App::response_error( 'Environment document was not found! Run \'php zinc env:new\' command to create a new environment document.' );
         exit();
       }
       // Set environment settings
-      return json_decode( file_get_contents( '../app/environment.json' ) );
+      return json_decode( file_get_contents( $envPath ) );
     }
 
     /**
