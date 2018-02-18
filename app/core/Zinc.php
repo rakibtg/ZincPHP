@@ -1,11 +1,11 @@
 <?php
 
-  require_once '../app/core/App.php';
-  require_once '../app/core/ZincMySQL.php';
-  require_once '../app/core/ZincJWT.php';
-  require_once '../app/core/ZincValidator.php';
-  require_once '../app/core/ZincHTTP.php';
-  require_once '../app/core/ZincRouter.php';
+  require_once __DIR__ . '/App.php';
+  require_once __DIR__ . '/ZincMySQL.php';
+  require_once __DIR__ . '/ZincJWT.php';
+  require_once __DIR__ . '/ZincValidator.php';
+  require_once __DIR__ . '/ZincHTTP.php';
+  require_once __DIR__ . '/ZincRouter.php';
 
   class Zinc {
 
