@@ -3,18 +3,17 @@
   // A test file.
   class Putunittest extends BlockTester {
 
-    public function makeTest() {
-
+    public function metaData () {
+      $this->headers = [];
       $this->parameters = [];
+    }
 
-      $this->expectedResponseStatus = '200';
-
+    public function setExpectations () {
+      $this->expectedResponseStatus = 200;
+      $this->expectedContentType = 'application/json';
       $this->expectEmptyResponse = false;
-
       $this->expectedData = null;
-
       $this->responseDataValidator = 'required|max:1000|string';
-
     }
 
   }
