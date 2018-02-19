@@ -86,6 +86,8 @@
         \ZincPHP\CLI\Helper\nl();
         \ZincPHP\CLI\Helper\nl();
 
+        sleep(2); // Safes from any unexpected attack.
+
         // Create new instance of the zinc http module.
         $requester = new ZincHTTP();
 
@@ -100,6 +102,7 @@
             $blockTester = new $_className(); // Dynamically create a new instance of the test class.
             $blockTester->generateUrlFromPath( $testBlock[ 'path' ], $this->devServer ); // Passing the block name into the block tester class.
             $blockTester->setRequestMethod( $testFile );
+            $blockTester->setTestFileName( $testFile );
             $blockTester->makeTest();
             $blockTester->runTest( $requester );
           }
