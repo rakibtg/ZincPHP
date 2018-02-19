@@ -3,11 +3,13 @@
   // A test file.
   class Puttestmakerequest extends BlockTester {
 
-    public function makeTest() {
-
+    public function metaData () {
       $this->headers = [];
-
       $this->parameters = [];
+    }
+
+    // public function makeTest() {
+    public function setExpectations () {
 
       $this->expectedResponseStatus = 200;
 
