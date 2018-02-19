@@ -20,22 +20,34 @@
 
     }
 
-    function makeTestClassName( $blockName ) {
-      $blockName = trim( str_replace( '_', '', $blockName ) );
-      $blockName = str_replace( '-', '', $blockName );
-      $blockName = str_replace( '.test.php', '', $blockName );
-      $blockName = str_replace( '.', '', $blockName );
-      return ucfirst( $blockName );
+    /**
+     * Generate the class name for the test file name.
+     * 
+     * @param   string $testFile Test file name
+     * @return  string Class name of the test file.
+     */
+    function makeTestClassName( $testFile ) {
+      $testFile = trim( str_replace( '_', '', $testFile ) );
+      $testFile = str_replace( '-', '', $testFile );
+      $testFile = str_replace( '.test.php', '', $testFile );
+      $testFile = str_replace( '.', '', $testFile );
+      return ucfirst( $testFile );
     }
 
-    function getTestableBlocks( $dir = false, &$results = [] ) {
+    /**
+     * Browser each tests directory of each block and pluck the test files.
+     * 
+     * @param   boolean|string $dir When $dir is false then define the blocks path.
+     * @param   array $testableFilesList Array of testable blocks and test files.
+     */
+    function getTestableBlocks( $dir = false, &$testableFilesList = [] ) {
       if ( $dir === false ) $dir = './blocks';
       $files = scandir( $dir );
       foreach( $files as $key => $value ){
         $path = realpath( $dir . DIRECTORY_SEPARATOR . $value );
         if( is_dir( $path ) ) {
           if( $value != "." && $value != ".." ) {
-            $this->getTestableBlocks( $path, $results );
+            $this->getTestableBlocks( $path, $testableFilesList );
             $_testDir = explode( DIRECTORY_SEPARATOR, $path );
             if ( $_testDir[ count( $_testDir ) - 1 ] === 'tests' ) {
               $testable[ 'block' ] = $_testDir[ count( $_testDir ) - 2 ];
@@ -49,19 +61,24 @@
               }
               if ( count ( $testable[ 'files' ] ) > 0 ) {
                 $this->testFilesCount += 1;
-                $results[] = $testable;
+                $testableFilesList[] = $testable;
               }
             }
           }
         }
       }
-      $this->blocksCount = count( $results );
-      $this->testables = $results;
-      return $results;
+      $this->blocksCount = count( $testableFilesList );
+      $this->testables = $testableFilesList;
+      return $testableFilesList;
     }
 
+    /**
+     * Start the test.
+     * 
+     * @param   array $argv Array of the system arguments.
+     * @return  void
+     */
     public function run( $argv ) {
-
       // Set the dev domain.
       if ( is_array( $argv ) ) {
         foreach ( $argv as $arg ) {
@@ -103,7 +120,7 @@
             $blockTester->generateUrlFromPath( $testBlock[ 'path' ], $this->devServer ); // Passing the block name into the block tester class.
             $blockTester->setRequestMethod( $testFile );
             $blockTester->setTestFileName( $testFile );
-            $blockTester->makeTest();
+            $blockTester->setExpectations();
             $blockTester->runTest( $requester );
           }
         } // End of $this->testables loop.
