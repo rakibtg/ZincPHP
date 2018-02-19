@@ -5,6 +5,8 @@
 
     public function makeTest() {
 
+      $this->headers = [];
+
       $this->parameters = [];
 
       $this->expectedResponseStatus = 200;
