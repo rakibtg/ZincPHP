@@ -5,7 +5,6 @@
  *
  */
 
-
 /*
 
   A SAMPLE RESPONSE DATA
@@ -46,22 +45,22 @@
 
 */
 
-
-
 class ZincHTTP {
+
   /**
    * Make HTTP-GET call
    * @param       $url
    * @param       array $params
    * @return      HTTP-Response body or an empty string if the request fails or is empty
    */
-  public function HTTPGet( $url, $params = [] ) {
+  public function HTTPGet( $url, $params = [], $headers = [] ) {
     $query = http_build_query( $params ); 
     $ch    = curl_init( $url . '?' . $query );
     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
     curl_setopt( $ch, CURLOPT_HEADER, false );
+    curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
     $response[ 'content' ] = curl_exec( $ch );
-    $response[ 'header' ] = curl_getinfo( $ch );
+    $response[ 'header' ]  = curl_getinfo( $ch );
     curl_close( $ch );
     return $response;
   }
@@ -72,16 +71,17 @@ class ZincHTTP {
    * @param       array $params
    * @return      HTTP-Response body or an empty string if the request fails or is empty
    */
-  public function HTTPPost( $url, $params = [] ) {
+  public function HTTPPost( $url, $params = [], $headers = [] ) {
     $query = http_build_query( $params );
     $ch    = curl_init();
     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
     curl_setopt( $ch, CURLOPT_HEADER, false );
+    curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
     curl_setopt( $ch, CURLOPT_URL, $url );
     curl_setopt( $ch, CURLOPT_POST, true );
     curl_setopt( $ch, CURLOPT_POSTFIELDS, $query );
     $response[ 'content' ] = curl_exec( $ch );
-    $response[ 'header' ] = curl_getinfo( $ch );
+    $response[ 'header' ]  = curl_getinfo( $ch );
     curl_close( $ch );
     return $response;
   }
@@ -93,17 +93,18 @@ class ZincHTTP {
    * @param       string  The method name.
    * @return      HTTP-Response body or an empty string if the request fails or is empty.
    */
-  private function makeRequestsFormula( $url, $params, $method ) {
-    $query = \http_build_query( $params );
-    $ch    = \curl_init();
-    \curl_setopt( $ch, \CURLOPT_RETURNTRANSFER, true );
-    \curl_setopt( $ch, \CURLOPT_HEADER, false );
-    \curl_setopt( $ch, \CURLOPT_URL, $url );
-    \curl_setopt( $ch, \CURLOPT_CUSTOMREQUEST, $method );
-    \curl_setopt( $ch, \CURLOPT_POSTFIELDS, $query );
+  private function makeRequestsFormula( $url, $params, $method, $headers ) {
+    $query = http_build_query( $params );
+    $ch    = curl_init();
+    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+    curl_setopt( $ch, CURLOPT_HEADER, false );
+    curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
+    curl_setopt( $ch, CURLOPT_URL, $url );
+    curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, $method );
+    curl_setopt( $ch, CURLOPT_POSTFIELDS, $query );
     $response[ 'content' ] = curl_exec( $ch );
-    $response[ 'header' ] = curl_getinfo( $ch );
-    \curl_close( $ch );
+    $response[ 'header' ]  = curl_getinfo( $ch );
+    curl_close( $ch );
     return $response;
   }
   /**
@@ -112,8 +113,8 @@ class ZincHTTP {
    * @param       array $params Parameters with the request.
    * @return      HTTP-Response body or an empty string if the request fails or is empty
    */
-  public function HTTPPut( $url, $params = [] ) {
-    return $this->makeRequestsFormula( $url, $params, 'PUT' );
+  public function HTTPPut( $url, $params = [], $headers = [] ) {
+    return $this->makeRequestsFormula( $url, $params, 'PUT', $headers );
   }
 
   /**
@@ -122,8 +123,8 @@ class ZincHTTP {
    * @param    array $params
    * @return   HTTP-Response body or an empty string if the request fails or is empty
    */
-  public function HTTPDelete( $url, $params = [] ) {
-    return $this->makeRequestsFormula( $url, $params, 'DELETE' );
+  public function HTTPDelete( $url, $params = [], $headers = [] ) {
+    return $this->makeRequestsFormula( $url, $params, 'DELETE', $headers );
   }
 
   /**
@@ -132,8 +133,8 @@ class ZincHTTP {
    * @param    array $params
    * @return   HTTP-Response body or an empty string if the request fails or is empty
    */
-  public function HTTPCopy( $url, $params = [] ) {
-    return $this->makeRequestsFormula( $url, $params, 'COPY' );
+  public function HTTPCopy( $url, $params = [], $headers = [] ) {
+    return $this->makeRequestsFormula( $url, $params, 'COPY', $headers );
   }
 
   /**
@@ -142,8 +143,8 @@ class ZincHTTP {
    * @param    array $params
    * @return   HTTP-Response body or an empty string if the request fails or is empty
    */
-  public function HTTPOptions( $url, $params = [] ) {
-    return $this->makeRequestsFormula( $url, $params, 'OPTIONS' );
+  public function HTTPOptions( $url, $params = [], $headers = [] ) {
+    return $this->makeRequestsFormula( $url, $params, 'OPTIONS', $headers );
   }
 
   /**
@@ -152,8 +153,8 @@ class ZincHTTP {
    * @param    array $params
    * @return   HTTP-Response body or an empty string if the request fails or is empty
    */
-  public function HTTPPatch( $url, $params = [] ) {
-    return $this->makeRequestsFormula( $url, $params, 'PATCH' );
+  public function HTTPPatch( $url, $params = [], $headers = [] ) {
+    return $this->makeRequestsFormula( $url, $params, 'PATCH', $headers );
   }
 
   /**
@@ -162,8 +163,8 @@ class ZincHTTP {
    * @param    array $params
    * @return   HTTP-Response body or an empty string if the request fails or is empty
    */
-  public function HTTPPropfind( $url, $params = [] ) {
-    return $this->makeRequestsFormula( $url, $params, 'PROPFIND' );
+  public function HTTPPropfind( $url, $params = [], $headers = [] ) {
+    return $this->makeRequestsFormula( $url, $params, 'PROPFIND', $headers );
   }
 
 }
