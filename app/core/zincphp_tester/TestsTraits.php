@@ -11,6 +11,9 @@
 
   trait TestsTraits {
 
+    /**
+     * Check if the status is expected.
+     */
     public function testStatus() {
       $flag = true;
       if ( isset( $this->fetchedResponse[ 'header' ][ 'http_code' ] ) ) {
@@ -30,9 +33,11 @@
         echo \ZincPHP\CLI\Helper\warn( "- Expected: " . $this->expectedResponseStatus . "\tFound: " . $this->fetchedResponse[ 'header' ][ 'http_code' ] );
         \ZincPHP\CLI\Helper\nl();
       }
-      // \ZincPHP\CLI\Helper\nl();
     }
 
+    /**
+     * Check if content type is expected.
+     */
     public function testContentType() {
       $flag = true;
       if ( isset( $this->fetchedResponse[ 'header' ][ 'content_type' ] ) ) {
@@ -52,7 +57,6 @@
         echo \ZincPHP\CLI\Helper\warn( "- Expected: " . $this->expectedContentType . "\tFound: " . $this->fetchedResponse[ 'header' ][ 'content_type' ] );
         \ZincPHP\CLI\Helper\nl();
       }
-      // \ZincPHP\CLI\Helper\nl();
     }
 
     public function testEmptyResponse() {
