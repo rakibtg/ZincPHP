@@ -1,11 +1,12 @@
 <?php
 
   /**
-    Expected Response Status
-    Expected Content Type
+    Expected Response Status - implemented
+    Expected Content Type - implemented
     Expect Empty Response
     Expected Data
     Response Data Validator
+    File upload
    */
 
   trait TestsTraits {
@@ -26,9 +27,10 @@
       if ( ! $flag ) {
         echo \ZincPHP\CLI\Helper\danger( "✘ HTTP response status code doesnt matched." );
         \ZincPHP\CLI\Helper\nl();
-        echo \ZincPHP\CLI\Helper\warn( "Expected: " . $this->expectedResponseStatus . "\tFound: " . $this->fetchedResponse[ 'header' ][ 'http_code' ] );
+        echo \ZincPHP\CLI\Helper\warn( "- Expected: " . $this->expectedResponseStatus . "\tFound: " . $this->fetchedResponse[ 'header' ][ 'http_code' ] );
         \ZincPHP\CLI\Helper\nl();
       }
+      // \ZincPHP\CLI\Helper\nl();
     }
 
     public function testContentType() {
@@ -47,9 +49,10 @@
       if ( ! $flag ) {
         echo \ZincPHP\CLI\Helper\danger( "✘ Content type doesnt matched." );
         \ZincPHP\CLI\Helper\nl();
-        echo \ZincPHP\CLI\Helper\warn( "Expected: " . $this->expectedContentType . "\tFound: " . $this->fetchedResponse[ 'header' ][ 'content_type' ] );
+        echo \ZincPHP\CLI\Helper\warn( "- Expected: " . $this->expectedContentType . "\tFound: " . $this->fetchedResponse[ 'header' ][ 'content_type' ] );
         \ZincPHP\CLI\Helper\nl();
       }
+      // \ZincPHP\CLI\Helper\nl();
     }
 
     public function testEmptyResponse() {
