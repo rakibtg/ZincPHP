@@ -8,20 +8,50 @@
 
     public $blockPath;
     public $requestUrl;
-    public $headers = [];
-    public $parameters = [];
     public $fetchedResponse;
-    public $expectedResponseStatus;
-    public $expectEmptyResponse;
-    public $expectedData;
-    public $responseDataValidator;
     public $expectedContentType;
     public $requestMethod;
     public $testSuccess;
     public $testFileName;
+    
+    // Variables that contains test data.
+    public $headers;
+    public $parameters;
+    public $expectedResponseStatus;
+    public $expectEmptyResponse;
+    public $expectedData;
+    public $responseDataValidator;
 
     function __construct() {
+      
+      // Setting a global flag that later tells if this test was successful or not.
       $this->testSuccess = true;
+
+      // Set default values to test varaibles, so later we can descide which tests to run.
+      $this->headers                  = "ZincPHP_" . md5( "headers" );
+      $this->parameters               = "ZincPHP_" . md5( "parameters" );
+      $this->expectedResponseStatus   = "ZincPHP_" . md5( "expectedResponseStatus" );
+      $this->expectEmptyResponse      = "ZincPHP_" . md5( "expectEmptyResponse" );
+      $this->expectedData             = "ZincPHP_" . md5( "expectedData" );
+      $this->responseDataValidator    = "ZincPHP_" . md5( "responseDataValidator" );
+
+    }
+
+    public function setHeaders ( $headers = [] ) {
+      if ( ! empty( $headers ) ) {
+        $this->headers = $headers;
+      }
+    }
+
+    public function setParameters ( $parameters = [] ) {
+      if ( ! empty( $parameters ) ) {
+        $this->parameters = $parameters;
+      }
+    }
+
+    public function testHas ( $testTypeName ) {
+      if ( $this->$testTypeName === "ZincPHP_" . md5( trim( $testTypeName ) ) ) return false;
+      else return true;
     }
 
     public function setTestFileName( $file ) {
