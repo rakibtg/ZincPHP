@@ -1,8 +1,15 @@
 # ZincPHP
 ## Micro RESTful Api Framework for PHP
+
 <p style="text-align: center;">
 <img src='https://i.imgur.com/6JaXF0t.png'/>
 </p>
+
+---
+
+### Development status: <span style="color: red">Under actove development - not ready to be used in production - a side project</span>
+
+---
 
 ZincPHP is a lightweight and dependency free PHP framework specially created for REST-ful architecture.
 
