@@ -2,7 +2,7 @@
 ## Micro RESTful Api Framework for PHP
 
 <p style="text-align: center;">
-<img src='https://i.imgur.com/6JaXF0t.png'/>
+<img src='https://i.imgur.com/4SK3Znp.png'/>
 </p>
 
 ---
@@ -72,5 +72,3 @@ This would create the block file inside the `/blocks/v1/blog/` and the API endpo
 ZincPHP is still in development, maintained and developed by [@rakibtg](https://www.twitter.com/rakibtg "Twitter profile")
 
 To use the development version of ZincPHP, please clone the repo and we would love to have your pull requests. ❤️
-
-  [1]: https://i.imgur.com/linBTlE.png
