@@ -8,6 +8,7 @@
     public $testFilesCount;
     public $testables;
     public $devServer;
+    public $allTestsPassed;
 
     function __construct() {
 
@@ -15,6 +16,7 @@
       $this->testFilesCount = 0;
       $this->testables      = [];
       $this->devServer      = '127.0.0.1:8585';
+      $this->allTestsPassed = true;
 
       $this->getTestableBlocks();
 
@@ -37,7 +39,7 @@
     /**
      * Browser each tests directory of each block and pluck the test files.
      * 
-     * @param   boolean|string $dir When $dir is false then define the blocks path.
+     * @param   boolean|string $dir When is is false then define the blocks path.
      * @param   array $testableFilesList Array of testable blocks and test files.
      */
     function getTestableBlocks( $dir = false, &$testableFilesList = [] ) {
@@ -94,12 +96,14 @@
       }
 
       \ZincPHP\CLI\Helper\nl();
-      echo 'Starting test...';
+      echo 'Starting test, make sure the dev server is running at ' . $this->devServer;
       \ZincPHP\CLI\Helper\nl();
 
       if ( count( $this->testables ) > 0 ) {
-
-        echo \ZincPHP\CLI\Helper\success( $this->blocksCount . " blocks and " . $this->testFilesCount . " files to test." );
+        // We have some test files.
+        echo \ZincPHP\CLI\Helper\success( 
+          $this->blocksCount . " blocks and " . $this->testFilesCount . " files to test." 
+        );
         \ZincPHP\CLI\Helper\nl();
         \ZincPHP\CLI\Helper\nl();
 
@@ -115,17 +119,29 @@
             // Importing the test file.
             require_once $testBlock[ 'path' ] . DIRECTORY_SEPARATOR . $testFile;
             // Start the test.
-            $_className  = $this->makeTestClassName( $testFile ); // Generate the class name of the test class.
-            $blockTester = new $_className(); // Dynamically create a new instance of the test class.
-            $blockTester->generateUrlFromPath( $testBlock[ 'path' ], $this->devServer ); // Passing the block name into the block tester class.
+            // Generate the class name of the test class.
+            $_className  = $this->makeTestClassName( $testFile ); 
+            // Dynamically create a new instance of the test class.
+            $blockTester = new $_className(); 
+            // Passing the block name into the block tester class.
+            $blockTester->generateUrlFromPath( $testBlock[ 'path' ], $this->devServer ); 
             $blockTester->setRequestMethod( $testFile );
             $blockTester->setTestFileName( $testFile );
             $blockTester->metaData();
             $blockTester->setExpectations();
-            $blockTester->runTest( $requester );
-          }
+            if ( $blockTester->runTest( $requester ) === false ) $this->allTestsPassed = false;
+          } // End of $testBlock[ 'files' ] loop.
         } // End of $this->testables loop.
 
+        echo "➜ All tests completed";
+        // Check if all tests are passed.
+        if ( $this->allTestsPassed === true ) {
+          echo \ZincPHP\CLI\Helper\success( " (✔ PASSED)" );
+        } else {
+          echo \ZincPHP\CLI\Helper\danger( " (✘ FAILED)" );
+        }
+        \ZincPHP\CLI\Helper\nl();
+        \ZincPHP\CLI\Helper\nl();
       } else {
         echo \ZincPHP\CLI\Helper\danger( "No tests found!" );
         \ZincPHP\CLI\Helper\nl();
