@@ -1,5 +1,5 @@
 # ZincPHP
-## Micro RESTful Api Framework for PHP
+## Micro PHP Framework for creating RESTful API
 
 <p style="text-align: center;">
 <img src='https://i.imgur.com/4SK3Znp.png'/>
