@@ -1,3 +1,3 @@
 <?php
   
-  App::response( 'hello from put block' );
+  App::response( [ 'status' => 'hello from put block' ] );

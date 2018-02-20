@@ -12,7 +12,7 @@
       $this->expectedResponseStatus = 200;
       $this->expectedContentType = 'application/json';
       $this->expectEmptyResponse = false;
-      $this->expectedData = null;
+      $this->expectedData = ['Hello World!'];
       $this->responseDataValidator = 'required|max:1000|string';
     }
 
