@@ -9,7 +9,6 @@
     public $blockPath;
     public $requestUrl;
     public $fetchedResponse;
-    public $expectedContentType;
     public $requestMethod;
     public $testSuccess;
     public $testFileName;
@@ -19,6 +18,7 @@
     public $parameters;
     public $expectedResponseStatus;
     public $expectEmptyResponse;
+    public $expectedContentType;
     public $expectedData;
     public $responseDataValidator;
 
@@ -28,8 +28,8 @@
       $this->testSuccess = true;
 
       // Set default values to test varaibles, so later we can descide which tests to run.
-      $this->headers                  = "ZincPHP_" . md5( "headers" );
-      $this->parameters               = "ZincPHP_" . md5( "parameters" );
+      $this->headers                  = [];
+      $this->parameters               = [];
       $this->expectedResponseStatus   = "ZincPHP_" . md5( "expectedResponseStatus" );
       $this->expectEmptyResponse      = "ZincPHP_" . md5( "expectEmptyResponse" );
       $this->expectedData             = "ZincPHP_" . md5( "expectedData" );
@@ -142,9 +142,13 @@
       $this->makeRequest( $requester );
       $this->testStatus();
       $this->testContentType();
+      $this->expectEmptyResponse();
+      $this->testExactResponseData();
 
       \ZincPHP\CLI\Helper\nl();
       sleep(0.30); // Safes from any unexpected attack.
+
+      return $this->testSuccess; // returns true on successful test, if fails then returns false.
 
     }
 
