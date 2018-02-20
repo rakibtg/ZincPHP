@@ -37,32 +37,72 @@
 
     }
 
+    /**
+     * Set header with the test request.
+     * 
+     * @param   array $headers Array of headers should pass with the test request.
+     * @return  void
+     */
     public function setHeaders ( $headers = [] ) {
       if ( ! empty( $headers ) ) {
         $this->headers = $headers;
       }
     }
 
+    /**
+     * Set parameters with the test requests.
+     * 
+     * @param   array @parameters Array of parameters should pass with the test request.
+     * @return  void
+     */
     public function setParameters ( $parameters = [] ) {
       if ( ! empty( $parameters ) ) {
         $this->parameters = $parameters;
       }
     }
 
+    /**
+     * Check if a test exists in a test file.
+     * For example: if a test file has "expectedResponseStatus" test, or not.
+     * 
+     * @param   string $testTypeName Name of the test.
+     * @return  boolean If a test type exists then it will return true or false either.
+     */
     public function testHas ( $testTypeName ) {
       if ( $this->$testTypeName === "ZincPHP_" . md5( trim( $testTypeName ) ) ) return false;
       else return true;
     }
 
+
+    /**
+     * Set a test file name.
+     * 
+     * @param   string $file Name of the test file.
+     * @return  void
+     */
     public function setTestFileName( $file ) {
       $this->testFileName = $file;
     }
 
+    /**
+     * Makes the actual test request to a block.
+     * 
+     * @param   object $requester The instantiated object of the ZincHTTP class
+     * @return  void
+     */
     private function makeRequest( $requester ) {
       $_funcName = "HTTP" . ucfirst( $this->requestMethod );
       $this->fetchedResponse = $requester->$_funcName( $this->requestUrl, $this->parameters, $this->headers );
     }
 
+    /**
+     * Generates the block path from the full path to the block, then
+     * concat with the dev server to make the requestable URL path to the block.
+     * 
+     * @param   string $requestUrl The block path
+     * @param   string $devServer The development domain of the server
+     * @return  void
+     */
     public function generateUrlFromPath( $requestUrl, $devServer ) {
       $requestUrl = preg_replace( '/\/tests$/', '', $requestUrl );
       $pos = strpos( $requestUrl, 'blocks' );
@@ -75,19 +115,31 @@
       }
     }
 
+    /**
+     * Dynamically look for the request method from the block name.
+     * 
+     * @param   string $testFileName Test file name.
+     * @return  void
+     */
     public function setRequestMethod( $testFileName ) {
       $_method = explode( '.', $testFileName );
       $this->requestMethod = $_method[ 0 ];
     }
 
+    /**
+     * Run the test of current block
+     * 
+     * @param   object $requester The instantiated object of the ZincHTTP class
+     * @return  void
+     */
     public function runTest( $requester ) {
       
       print "Testing:\t" . $this->blockPath . " (" . strtoupper( $this->requestMethod ) . " request)";
       \ZincPHP\CLI\Helper\nl();
       print "Test File:\t" . $this->testFileName;
       \ZincPHP\CLI\Helper\nl();
-      $this->makeRequest( $requester );
 
+      $this->makeRequest( $requester );
       $this->testStatus();
       $this->testContentType();
 
