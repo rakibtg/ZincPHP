@@ -120,6 +120,7 @@
             $blockTester->generateUrlFromPath( $testBlock[ 'path' ], $this->devServer ); // Passing the block name into the block tester class.
             $blockTester->setRequestMethod( $testFile );
             $blockTester->setTestFileName( $testFile );
+            $blockTester->metaData();
             $blockTester->setExpectations();
             $blockTester->runTest( $requester );
           }
