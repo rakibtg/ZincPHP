@@ -7,7 +7,11 @@
 
 ---
 
-### Development status: <span style="color: red">Under actove development - not ready to be used in production - a side project</span>
+## Development status: 
+ - Under active development
+ - Not ready to be used in production
+ - A side project
+ - Working on the documentations, automatic RESTful API testing
 
 ---
 
