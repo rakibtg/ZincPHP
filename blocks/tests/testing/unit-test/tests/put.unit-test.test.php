@@ -4,8 +4,8 @@
   class Putunittest extends BlockTester {
 
     public function metaData () {
-      $this->headers = [];
-      $this->parameters = [];
+      $this->setHeaders( [] );
+      $this->setParameters( [] );
     }
 
     public function setExpectations () {
