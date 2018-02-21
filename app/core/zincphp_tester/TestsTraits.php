@@ -119,8 +119,16 @@
       }
     }
 
-    public function dataValidator() {
-
+    /**
+     * Check if data is validated.
+     */
+    public function dataValidator( $responseContent = [] ) {
+      if ( $this->testHas( 'responseDataValidator' ) ) {
+        $flag = true;
+        $validator = new ZincValidator;
+        print_r( $this->responseDataValidator );
+        print_r( $this->getResponseData() );
+      }
     }
 
     
