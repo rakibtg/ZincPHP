@@ -73,6 +73,26 @@
       else return true;
     }
 
+    /**
+     * Get the data as an array of the current request.
+     * 
+     * @param   void
+     * @return  array|boolean If data found then return it as array, either boolean false.
+     */
+    public function getResponseData( $indexName = false ) {
+      return json_decode( $this->fetchedResponse[ 'content' ], true );
+      if ( ! empty( $this->fetchedResponse[ 'content' ] ) ) {
+        $data = json_decode( $this->fetchedResponse[ 'content' ], true );
+        if ( $indexName !== false ) {
+          if ( isset( $data[ $indexName ] ) ) return $data[ $indexName ];
+          else return false;
+        } else {
+          return $data;
+        }
+      } else {
+        return false;
+      }
+    }
 
     /**
      * Set a test file name.
@@ -144,6 +164,7 @@
       $this->testContentType();
       $this->expectEmptyResponse();
       $this->testExactResponseData();
+      $this->dataValidator();
 
       \ZincPHP\CLI\Helper\nl();
       sleep(0.30); // Safes from any unexpected attack.
