@@ -12,7 +12,7 @@
  - Not ready to be used in production
  - A side project
  - Working on the documentations, automatic RESTful API testing
-
+ - For any discussion about this framework please direct message me on Twitter at [@rakibtg](https://www.twitter.com/rakibtg "Twitter profile") or mail me at rakibtg@gmail.com 
 ---
 
 ZincPHP is a lightweight and dependency free PHP framework specially created for REST-ful architecture.
@@ -39,20 +39,20 @@ blocks/
 ```
 Now the route path(API endpoint) for this block would be:
 ```
-/api/blog/
+/blog/
 ```
 Here is how the block will response to each requests:
 
-- A GET request to `/api/blog/` will redirect to the `/blocks/blog/get.blog.php` file.
-- A POST request to `/api/blog/` will redirect to the `/blocks/blog/post.blog.php` file.
-- A PUT request to `/api/blog/` will redirect to the `/blocks/blog/put.blog.php` file.
-- A DELETE request to `/api/blog/` will redirect to the `/blocks/blog/delete.blog.php` file.
+- A GET request to `/blog/` will redirect to the `/blocks/blog/get.blog.php` file.
+- A POST request to `/blog/` will redirect to the `/blocks/blog/post.blog.php` file.
+- A PUT request to `/blog/` will redirect to the `/blocks/blog/put.blog.php` file.
+- A DELETE request to `/blog/` will redirect to the `/blocks/blog/delete.blog.php` file.
 
 If we want a custom API for example we want to highlight the API version in the path, we can achive this by creating the block with the expected version no. like this:
 ```
-php zinc make:block v1/blog --all
+php zinc make:block api/v1/blog --all
 ```
-This would create the block file inside the `/blocks/v1/blog/` and the API endpoint would be `/api/v1/blog/`
+This would create the block file inside the `/blocks/api/v1/blog/` and the API endpoint would be `/api/v1/blog/`
 
 ## Default included features are
 - Command line interface for managing the framework
@@ -66,6 +66,7 @@ This would create the block file inside the `/blocks/v1/blog/` and the API endpo
 - Database Query Builder
 - CORS Management
 - Configurable
+- Built in test framework for REST API's
 - Extendable
 
 ## Development Status
