@@ -1,6 +1,7 @@
 <?php
 
   require_once __DIR__ . '/../ZincHTTP.php';
+  require_once __DIR__ . '/../ZincValidator.php';
 
   class ZincTester {
 
