@@ -13,7 +13,7 @@
       $this->expectedContentType = 'application/json';
       $this->expectEmptyResponse = false;
       $this->expectedData = [ 'status' => 'hello from put block' ];
-      $this->responseDataValidator = 'required|max:1000|string';
+      // $this->responseDataValidator = 'required|max:1000|string';
     }
 
   }

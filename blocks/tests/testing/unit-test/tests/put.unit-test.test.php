@@ -12,8 +12,13 @@
       $this->expectedResponseStatus = 200;
       $this->expectedContentType = 'application/json';
       $this->expectEmptyResponse = false;
-      $this->expectedData = ['Hello World!'];
-      $this->responseDataValidator = 'required|max:1000|string';
+      $this->expectedData = ['name' => 'Hello World!'];
+      $this->responseDataValidator = [
+        'name' => [
+          'rules' => 'required|lengthMax:120',
+          'value' => $this->getResponseData( 'name' ) // $this->getResponseData()[ 0 ][ 'name ] ; just check the first item of a array of result.
+        ]
+      ];
     }
 
   }
