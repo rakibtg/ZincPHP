@@ -10,9 +10,9 @@
 
     public function setExpectations () {
       $this->expectedResponseStatus = 200;
-      $this->expectedContentType = 'application/json';
+      $this->expectedContentTypeValue = 'application/json';
       $this->expectEmptyResponse = false;
-      $this->expectedData = [ 'status' => 'hello from put block' ];
+      $this->expectedDataValue = [ 'status' => 'hello from put block' ];
       // $this->responseDataValidator = 'required|max:1000|string';
     }
 
