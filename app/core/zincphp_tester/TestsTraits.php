@@ -42,10 +42,10 @@
      * Check if content type is expected.
      */
     public function testContentType() {
-      if ( $this->testHas( 'expectedContentType' ) ) {
+      if ( $this->testHas( 'expectedContentTypeValue' ) ) {
         $flag = true;
         if ( isset( $this->fetchedResponse[ 'header' ][ 'content_type' ] ) ) {
-          if ( strpos( $this->fetchedResponse[ 'header' ][ 'content_type' ], $this->expectedContentType ) !== false ) {
+          if ( strpos( $this->fetchedResponse[ 'header' ][ 'content_type' ], $this->expectedContentTypeValue ) !== false ) {
             echo \ZincPHP\CLI\Helper\success( "✔ Content type matched." );
             \ZincPHP\CLI\Helper\nl();
           } else {
@@ -58,7 +58,7 @@
         if ( ! $flag ) {
           echo \ZincPHP\CLI\Helper\danger( "✘ Content type doesnt matched." );
           \ZincPHP\CLI\Helper\nl();
-          echo \ZincPHP\CLI\Helper\warn( "- Expected: " . $this->expectedContentType . "\tFound: " . $this->fetchedResponse[ 'header' ][ 'content_type' ] );
+          echo \ZincPHP\CLI\Helper\warn( "- Expected: " . $this->expectedContentTypeValue . "\tFound: " . $this->fetchedResponse[ 'header' ][ 'content_type' ] );
           \ZincPHP\CLI\Helper\nl();
         }
         if ( $this->testSuccess !== false ) $this->testSuccess = $flag;
@@ -97,16 +97,16 @@
      * Chekc if response is exact same as expected.
      */
     public function testExactResponseData() {
-      if ( $this->testHas( 'expectedData' ) ) {
+      if ( $this->testHas( 'expectedDataValue' ) ) {
         $flag = true;
-        if ( is_array( $this->expectedData ) ) {
+        if ( is_array( $this->expectedDataValue ) ) {
           $content = json_decode( $this->fetchedResponse[ 'content' ], true );
-          if ( $this->expectedData != $content ) $flag = false;
-        } else if ( is_object( $this->expectedData ) ) {
+          if ( $this->expectedDataValue != $content ) $flag = false;
+        } else if ( is_object( $this->expectedDataValue ) ) {
           $content = json_decode( $this->fetchedResponse[ 'content' ] );
-          if ( $this->expectedData != $content ) $flag = false;
+          if ( $this->expectedDataValue != $content ) $flag = false;
         } else {
-          if ( $this->expectedData !== $this->fetchedResponse[ 'content' ] ) $flag = false;
+          if ( $this->expectedDataValue !== $this->fetchedResponse[ 'content' ] ) $flag = false;
         }
         if ( $flag === true ) {
           echo \ZincPHP\CLI\Helper\success( "✔ Response data matched with expected data." );
@@ -122,12 +122,25 @@
     /**
      * Check if data is validated.
      */
-    public function dataValidator( $responseContent = [] ) {
+    public function dataValidator() {
       if ( $this->testHas( 'responseDataValidator' ) ) {
         $flag = true;
         $validator = new ZincValidator;
-        print_r( $this->responseDataValidator );
-        print_r( $this->getResponseData() );
+        // Generate the validator rules with the value.
+        foreach ( $this->responseDataValidator as $key => $rule ) {
+          $this->responseDataValidator[ $key ][ 'value' ] = $this->getResponseData( $key );
+        }
+        $v = $validator->validate( $this->responseDataValidator, '', false );
+        if ( $v ) {
+          print "Success\n";
+          print_r($v);
+        } else {
+          print "Failed\n";
+          print_r($v);
+        }
+
+        // print_r( $this->responseDataValidator );
+        // print_r( $this->getResponseData() );
       }
     }
 
