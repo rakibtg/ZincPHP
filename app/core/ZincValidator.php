@@ -69,11 +69,14 @@
       if( ! empty( $this->errorMessageList ) ) {
         if( $this->exitAfterExecution === true ) {
           http_response_code( 400 );
-          echo json_encode( $this->errorMessageList );
+          echo json_encode( [ 'status' => 'falied', 'message' => $this->errorMessageList ] );
           exit();
         }
       }
-      return $this->errorMessageList;
+      return [ 
+        'status'  => ( empty( $this->errorMessageList ) ) ? 'valid' : 'failed', 
+        'message' => $this->errorMessageList 
+      ];
     }
 
     /**
