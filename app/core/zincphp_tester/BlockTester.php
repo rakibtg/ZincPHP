@@ -1,10 +1,11 @@
 <?php
 
   require_once __DIR__ . '/TestsTraits.php';
+  require_once __DIR__ . '/ExpectationsTrait.php';
   
   class BlockTester {
 
-    use TestsTraits;
+    use TestsTraits, ExpectationsTrait;
 
     public $blockPath;
     public $requestUrl;
@@ -12,27 +13,29 @@
     public $requestMethod;
     public $testSuccess;
     public $testFileName;
+    public $dataValidateOnlyFirstIteration;
     
     // Variables that contains test data.
     public $headers;
     public $parameters;
     public $expectedResponseStatus;
     public $expectEmptyResponse;
-    public $expectedContentType;
-    public $expectedData;
+    public $expectedContentTypeValue;
+    public $expectedDataValue;
     public $responseDataValidator;
 
     function __construct() {
       
       // Setting a global flag that later tells if this test was successful or not.
       $this->testSuccess = true;
+      $this->dataValidateOnlyFirstIteration = false;
 
       // Set default values to test varaibles, so later we can descide which tests to run.
       $this->headers                  = [];
       $this->parameters               = [];
       $this->expectedResponseStatus   = "ZincPHP_" . md5( "expectedResponseStatus" );
       $this->expectEmptyResponse      = "ZincPHP_" . md5( "expectEmptyResponse" );
-      $this->expectedData             = "ZincPHP_" . md5( "expectedData" );
+      $this->expectedDataValue        = "ZincPHP_" . md5( "expectedDataValue" );
       $this->responseDataValidator    = "ZincPHP_" . md5( "responseDataValidator" );
 
     }
@@ -80,7 +83,6 @@
      * @return  array|boolean If data found then return it as array, either boolean false.
      */
     public function getResponseData( $indexName = false ) {
-      return json_decode( $this->fetchedResponse[ 'content' ], true );
       if ( ! empty( $this->fetchedResponse[ 'content' ] ) ) {
         $data = json_decode( $this->fetchedResponse[ 'content' ], true );
         if ( $indexName !== false ) {
