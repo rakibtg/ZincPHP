@@ -27,7 +27,7 @@ class ZincHTTP {
    * @return      HTTP-Response body or an empty string if the request fails or is empty
    */
   public function HTTPGet( $url, $params = [], $headers = [] ) {
-    $query = http_build_query( $params ); 
+    $query = http_build_query( $params );
     $ch    = curl_init( $url . '?' . $query );
     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
     curl_setopt( $ch, CURLOPT_HEADER, false );
@@ -45,7 +45,18 @@ class ZincHTTP {
    * @param       array $headers
    * @return      HTTP-Response body or an empty string if the request fails or is empty
    */
-  public function HTTPPost( $url, $params = [], $headers = [] ) {
+  public function HTTPPost( $url, $params = [], $headers = [], $files = [] ) {
+
+    // Check if we have any files.
+    if ( ! empty( $files ) ) {
+      // Prepare array of the files path.
+      foreach ( $files as $key => $file ) {
+        $files[ $key ] = '@' . __DIR__ . '/../../' . trim( $files[ $key ], '/' );
+      }
+      // Merge files with the parameters.
+      $params = array_merge( $params, $files );
+    }
+
     $query = http_build_query( $params );
     $ch    = curl_init();
     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
@@ -68,7 +79,18 @@ class ZincHTTP {
    * @param       string $method The method type in string. (PUT,DELETE,PATCH etc...)
    * @return      HTTP-Response body or an empty string if the request fails or is empty
    */
-  private function makeRequestsFormula( $url, $params, $method, $headers ) {
+  private function makeRequestsFormula( $url, $params = [], $method, $headers = [], $files = [] ) {
+
+    // Check if we have any files.
+    if ( ! empty( $files ) ) {
+      // Prepare array of the files path.
+      foreach ( $files as $key => $file ) {
+        $files[ $key ] = '@' . __DIR__ . '/../../' . trim( $files[ $key ], '/' );
+      }
+      // Merge files with the parameters.
+      $params = array_merge( $params, $files );
+    }
+
     $query = http_build_query( $params );
     $ch    = curl_init();
     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
@@ -82,6 +104,7 @@ class ZincHTTP {
     curl_close( $ch );
     return $response;
   }
+
   /**
    * Make HTTP-PUT call
    * @param       $url
@@ -89,8 +112,8 @@ class ZincHTTP {
    * @param       array $headers
    * @return      HTTP-Response body or an empty string if the request fails or is empty
    */
-  public function HTTPPut( $url, $params = [], $headers = [] ) {
-    return $this->makeRequestsFormula( $url, $params, 'PUT', $headers );
+  public function HTTPPut( $url, $params = [], $headers = [], $files = [] ) {
+    return $this->makeRequestsFormula( $url, $params, 'PUT', $headers, $files );
   }
 
   /**
@@ -100,8 +123,8 @@ class ZincHTTP {
    * @param       array $headers
    * @return      HTTP-Response body or an empty string if the request fails or is empty
    */
-  public function HTTPDelete( $url, $params = [], $headers = [] ) {
-    return $this->makeRequestsFormula( $url, $params, 'DELETE', $headers );
+  public function HTTPDelete( $url, $params = [], $headers = [], $files = [] ) {
+    return $this->makeRequestsFormula( $url, $params, 'DELETE', $headers, $files );
   }
 
   /**
@@ -111,8 +134,8 @@ class ZincHTTP {
    * @param       array $headers
    * @return      HTTP-Response body or an empty string if the request fails or is empty
    */
-  public function HTTPCopy( $url, $params = [], $headers = [] ) {
-    return $this->makeRequestsFormula( $url, $params, 'COPY', $headers );
+  public function HTTPCopy( $url, $params = [], $headers = [], $files = [] ) {
+    return $this->makeRequestsFormula( $url, $params, 'COPY', $headers, $files );
   }
 
   /**
@@ -122,8 +145,8 @@ class ZincHTTP {
    * @param       array $headers
    * @return      HTTP-Response body or an empty string if the request fails or is empty
    */
-  public function HTTPOptions( $url, $params = [], $headers = [] ) {
-    return $this->makeRequestsFormula( $url, $params, 'OPTIONS', $headers );
+  public function HTTPOptions( $url, $params = [], $headers = [], $files = [] ) {
+    return $this->makeRequestsFormula( $url, $params, 'OPTIONS', $headers, $files );
   }
 
   /**
@@ -133,8 +156,8 @@ class ZincHTTP {
    * @param       array $headers
    * @return      HTTP-Response body or an empty string if the request fails or is empty
    */
-  public function HTTPPatch( $url, $params = [], $headers = [] ) {
-    return $this->makeRequestsFormula( $url, $params, 'PATCH', $headers );
+  public function HTTPPatch( $url, $params = [], $headers = [], $files = [] ) {
+    return $this->makeRequestsFormula( $url, $params, 'PATCH', $headers, $files );
   }
 
   /**
@@ -144,8 +167,8 @@ class ZincHTTP {
    * @param       array $headers
    * @return      HTTP-Response body or an empty string if the request fails or is empty
    */
-  public function HTTPPropfind( $url, $params = [], $headers = [] ) {
-    return $this->makeRequestsFormula( $url, $params, 'PROPFIND', $headers );
+  public function HTTPPropfind( $url, $params = [], $headers = [], $files = [] ) {
+    return $this->makeRequestsFormula( $url, $params, 'PROPFIND', $headers, $files );
   }
 
 }
