@@ -1,11 +1,16 @@
 <?php
 
   /*
-    Collection of methods that handles everything 
+    Collection of methods that handles everything
     related to sending requests.
   */
 
   trait InputTraits {
+
+    public static function input ( $fieldName = false ) {
+      return ( new ZincPHPInput )->input( $fieldName );
+    }
+
     /**
      * Get input data from GET requests.
      *
@@ -99,7 +104,7 @@
         return App::strTrim( $_POST[ $key ] );
       }
       return '';
-    }    
+    }
 
 
     /**
@@ -114,8 +119,8 @@
         return App::strTrim( $_POST[ $key ] );
       }
       return '';
-    }   
-    
+    }
+
 
     /**
      * Get input data form PATCH requests.
@@ -129,5 +134,5 @@
         return App::strTrim( $_POST[ $key ] );
       }
       return '';
-    }   
+    }
   }
