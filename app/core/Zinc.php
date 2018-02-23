@@ -1,6 +1,7 @@
 <?php
 
   require_once __DIR__ . '/App.php';
+  require_once __DIR__ . '/ZincPHPInput.php';
   require_once __DIR__ . '/ZincMySQL.php';
   require_once __DIR__ . '/ZincJWT.php';
   require_once __DIR__ . '/ZincValidator.php';
