@@ -2,7 +2,7 @@
 
   require_once __DIR__ . '/TestsTraits.php';
   require_once __DIR__ . '/ExpectationsTrait.php';
-  
+
   class BlockTester {
 
     use TestsTraits, ExpectationsTrait;
@@ -12,9 +12,9 @@
     public $fetchedResponse;
     public $requestMethod;
     public $testSuccess;
-    public $testFileName;
+    public $testFiles;
     public $dataValidateOnlyFirstIteration;
-    
+
     // Variables that contains test data.
     public $headers;
     public $parameters;
@@ -25,10 +25,11 @@
     public $responseDataValidator;
 
     function __construct() {
-      
+
       // Setting a global flag that later tells if this test was successful or not.
       $this->testSuccess = true;
       $this->dataValidateOnlyFirstIteration = false;
+      $this->testFiles = [];
 
       // Set default values to test varaibles, so later we can descide which tests to run.
       $this->headers                  = [];
@@ -42,7 +43,7 @@
 
     /**
      * Set header with the test request.
-     * 
+     *
      * @param   array $headers Array of headers should pass with the test request.
      * @return  void
      */
@@ -54,7 +55,7 @@
 
     /**
      * Set parameters with the test requests.
-     * 
+     *
      * @param   array @parameters Array of parameters should pass with the test request.
      * @return  void
      */
@@ -67,7 +68,7 @@
     /**
      * Check if a test exists in a test file.
      * For example: if a test file has "expectedResponseStatus" test, or not.
-     * 
+     *
      * @param   string $testTypeName Name of the test.
      * @return  boolean If a test type exists then it will return true or false either.
      */
@@ -78,7 +79,7 @@
 
     /**
      * Get the data as an array of the current request.
-     * 
+     *
      * @param   void
      * @return  array|boolean If data found then return it as array, either boolean false.
      */
@@ -98,7 +99,7 @@
 
     /**
      * Set a test file name.
-     * 
+     *
      * @param   string $file Name of the test file.
      * @return  void
      */
@@ -108,19 +109,21 @@
 
     /**
      * Makes the actual test request to a block.
-     * 
+     *
      * @param   object $requester The instantiated object of the ZincHTTP class
      * @return  void
      */
     private function makeRequest( $requester ) {
       $_funcName = "HTTP" . ucfirst( $this->requestMethod );
-      $this->fetchedResponse = $requester->$_funcName( $this->requestUrl, $this->parameters, $this->headers );
+      $this->fetchedResponse = $requester->$_funcName(
+        $this->requestUrl, $this->parameters, $this->headers, $this->testFiles
+      );
     }
 
     /**
      * Generates the block path from the full path to the block, then
      * concat with the dev server to make the requestable URL path to the block.
-     * 
+     *
      * @param   string $requestUrl The block path
      * @param   string $devServer The development domain of the server
      * @return  void
@@ -139,7 +142,7 @@
 
     /**
      * Dynamically look for the request method from the block name.
-     * 
+     *
      * @param   string $testFileName Test file name.
      * @return  void
      */
@@ -149,13 +152,23 @@
     }
 
     /**
+     * Set files to send with the request.
+     *
+     * @param   array $fileName Test file name.
+     * @return  void
+     */
+    public function setFiles( $files ) {
+      $this->testFiles = $files;
+    }
+
+    /**
      * Run the test of current block
-     * 
+     *
      * @param   object $requester The instantiated object of the ZincHTTP class
      * @return  void
      */
     public function runTest( $requester ) {
-      
+
       print "Testing:\t" . $this->blockPath . " (" . strtoupper( $this->requestMethod ) . " request)";
       \ZincPHP\CLI\Helper\nl();
       print "Test File:\t" . $this->testFileName;
@@ -167,6 +180,9 @@
       $this->expectEmptyResponse();
       $this->testExactResponseData();
       $this->dataValidator();
+
+      print_r($this->testFiles);
+      print_r($this->fetchedResponse[ 'content' ]);
 
       \ZincPHP\CLI\Helper\nl();
       sleep(0.30); // Safes from any unexpected attack.
