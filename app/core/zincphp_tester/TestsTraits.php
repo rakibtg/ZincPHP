@@ -130,20 +130,23 @@
         foreach ( $this->responseDataValidator as $key => $rule ) {
           $this->responseDataValidator[ $key ][ 'value' ] = $this->getResponseData( $key );
         }
-        $v = $validator->validate( $this->responseDataValidator, '', false );
-        if ( $v ) {
-          print "Success\n";
-          print_r($v);
+        $validated = $validator->validate( $this->responseDataValidator, '', false );
+        if ( $validated[ 'status' ] === 'valid' ) {
+          echo \ZincPHP\CLI\Helper\success( "✔ Response data validated successfully." );
+          \ZincPHP\CLI\Helper\nl();
         } else {
-          print "Failed\n";
-          print_r($v);
+          echo \ZincPHP\CLI\Helper\danger( "✘ Failed to validate response data, reasons: " );
+          \ZincPHP\CLI\Helper\nl();
+          foreach ( $validated[ 'message' ] as $er ) {
+            echo \ZincPHP\CLI\Helper\warn( "  - " . $er );
+            \ZincPHP\CLI\Helper\nl();
+          }
+          $flag = false;
         }
-
-        // print_r( $this->responseDataValidator );
-        // print_r( $this->getResponseData() );
+        if ( $this->testSuccess !== false ) $this->testSuccess = $flag;
       }
     }
 
-    
+
 
   }
