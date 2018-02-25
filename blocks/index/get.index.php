@@ -10,6 +10,7 @@
   $welcomeMessage = [
     'ZincPHP'   => 'Welcome to ZincPHP',
     'ToDo'      => 'To edit this response, go to \'get.index.php\' inside \'blocks\' directory',
+    'yo'        => App::input( 'yo' ),
   ];
 
   App::response( $data = $welcomeMessage, $responseStatus = 200, $prettyPrint = true );
