@@ -181,11 +181,11 @@
       $this->testExactResponseData();
       $this->dataValidator();
 
-      print_r($this->testFiles);
-      print_r($this->fetchedResponse[ 'content' ]);
+      // print_r($this->testFiles);
+      // print_r($this->fetchedResponse[ 'content' ]);
 
       \ZincPHP\CLI\Helper\nl();
-      sleep(0.30); // Safes from any unexpected attack.
+      sleep( 0.30 ); // Safes from any unexpected attack.
 
       return $this->testSuccess; // returns true on successful test, if fails then returns false.
 
