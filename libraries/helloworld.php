@@ -14,6 +14,6 @@
    * 
    * @return string
    */
-  function helloworld() {
+  function HelloWorld() {
     return 'Hello World!';
   }
