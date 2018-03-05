@@ -7,8 +7,15 @@
 
   trait InputTraits {
 
+    /**
+     * Get input data from the available request method.
+     *
+     * @param   string $fieldName The filed name, if not given then return all data of the request.
+     * @return  string Returns null if the key is not found by default.
+     */
     public static function input ( $fieldName = false ) {
-      return ( new ZincPHPInput )->input( $fieldName );
+      $method = App::requestType();
+      return App::$method( $fieldName );
     }
 
     /**
@@ -61,7 +68,6 @@
       return '';
     }
 
-
     /**
      * Get input data form DELETE requests.
      *
@@ -75,7 +81,6 @@
       }
       return '';
     }
-
 
     /**
      * Get input data form COPY requests.
@@ -91,7 +96,6 @@
       return '';
     }
 
-
     /**
      * Get input data form OPTIONS requests.
      *
@@ -106,7 +110,6 @@
       return '';
     }
 
-
     /**
      * Get input data form PROPFIND requests.
      *
@@ -120,7 +123,6 @@
       }
       return '';
     }
-
 
     /**
      * Get input data form PATCH requests.
