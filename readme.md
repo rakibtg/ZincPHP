@@ -70,6 +70,6 @@ This would create the block file inside the `/blocks/api/v1/blog/` and the API e
 - Extendable
 
 ## Development Status
-ZincPHP is still in development, maintained and developed by [@rakibtg](https://www.twitter.com/rakibtg "Twitter profile")
+ZincPHP is still in development, maintained and developed by [@rakibtg](https://www.twitter.com/rakibtg "Twitter profile"), I would love to have your contributions.
 
 To use the development version of ZincPHP, please clone the repo and we would love to have your pull requests. ❤️
