@@ -1,6 +1,7 @@
 <?php
 
   namespace ZincPHP\CLI;
+  require_once './app/core/App.php';
   require_once './app/core/zinc_cli/cli_helpers.php';
 
   // Check if we have the variable json doc.
@@ -67,14 +68,16 @@
     if ( $thisArg === 'migrate:refresh' ) require_once './app/core/zinc_cli/migration/MigrateRefresh.php';
 
     if ( $thisArg === 'make:seed' ) require_once './app/core/zinc_cli/seed/make_seeder.php';
-    
+
     if ( $thisArg === 'seeder' || $thisArg === 'seed' ) require_once './app/core/zinc_cli/seed/seeder.php';
 
     // Run test command
     if ( $thisArg === 'run:test' ) require_once './app/core/zincphp_tester/runTest.php';
 
+    // Make a new library
+    if ( $thisArg === 'make:library' ) require_once './app/core/zinc_cli/zincphp_library/makeLibrary.php';
 
     // Default ZincPHP CLI welcome message.
     require_once './app/core/zinc_cli/static/default_message.php';
-    
+
   }
