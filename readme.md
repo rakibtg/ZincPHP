@@ -65,9 +65,10 @@ This would create the block file inside the `/blocks/api/v1/blog/` and the API e
 - Dynamic routing
 - Database Query Builder
 - CORS Management
+- User defined libraries
 - Configurable
 - Built in test framework for REST API's
-- Extendable
+- Extendable; Has ~1,77,900 [packages](https://packagist.org/explore/ "Go to packagist")! 😉 Install them VIA composer and start using any package.
 
 ## Development Status
 ZincPHP is still in development, maintained and developed by [@rakibtg](https://www.twitter.com/rakibtg "Twitter profile"), I would love to have your contributions.
