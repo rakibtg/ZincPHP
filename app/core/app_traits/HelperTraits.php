@@ -4,7 +4,7 @@
 
     /**
      * Get all the environments data.
-     * 
+     *
      * @return array App settings; JSON document as array.
      */
     public static function environment() {
@@ -77,7 +77,7 @@
 
     /**
      * Fallback to random_bytes() function for PHP 5+
-     * 
+     *
      * @param  integer $length Total number of charecters need to be returned.
      * @return string  The random string.
      */
@@ -91,7 +91,7 @@
           $max = mb_strlen( $keyspace, '8bit' ) - 1;
         } else {
           $max = strlen( $keyspace );
-        }        
+        }
         for ( $i = 0; $i < $length; ++$i ) {
           if ( function_exists( 'random_int' ) ) {
             $str .= $keyspace[ random_int( 0, $max ) ];
@@ -172,10 +172,10 @@
      * @param   string    $field            Name of the key.
      * @param   array     $objectSortable   Associative array to sort.
      * @param   string    $direction        Sort by asc or desc. Default is asc order.
-     * 
+     *
      * @return  boolean   On successful sort it will return a boolean true.
      */
-    function sortBy( $field, &$objectSortable, $direction = 'asc' ) {
+    public static function sortBy( $field, &$objectSortable, $direction = 'asc' ) {
       usort( $objectSortable, create_function( '$a, $b', '
         $a = $a["' . $field . '"];
         $b = $b["' . $field . '"];
@@ -183,6 +183,21 @@
         return ($a ' . ( $direction == 'desc' ? '>' : '<' ) .' $b) ? -1 : 1;
       ') );
       return true;
+    }
+
+    /**
+     * Get the root directory of the app.
+     *
+     * @param string $path Custom path to be added from the root directory.
+     */
+    public static function dir( $path = false ) {
+      $returnable = preg_replace(
+        '/'. preg_quote( "app".DIRECTORY_SEPARATOR."core".DIRECTORY_SEPARATOR."app_traits".DIRECTORY_SEPARATOR, '/' ) . '$/',
+        '',
+        __DIR__ . DIRECTORY_SEPARATOR
+      );
+      if ( $path !== false ) return $returnable . $path;
+      return $returnable;
     }
 
   }
