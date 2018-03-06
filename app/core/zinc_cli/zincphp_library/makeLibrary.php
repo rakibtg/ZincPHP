@@ -1,7 +1,5 @@
 <?php
 
-  // print_r( $argv );
-
   /**
    * Get all argument values as an assosiative array.
    *
@@ -23,9 +21,7 @@
    */
   $libraryName = App::strTrim( $argv[ 2 ] );
 
-  /*
-    Validate the library name.
-  */
+  // Validate the library name.
 
   // Checking for empty.
   if ( empty( $libraryName ) ) {
@@ -57,9 +53,14 @@
 
   // Check if there is already a library.
   if ( file_exists( $libraryFilePath ) ) {
-    echo \ZincPHP\CLI\Helper\danger( "> Error: Library file already exists." );
+    echo \ZincPHP\CLI\Helper\danger( "> Library file already exists." );
     \ZincPHP\CLI\Helper\nl();
     exit();
+  }
+
+  // Create directories of the library.
+  if( ! file_exists( $libraryPath . '/' . $libraryName . '/' ) ) {
+    mkdir( $libraryPath . '/' . $libraryName . '/', 0777, true );
   }
 
   /**
@@ -72,12 +73,36 @@
     if ( $arguments[ 'type' ] === 'class' ) $libraryType = 'class';
   }
 
-  /*
-    - Create all directories.
-    - get the template based on library type.
-    - replace values.
-    - save the library.
-  */
+  /**
+   * Library namespace.
+   * Default will be the library path from the libraries directory.
+   * 
+   * @var string  $libraryNamespace
+   */
+  if ( ! empty( App::strTrim( $arguments[ 'namespace' ] ) ) ) {
+    // Use the custom namespace.
+    $libraryNamespace = App::strTrim( $arguments[ 'namespace' ] );
+  } else {
+    // Use the default namespace.
+    $libraryNamespace = str_replace( '/', '\\', $libraryName );
+  }
 
+  // Getting the template based on library type.
+  if ( $libraryType === 'class' ) $template = file_get_contents( __DIR__ . '/template/classLib.example.php' );
+  else $template = file_get_contents( __DIR__ . '/template/functionLib.example.php' );
 
+  // Update the values of the template.
+  $template = str_replace( '{NameSpaceName}', $libraryNamespace, $template );
+  $template = str_replace( '{LibraryName}', trim( pathinfo( basename( $libraryName ), PATHINFO_FILENAME ) ), $template );
+  
+  // Save the library.
+  file_put_contents( $libraryFilePath, $template );
+
+  // Success.
+  echo \ZincPHP\CLI\Helper\success( "> Library created successfully." );
+  \ZincPHP\CLI\Helper\nl();
+  echo "Path: " . $libraryFilePath;
+  \ZincPHP\CLI\Helper\nl();
+
+  // Release the CLI
   exit();
