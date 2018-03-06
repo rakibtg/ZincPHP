@@ -1,5 +1,23 @@
 <?php
   namespace ZincPHP\CLI\Helper;
+
+  /**
+   * Get argument variables with value as an associative array.
+   *
+   * @param   array System argument variables.
+   * @return  array
+   */
+  function getArgumentVariables( $arg = [] ) {
+    $arguments = [];
+    foreach ( $arg as $a ) {
+      if ( ( strpos( $a, '--') !== false ) && ( strpos( $a, '=' ) !== false ) ) {
+        $_a = explode( '=', ltrim( $a, '--' ) );
+        $arguments[ trim( $_a[ 0 ] ) ] = trim( $_a[ 1 ] );
+      }
+    }
+    return $arguments;
+  }
+
   /**
    * Outputs danger.
    */
@@ -43,6 +61,7 @@
   function trimds( $s ) {
     return rtrim( $s, DIRECTORY_SEPARATOR );
   }
+
   function joinpaths() {
     return implode( DIRECTORY_SEPARATOR, array_map( '\ZincPHP\CLI\Helper\trimds', func_get_args() ) );
   }
