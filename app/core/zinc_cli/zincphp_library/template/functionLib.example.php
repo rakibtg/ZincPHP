@@ -9,6 +9,6 @@
    * @return
    */
 
-  function {LibraryName} {
+  function {LibraryName}() {
     // ...
   }
