@@ -37,7 +37,7 @@
     }
 
     /**
-     * Prepare a single file name.
+     * Prepare a single file name. Handle the extension of the file name.
      * @param   string    $fileName    Migration file path.
      * @return  string    ...          Proper path of the migration file.
      */
