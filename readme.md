@@ -1,12 +1,10 @@
 <p align="center">
 
-  <img align="left" width="130" height="130" src='https://i.imgur.com/6krzkWG.png'/>
-
-  <h1 align="center">ZincPHP</h1>
+  <img width="130" height="130" src='https://i.imgur.com/6krzkWG.png'/>
 
 </p>
 
----
+# ZincPHP
 
 ## Micro PHP Framework for creating RESTful API
 
