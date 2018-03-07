@@ -188,7 +188,8 @@
     /**
      * Get the root directory of the app.
      *
-     * @param string $path Custom path to be added from the root directory.
+     * @param   string $path Custom path to be added from the root directory.
+     * @return  string
      */
     public static function dir( $path = false ) {
       $returnable = preg_replace(
