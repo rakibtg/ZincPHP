@@ -1,11 +1,12 @@
-# ZincPHP
+<div style="display: flex; align-items: center; justify-content: center;">
+
+<img style="width: 140px; height: 140px;" src='https://i.imgur.com/6krzkWG.png'/>
+
+<h1 style="font-size: 40px; padding-left: 20px; border: 0px;">ZincPHP</h1>
+
+</div>
+
 ## Micro PHP Framework for creating RESTful API
-
-<p style="text-align: center;">
-<img src='https://i.imgur.com/4SK3Znp.png'/>
-</p>
-
----
 
 ## Development status: 
  - Under active development
@@ -14,6 +15,10 @@
  - Working on the documentations, automatic RESTful API testing
  - For any discussion about this framework please direct message me on Twitter at [@rakibtg](https://www.twitter.com/rakibtg "Twitter profile") or mail me at rakibtg@gmail.com 
 ---
+
+<p style="text-align: center;">
+<img src='https://i.imgur.com/4SK3Znp.png'/>
+</p>
 
 ZincPHP is a lightweight and dependency free PHP framework specially created for REST-ful architecture.
 
