@@ -75,6 +75,50 @@ This would create the block file inside the `/blocks/api/v1/blog/` and the API e
 - Built in test framework for REST API's
 - Extendable; Has ~1,77,900 [packages](https://packagist.org/explore/ "Go to packagist")! 😉 Install them VIA composer and start using any package.
 
+# Quick Start Guide
+- Clone the project
+  ```
+  git clone git@github.com:rakibtg/ZincPHP.git 'myApp'
+  ```
+
+- Change the directory
+  ```
+  cd myApp
+  ```
+- You need to create an environment file in   order to start using the framework. Open  terminal/cmd and type
+  ```
+  php zinc env:new
+  ```
+  This above command would create the required environment file for you.
+- Now lets make a block
+  ```
+  php zinc make:block welcome --get
+  ```
+  Once you run this above command a block file will be created at `/myApp/blocks/welcome/get.welcome.php`
+- Go to the block file and for our testing purpose we will just send a "Hello World" message. To send a response we will use the `App::response()` method in the block file like this
+  ```
+  <?php
+
+    /**
+    * Hello world block.
+    * 
+    */
+
+    App::response( 'Hello World' );
+
+  ```
+- Now start the ZincPHP development server
+  ```
+  php zinc serve
+  ```
+  By default the server will use the `8585` port, but you can use custom port using this argument `--port 2020` as well as the host `--host 0.0.0.0`
+
+- Now go to this url in any web browser: `http://127.0.0.1:8585?route=welcome`
+
+- You would have a beautiful JSON response as the output on the browser!
+- There is a lot more that we can do, but for now here is a simple tip, if you would like to take an input then use this: `App::input( 'username' )`
+- More detail and documentations would be live very soon :)
+
 ## Development Status
 ZincPHP is still in development, maintained and developed by [@rakibtg](https://www.twitter.com/rakibtg "Twitter profile"), I would love to have your contributions.
 
