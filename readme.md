@@ -1,10 +1,12 @@
-<div style="display: flex; align-items: center; justify-content: center;">
+<p align="center">
 
-<img style="width: 140px; height: 140px;" src='https://i.imgur.com/6krzkWG.png'/>
+  <img align="left" width="130" height="130" src='https://i.imgur.com/6krzkWG.png'/>
 
-<h1 style="font-size: 40px; padding-left: 20px; border: 0px;">ZincPHP</h1>
+  <h1 align="center">ZincPHP</h1>
 
-</div>
+</p>
+
+---
 
 ## Micro PHP Framework for creating RESTful API
 
@@ -16,7 +18,7 @@
  - For any discussion about this framework please direct message me on Twitter at [@rakibtg](https://www.twitter.com/rakibtg "Twitter profile") or mail me at rakibtg@gmail.com 
 ---
 
-<p style="text-align: center;">
+<p align="center">
 <img src='https://i.imgur.com/4SK3Znp.png'/>
 </p>
 
