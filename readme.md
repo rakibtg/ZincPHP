@@ -1,12 +1,11 @@
 <p align="center">
 
-  <img width="130" height="130" src='https://i.imgur.com/6krzkWG.png'/>
+  <img width="300" height="300" src='https://i.imgur.com/N9i4AvI.png'/>
 
 </p>
 
-# ZincPHP
-
-## Micro PHP Framework for creating RESTful API
+<h1 align="center">ZincPHP</h1>
+<h2 align="center">Micro PHP Framework for creating RESTful API</h2>
 
 ## Development status: 
  - Under active development
