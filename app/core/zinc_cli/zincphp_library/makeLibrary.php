@@ -94,13 +94,14 @@
 
   // Update the values of the template.
   $template = str_replace( '{NameSpaceName}', $libraryNamespace, $template );
-  $template = str_replace( '{LibraryName}', trim( pathinfo( basename( $libraryName ), PATHINFO_FILENAME ) ), $template );
+  $_lib     = trim( pathinfo( basename( $libraryName ), PATHINFO_FILENAME ) );
+  $template = str_replace( '{LibraryName}', $_lib, $template );
   
   // Save the library.
   file_put_contents( $libraryFilePath, $template );
 
   // Success.
-  echo \ZincPHP\CLI\Helper\success( "> Library created successfully." );
+  echo \ZincPHP\CLI\Helper\success( "✔ Library created successfully." );
   \ZincPHP\CLI\Helper\nl();
   echo "Path: " . $libraryFilePath;
   \ZincPHP\CLI\Helper\nl();

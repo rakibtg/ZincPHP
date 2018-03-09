@@ -61,7 +61,7 @@
     $rawMigratable = str_replace( '{{MigrationRawName}}', $tableName, $rawMigratable );
     // Save migration file.
     if( file_put_contents( $migrationFileName, $rawMigratable ) ) {
-      print \ZincPHP\CLI\Helper\success( "Migration file($migrationName) was created" );
+      print \ZincPHP\CLI\Helper\success( "✔ Migration file($migrationName) was created" );
       \ZincPHP\CLI\Helper\nl();
       print "Migration File Path: " . $migrationFileName;
       \ZincPHP\CLI\Helper\nl();
