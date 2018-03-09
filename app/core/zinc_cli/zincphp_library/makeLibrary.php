@@ -79,6 +79,7 @@
    * 
    * @var string  $libraryNamespace
    */
+  if ( ! isset( $arguments[ 'namespace' ] ) ) $arguments[ 'namespace' ] = '';
   if ( ! empty( App::strTrim( $arguments[ 'namespace' ] ) ) ) {
     // Use the custom namespace.
     $libraryNamespace = App::strTrim( $arguments[ 'namespace' ] );
