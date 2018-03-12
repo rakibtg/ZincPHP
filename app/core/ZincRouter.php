@@ -79,7 +79,7 @@
         $this->loadBlock();
       } else {
         // No block was found, return not found error.
-        App::response_error( 'Block not found.' );
+        App::responseError( 'Block not found.' );
       }
     }
 
@@ -108,7 +108,7 @@
         require_once $this->blockName;
       } else {
         // No block was found, return not found error.
-        App::response_error( 'Block not found.' );
+        App::responseError( 'Block not found.' );
       }
     }
 

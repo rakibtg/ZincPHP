@@ -35,7 +35,7 @@
      * @param   integer   $status     HTTP status code, defualt is 404 (Not found)
      * @return  void
      */
-    public static function response_error( $msg = false, $status = 404 ) {
+    public static function responseError( $msg = false, $status = 404 ) {
         http_response_code( $status );
         if( ! $msg ) $msg = 'Unexpected error occured';
         echo json_encode( [
