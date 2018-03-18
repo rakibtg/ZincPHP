@@ -8,9 +8,14 @@
       if( strtolower( trim( $arg ) ) == '--port' ) $_port = $argv[ $index + 1 ];
     }
   }
-  \ZincPHP\CLI\Helper\nl();
+  // \ZincPHP\CLI\Helper\nl();
   echo \ZincPHP\CLI\Helper\success( '> ZincPHP development server is running' );
-  echo \ZincPHP\CLI\Helper\warn( 'ᕕ(^.^)ᕗ ' );
+  if ( PHP_OS != 'WINNT' ) {
+    echo \ZincPHP\CLI\Helper\warn( ' ᕕ(^.^)ᕗ ' );
+  } else {
+    echo \ZincPHP\CLI\Helper\warn( ' (^.^) ' );
+  }
+  
   \ZincPHP\CLI\Helper\nl();
   \ZincPHP\CLI\Helper\nl();
   echo 'Local Server: http://' . $_host . ':' . $_port;
