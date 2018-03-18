@@ -201,4 +201,16 @@
       return $returnable;
     }
 
+    /**
+     * Log data on runtime and display instantly in the console.
+     * 
+     * @param  void
+     * @return void
+     */
+    public static function console() {
+      // Require the console class.
+      require_once __DIR__ . '/../zincphp_consoler/Console.php';
+      return new Console();
+    }
+
   }
