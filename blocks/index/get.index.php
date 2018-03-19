@@ -12,5 +12,7 @@
     'ToDo'      => 'To edit this response, go to \'get.index.php\' inside \'blocks\' directory',
     'yo'        => App::input( 'yo' ),
   ];
-  App::console()->log( 'I am at line 15!' );
+
+  App::console()->log( 'Total amount', 150 );
+
   App::response( $data = $welcomeMessage, $responseStatus = 200, $prettyPrint = true );
