@@ -10,10 +10,13 @@
      * @param boolean               $prettyPrint    Pretty prints the output JSON
      * @return void
      */
-    public static function response( $data = [], $responseStatus = 200, $prettyPrint = false ) {
+    public static function response( $data = [], $responseStatus = 200, $prettyPrint = false, $contentType = 'application/json' ) {
 
       // Setting the reponse code of the output.
       http_response_code( $responseStatus );
+
+      // Setting the response content type.
+      header( 'Content-Type: ' . $contentType . '; charset=utf-8' );
 
       if( empty( $data ) ) {
           echo json_encode( [] );
