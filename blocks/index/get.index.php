@@ -13,6 +13,6 @@
     'yo'        => App::input( 'yo' ),
   ];
 
-  App::console()->log( 'Total amount', 150 );
+  App::console()->log( 'welcome message' );
 
   App::response( $data = $welcomeMessage, $responseStatus = 200, $prettyPrint = true );
