@@ -26,7 +26,7 @@
         $liblocation = $libpath . '/' . $lib . '/' . basename( trim( $lib, '/' ) ) . '.php';
 
         // Check if library exists.
-        if ( ! file_exists( $liblocation ) ) App::response_error(
+        if ( ! file_exists( $liblocation ) ) App::responseError(
           'Error: Library not found. Looking for "'.$liblocation.'"',
           500
         );
