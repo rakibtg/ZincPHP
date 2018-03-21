@@ -99,7 +99,7 @@
       // Start validation process.
       if( ! empty( $toValid ) ) {
         foreach( $toValid as $fieldName => $rules ) {
-          // Caching $rules type.
+          // Caching $rules data type.
           $_type = gettype( $rules );
           if( $_type == 'string' ) {
             // Extract all rules and set them in the validables property
