@@ -131,13 +131,13 @@
 
     /**
      * Generates slug of a string. Supports any languages.
-     * Try to avoid + as the seperator as this would break the slug.
+     * Try to avoid + as the separator as this would break the slug.
      *
      * @param   string $url         Plain text
-     * @param   string $seperator   The seperator of the slug
+     * @param   string $separator   The separator of the slug
      * @return  string
      */
-    public static function slug( $url = '', $seperator = '_' ) {
+    public static function slug( $url = '', $separator = '_' ) {
         $url = trim( $url );
         foreach( [
             '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=',
@@ -145,23 +145,23 @@
         ] as $del ) {
             $url = str_replace( $del, '', $url );
         }
-        $url = str_replace( ' ', $seperator, trim( $url ) );
-        return preg_replace( '/'.$seperator.'+/', $seperator, $url );
+        $url = str_replace( ' ', $separator, trim( $url ) );
+        return preg_replace( '/'.$separator.'+/', $separator, $url );
     }
 
     /**
-     * Generates slug of a string, keep only english charecters.
+     * Generates slug of a string, keeps only the English characters.
      *
      * @param   string    $url         Plain text
-     * @param   string    $seperator   The seperator of the slug
+     * @param   string    $separator   The separator of the slug
      * @return  boolean   $fallback    The fallback is idea because if the slug is empty then
      *                                 instead of empty it would return a unique random string as the slug.
      */
-    public static function en_slug( $url = '', $seperator = ' ', $fallback = false ) {
+    public static function en_slug( $url = '', $separator = ' ', $fallback = false ) {
       $url = trim( $url );
       $url = preg_replace('/[^a-zA-Z0-9\s]/', '', $url);
       $url = preg_replace('!\s+!', ' ', $url);
-      $url = str_replace( ' ', $seperator, $url );
+      $url = str_replace( ' ', $separator, $url );
       if( $fallback ) $url .= mt_rand();
       return $url;
     }
@@ -199,18 +199,6 @@
       );
       if ( $path !== false ) return $returnable . $path;
       return $returnable;
-    }
-
-    /**
-     * Log data on runtime and display instantly in the console.
-     * 
-     * @param  void
-     * @return void
-     */
-    public static function console() {
-      // Require the console class.
-      require_once __DIR__ . '/../zincphp_consoler/Console.php';
-      return new Console();
     }
 
   }
