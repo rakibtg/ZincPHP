@@ -26,12 +26,21 @@
      * This method will allow specific domain for Cross-origin resource sharing.
      */
     public function bootCors() {
-      if( ! empty( $this->env->cors_allowed ) ) {
+      $env = App::environment();
+      $requestMethod = strtolower( trim( $_SERVER[ 'REQUEST_METHOD' ] ) );
+
+      if( ! empty( $env->cors_allowed ) ) {
         if( isset( $_SERVER[ 'HTTP_ORIGIN' ] ) ) {
           $http_origin = $_SERVER[ 'HTTP_ORIGIN' ];
-          foreach( $this->env->cors_allowed as $_dmn ) {
-            if( in_array ( $http_origin, $_dmn ) ) {
-              header("Access-Control-Allow-Origin: $http_origin");
+          foreach( $env->cors_allowed as $_dmn ) {
+            if( $http_origin == $_dmn ) {
+              header( 'Access-Control-Allow-Origin: ' . $http_origin );
+              header( 'Access-Control-Allow-Methods: ' . 'GET, POST, PUT ,DELETE' );
+              header( 'Access-Control-Allow-Headers: Origin, Content-Type, Authorization' );
+              if ( $requestMethod == 'options' ) {
+                // This request is a CORS preflight.
+                App::response('');
+              }
             }
           }
         }
