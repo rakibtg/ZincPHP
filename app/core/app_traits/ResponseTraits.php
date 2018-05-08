@@ -41,8 +41,9 @@
     public static function responseError( $msg = false, $status = 404 ) {
         http_response_code( $status );
         if( ! $msg ) $msg = 'Unexpected error occured';
+        $msg = (array) $msg;
         echo json_encode( [
-            'status' => $msg,
+            'message' => $msg,
         ] );
         exit();
     }
