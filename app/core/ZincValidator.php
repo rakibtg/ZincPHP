@@ -358,7 +358,7 @@
      */
     protected function validateLengthMin( $fieldName, $validateValue, $value ) {
       if( ! empty( $value ) ) {
-        if( strlen( $value ) <= ( int ) $validateValue[ 1 ] ) {
+        if( strlen( $value ) < ( int ) $validateValue[ 1 ] ) {
           $this->setError( 
             $fieldName, 
             '{label} must be a minimum length of ' . $validateValue[ 1 ] . ' characters', 
@@ -374,7 +374,7 @@
      */
     protected function validateLengthMax( $fieldName, $validateValue, $value ) {
       if( ! empty( $value ) ) {
-        if( strlen( $value ) >= $validateValue[ 1 ] ) {
+        if( strlen( $value ) > $validateValue[ 1 ] ) {
           $this->setError( 
             $fieldName, 
             '{label} must be no more than ' . $validateValue[ 1 ] . ' characters', 
