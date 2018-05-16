@@ -19,12 +19,12 @@
       header( 'Content-Type: ' . $contentType . '; charset=utf-8' );
 
       if( empty( $data ) ) {
-          echo json_encode( [] );
+        echo json_encode( [] );
       } else if ( is_array( $data ) ) {
-          if( $prettyPrint ) echo json_encode( $data, JSON_PRETTY_PRINT );
-          else echo json_encode( $data );
+        if( $prettyPrint ) echo json_encode( $data, JSON_PRETTY_PRINT );
+        else echo json_encode( $data );
       } else {
-          echo json_encode( [ $data ] );
+        echo json_encode( $data );
       }
       exit();
     }
@@ -39,13 +39,13 @@
      * @return  void
      */
     public static function responseError( $msg = false, $status = 404 ) {
-        http_response_code( $status );
-        if( ! $msg ) $msg = 'Unexpected error occured';
-        $msg = (array) $msg;
-        echo json_encode( [
-            'message' => $msg,
-        ] );
-        exit();
+      http_response_code( $status );
+      if( ! $msg ) $msg = 'Unexpected error occured';
+      $msg = (array) $msg;
+      echo json_encode( [
+        'message' => $msg,
+      ] );
+      exit();
     }
 
   }
