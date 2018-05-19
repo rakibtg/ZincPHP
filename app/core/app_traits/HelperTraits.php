@@ -76,23 +76,27 @@
     }
 
     /**
-     * Fallback to random_bytes() function for PHP 5+
+     * Generate unique random string of a length.
      *
      * @param  integer $length Total number of charecters need to be returned.
      * @return string  The random string.
      */
     public static function randomString( $length = 10 ) {
-      if ( function_exists( 'random_bytes' ) ) {
-        return bin2hex( random_bytes( $length ) );
+      $keyspace = '0123456789abcdefg.hijklmnopqrstuvwxyzA-BCDEFGHIJK_LMNOPQRSTU#VWXYZ';
+      $str = '';
+      if( function_exists( 'mb_strlen' ) ) {
+        $max = mb_strlen( $keyspace, '8bit' ) - 1;
       } else {
-        $keyspace = '0123456789abcdefg.hijklmnopqrstuvwxyzA-BCDEFGHIJK_LMNOPQRSTU#VWXYZ';
-        $str = '';
         $max = strlen( $keyspace );
-        for ( $i = 0; $i < $length; ++$i ) {
+      }
+      for ( $i = 0; $i < $length; ++$i ) {
+        if ( function_exists( 'random_int' ) ) {
+          $str .= $keyspace[ random_int( 0, $max ) ];
+        } else {
           $str .= $keyspace[ mt_rand( 0, $max ) ];
         }
-        return $str;
       }
+      return $str;
     }
 
     /**
