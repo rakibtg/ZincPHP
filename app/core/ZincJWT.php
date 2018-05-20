@@ -53,7 +53,7 @@
         return JWT::encode( $payload, $this->env->secret_keys, $alg = 'HS256', $keyId = null, $head = null );
       } catch( Exception $e ) {
         if( $returnBoolOnFail == true ) return false;
-        else if( $returnBoolOnFail == false ) return $e;
+        else if( $returnBoolOnFail == false ) App::response( [ 'Unable to generate the token' ], 401 );
         else return false;
       }
     }
@@ -72,15 +72,20 @@
           $tokenString = getallheaders()[ 'Authorization' ];
         } else {
           if( $returnBoolOnFail == true ) return false;
-          else if( $returnBoolOnFail == false ) return 'Authorization token not found in the header.';
+          else if( $returnBoolOnFail == false ) App::response( [ 'Authorization token not found in the header.' ], 403 );
           else return false;
         }
       }
       try {
-        return JWT::decode( $tokenString, $this->env->secret_keys, $alg );
+        $token = (array) JWT::decode( $tokenString, $this->env->secret_keys, $alg );
+        if ( empty( $token ) ) {
+          // Token was invalid.
+          App::response( [ 'Invalid token found' ], 403 );
+        } 
+        return $token;
       } catch( Exception $e ) {
         if( $returnBoolOnFail == true ) return false;
-        else if( $returnBoolOnFail == false ) return $e;
+        else if( $returnBoolOnFail == false ) App::response( [ 'Invalid token found' ], 403 );
         else return false;
       }
 
