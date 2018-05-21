@@ -66,7 +66,7 @@
      * 
      * @return boolean|array|void
      */
-    public function getToken( $tokenString = false, $returnBoolOnFail = true, $alg = [ 'HS256' ] ) {
+    public function getToken( $tokenString = false, $returnBoolOnFail = false, $alg = [ 'HS256' ] ) {
       if( ! $tokenString ) {
         if( isset( getallheaders()[ 'Authorization' ] ) ) {
           $tokenString = getallheaders()[ 'Authorization' ];
