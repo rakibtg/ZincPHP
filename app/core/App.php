@@ -37,11 +37,9 @@
     * Alias to db.
     *
     */
-    public static function db () {
-      $env = App::environment();
-      if( ! empty( $env->database ) ) {
-        return DB::getInstance( $env );
-      }
+    public static function db ( $table = false ) {
+      if ( $table ) return ZincDB::getInstance()->newQB()->table( $table );
+      else return ZincDB::getInstance()->newQB();
     }
 
     /**
