@@ -2,7 +2,7 @@
 
   require_once __DIR__ . '/ZincEnvironment.php';
   require_once __DIR__ . '/App.php';
-  require_once __DIR__ . '/ZincMySQL.php';
+  require_once __DIR__ . '/ZincDB.php';
   require_once __DIR__ . '/ZincJWT.php';
   require_once __DIR__ . '/ZincValidator.php';
   require_once __DIR__ . '/ZincHTTP.php';
