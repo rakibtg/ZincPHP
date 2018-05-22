@@ -11,6 +11,7 @@
         }
     ],
     "require": {
-      "php": ">=5.6"
+        "php": ">=5.6",
+        "usmanhalalit/pixie": "^2.0"
     }
 }
