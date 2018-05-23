@@ -14,7 +14,7 @@
      */
     function run ( $db ) {
 
-      return $db->insertMany( 'stories', [
+      return $db->table( 'stories' )->insert( [
         [
           'title' => 'How its possible.',
           'content' => 'Am i realy gonna make a framework?',
