@@ -1,11 +1,15 @@
 <?php
 
+  // Autoload files using Composer autoload
+  if ( file_exists( __DIR__ . '/../../../vendor/autoload.php' ) ) require_once __DIR__ . '/../../../vendor/autoload.php';
+
   require_once __DIR__ . '/ColumnsTrait.php';
   require_once __DIR__ . '/ModifiersTrait.php';
   require_once __DIR__ . '/MigrationTrait.php';
   require_once __DIR__ . '/TablesTrait.php';
   require_once __DIR__ . '/ZincPHPMigrater.php';
   require_once __DIR__ . '/SeedsTrait.php';
+  require_once __DIR__ . '/../Zinc.php';
   require_once __DIR__ . '/../App.php';
 
   class ZincDBManager {
@@ -47,20 +51,6 @@
      */
     protected $tableName;
 
-    /**
-     * Application environment settings.
-     *
-     * @var object $env
-     */
-    protected $env;
-
-    /**
-     * Connection variable for MySQL.
-     *
-     * @var object $db
-     */
-    protected $db;
-
     function __construct() {
 
       $this->queryHead = '';
@@ -68,22 +58,6 @@
       $this->queryFoot = '';
       $this->tableName = '';
       $this->rawQuery  = false; // If the value is not false then the build method will only return its value.
-
-      // Get environment settings from environment document
-      $this->env = json_decode( file_get_contents( './app/environment.json' ) );
-
-      // New mysql connection.
-      if(!$this->db = mysqli_connect(
-        $this->env->host,
-        $this->env->database_user,
-        $this->env->database_password,
-        $this->env->database
-      )){
-        print \ZincPHP\CLI\Helper\danger("Error: Unable to connect with the database. Edit environment.json file and check your database configurations.");
-        \ZincPHP\CLI\Helper\nl();
-        print 'Error Message: ' . mysqli_connect_error();
-        \ZincPHP\CLI\Helper\nl();
-      }
     }
 
     /**
@@ -137,12 +111,10 @@
      * @return boolean
      */
     function query() {
-      // print "\n".$this->build()."\n";
-      if( ! $this->db ) exit();
-      $execQuery = mysqli_query( $this->db, trim( $this->build() ) );
-      if( $execQuery !== true ) {
-        return (string) mysqli_error( $this->db );
-      }
+      $zpEnv = (array) \App::environment()->database_config;
+      $connection = new \Pixie\Connection( $zpEnv[ 'driver' ], $zpEnv );
+      $qb = new \Pixie\QueryBuilder\QueryBuilderHandler( $connection );
+      $qb->query( $this->build() );
       // Resetting the recent build.
       $this->destroyBuild();
       // Everything just works.
