@@ -1,13 +1,19 @@
 {
-    "environment" : "local",
-    "name" : "",
-    "url"  : "",
-    "driver" : "mysql",
-    "host": "127.0.0.1",
-    "database" : "",
-    "database_user" : "",
-    "database_password" : "",
-    "cors_allowed" : [
+    "environment": "development",
+    "name": "",
+    "url": "",
+    "database_config": {
+        "driver"    : "mysql",
+        "host"      : "localhost",
+        "database"  : "elitepress",
+        "username"  : "root",
+        "password"  : "root",
+        "charset"   : "utf8",
+        "collation" : "utf8_unicode_ci",
+        "prefix"    : ""
+    },
+    "cors_allowed": [
         "http:\/\/127.0.0.1:3000"
-    ]
+    ],
+    "secret_keys": ""
 }
