@@ -36,6 +36,7 @@
     /**
     * Alias to db.
     *
+    * @param $table   string    The name of the table.
     */
     public static function db ( $table = false ) {
       if ( $table ) return ZincDB::getInstance()->newQB()->table( $table );
