@@ -17,7 +17,7 @@
      */
     function run ( $db ) {
 
-      $db->insert( 'memories', [
+      $db->table( 'memories' )->insert( [
         'title' => 'That night i never forgot',
         'content' => 'When i have descided to make ZincPHP.'
       ] );
