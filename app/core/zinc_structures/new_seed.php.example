@@ -17,7 +17,7 @@
      */
     function run ( $db ) {
 
-      $db->insert( '{{SEED_TABLE}}', [
+      $db->table( '{{SEED_TABLE}}' )->insert( [
 
       ] );
 
