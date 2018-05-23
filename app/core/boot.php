@@ -1,9 +1,9 @@
 <?php
 
   // Autoload files using Composer autoload
-  if ( file_exists( '../vendor/autoload.php' ) ) require_once '../vendor/autoload.php';
+  if ( file_exists( __DIR__ . '/../../vendor/autoload.php' ) ) require_once __DIR__ . '/../../vendor/autoload.php';
 
-  require_once "../app/core/Zinc.php";
+  require_once __DIR__ . '/Zinc.php';
 
   /**
    * Instantiating Zinc core class.
