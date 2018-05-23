@@ -1,12 +1,12 @@
 <?php
 
-  require_once './app/core/zinc_dbm/ColumnsTrait.php';
-  require_once './app/core/zinc_dbm/ModifiersTrait.php';
-  require_once './app/core/zinc_dbm/MigrationTrait.php';
-  require_once './app/core/zinc_dbm/TablesTrait.php';
-  require_once './app/core/zinc_dbm/ZincPHPMigrater.php';
-  require_once './app/core/zinc_dbm/SeedsTrait.php';
-  require_once './app/core/ZincMySQL.php';
+  require_once __DIR__ . '/ColumnsTrait.php';
+  require_once __DIR__ . '/ModifiersTrait.php';
+  require_once __DIR__ . '/MigrationTrait.php';
+  require_once __DIR__ . '/TablesTrait.php';
+  require_once __DIR__ . '/ZincPHPMigrater.php';
+  require_once __DIR__ . '/SeedsTrait.php';
+  require_once __DIR__ . '/../App.php';
 
   class ZincDBManager {
 
