@@ -1,12 +1,10 @@
 <?php
 
-
 namespace Firebase\JWT;
 
-require_once '../app/core/zinc_jwt/BeforeValidException.php';
-require_once '../app/core/zinc_jwt/ExpiredException.php';
-require_once '../app/core/zinc_jwt/SignatureInvalidException.php';
-
+require_once __DIR__ . '/BeforeValidException.php';
+require_once __DIR__ . '/ExpiredException.php';
+require_once __DIR__ . '/SignatureInvalidException.php';
 
 use \DomainException;
 use \InvalidArgumentException;
