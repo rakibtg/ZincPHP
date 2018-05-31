@@ -5,7 +5,7 @@
     "database_config": {
         "driver"    : "mysql",
         "host"      : "localhost",
-        "database"  : "elitepress",
+        "database"  : "",
         "username"  : "root",
         "password"  : "root",
         "charset"   : "utf8",
