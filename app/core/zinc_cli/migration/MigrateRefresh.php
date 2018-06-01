@@ -68,9 +68,6 @@
           if( file_exists( './app/core/zinc_cli/migration/migrationlist.json' ) ) {
             file_put_contents( './app/core/zinc_cli/migration/migrationlist.json', '[]' );
           }
-
-          echo \ZincPHP\CLI\Helper\success( '✅  Successfully cleaned the database.' );
-          echo \ZincPHP\CLI\Helper\nl();
           
           echo '➡️  Migrating the database';
           echo \ZincPHP\CLI\Helper\nl();
