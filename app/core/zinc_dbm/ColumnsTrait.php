@@ -251,8 +251,12 @@
      *                                    name will be the default name for the index.
      * @return  object        ...         Current object.
      */
-    function index( $columns, $indexName = '' ) {
+    function index( $columns, $indexName = false ) {
       $columns = ( array ) $columns;
+      if( $indexName === false ) {
+        // No index name found, take the first column name as the index name.
+        $indexName = $columns[ 0 ];
+      }
       $this->queryBody .= ', INDEX `' . $indexName . '` ( ' . implode( ',', $columns ) . ' ) ';
       return $this;
     }
