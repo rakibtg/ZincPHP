@@ -62,4 +62,25 @@
       return $this;
     }
 
+    // Timestamps will set common created_at and updated_at 
+    // column with default datetime.
+    function timestamps() {
+      $this->queryBody .= ' , 
+        `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP, 
+        `updated_at` DATETIME ON UPDATE CURRENT_TIMESTAMP 
+      ';
+      return $this;
+    }
+
+    // Common columns will create widely used common columns for your table.
+    // Included columns are: created_by, is_active, created_at, updated_at
+    function commonColumns( $isActive = 0 ) {
+      $this->queryBody .= ' , 
+      `created_by` INTEGER UNSIGNED NULL, 
+      `is_active` TINYINT(1) UNSIGNED NOT NULL DEFAULT '. $isActive .' 
+      ';
+      $this->timestamps();
+      return $this;
+    }
+
   }

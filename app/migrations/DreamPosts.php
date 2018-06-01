@@ -8,6 +8,7 @@
         ->string( 'title' )
         ->text( 'content' )
         ->integer( 'author' )
+        ->commonColumns()
       ->query();
     }
 
