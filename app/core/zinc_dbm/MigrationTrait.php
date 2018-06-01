@@ -126,11 +126,6 @@
       exit();
     }
 
-    function useDatabase() {
-      $this->rawQuery = 'USE `'.$this->env->database.'`';
-      return $this;
-    }
-
     /**
      * Method to migrate database form the migration file.
      *
