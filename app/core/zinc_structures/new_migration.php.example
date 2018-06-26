@@ -1,8 +1,12 @@
 <?php
 
   /**
-   * Yet another migration class.
-   * To learn more about migrations go here: http://...
+   * A migration example class.
+   *
+   * Using timestamps() method will create a "created_at" and "updated_at" column.
+   *
+   * Using commonColumns() method will create four common columns,
+   * -> "is_active", "created_by", "created_at" and "updated_at"!
    * 
    */
 
@@ -12,12 +16,7 @@
       return $this->db->createTable( '{{MigrationRawName}}' )
         ->increments( 'id' )
 
-
-        ->timestamps() // timestamps will create a created_at and updated_at column
-        
-        // Use commonColumns() that will create four common columns,
-        // is_active, created_by, created_at and updated_at!
-
+        ->timestamps()
       ->query();
     }
 
