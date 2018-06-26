@@ -3,7 +3,7 @@
   /**
    * {{SEED_NAME}} Database Seeder.
    * To insert single item use insert() method.
-   * To insert multiple item use insertMany() method.
+   * To insert multiple item pass an array to insert() method.
    * 
    */
 
