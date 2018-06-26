@@ -35,7 +35,7 @@
   // Process migration name.
   if ( $tableName === false ) {
     // Table name was not provided using the system argument --table
-    $tableName = trim( $argv[ 2 ] );
+    $tableName = strtolower( trim( $argv[ 2 ] ) );
   }
 
   // Generate and formet the migration file name.
