@@ -75,7 +75,7 @@
      * @return string  The random string.
      */
     public static function randomString( $length = 10 ) {
-      $keyspace = '0123456789abcdefg.hijklmnopqrstuvwxyzA-BCDEFGHIJK_LMNOPQRSTU#VWXYZ';
+      $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
       $str = '';
       if( function_exists( 'mb_strlen' ) ) {
         $max = mb_strlen( $keyspace, '8bit' ) - 1;
