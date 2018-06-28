@@ -25,6 +25,10 @@
       return new ZincJWT( App::environment() );
     }
 
+    public static function newJWT() {
+      return new ZincPHP\core\ZincJWT();
+    }
+
     /**
     * Alias to send a request.
     *
