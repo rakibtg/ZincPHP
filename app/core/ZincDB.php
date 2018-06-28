@@ -18,7 +18,7 @@ class ZincDB {
   /**
    * Cache the query builder instance.
    * 
-   * @var object $instance
+   * @var object $queryBuilder
    */
   private $queryBuilder = null;
 
