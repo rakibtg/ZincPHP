@@ -12,6 +12,7 @@
     ],
     "require": {
         "php": ">=5.6",
-        "usmanhalalit/pixie": "^2.0"
+        "usmanhalalit/pixie": "^2.0",
+        "firebase/php-jwt": "^5.0"
     }
 }
