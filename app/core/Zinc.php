@@ -3,7 +3,12 @@
   require_once __DIR__ . '/ZincEnvironment.php';
   require_once __DIR__ . '/App.php';
   require_once __DIR__ . '/ZincDB.php';
+
+  // OLD JWT Implementation.
   require_once __DIR__ . '/ZincJWT.php';
+  // New JWT implementation.
+  require_once __DIR__ . '/zinc_jwt/ZincJWT.php';
+
   require_once __DIR__ . '/ZincValidator.php';
   require_once __DIR__ . '/ZincHTTP.php';
   require_once __DIR__ . '/ZincRouter.php';
