@@ -21,11 +21,7 @@
     * Alias to ZincJWT class.
     *
     */
-    public static function jwt() {
-      return new ZincJWT( App::environment() );
-    }
-
-    public static function newJWT() {
+    public static function JWT() {
       return new ZincPHP\core\ZincJWT();
     }
 
