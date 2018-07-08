@@ -16,6 +16,7 @@
     public static function input ( $fieldName = false ) {
 
       $method = App::requestType();
+      $data   = '';
 
       // Detecting the content type of the request.
       if ( ! isset( $_SERVER[ "CONTENT_TYPE" ] ) ) {
@@ -36,137 +37,25 @@
       }
 
       // We dont need a check if GET method
-      if ( $method === 'get' ) return $_GET;
-
-      // Encode data based on content type
-      if ( $contentType === 'application/x-www-form-urlencoded' ) {
-        if ( $method === 'post' ) return $_POST;
-        else return json_decode( file_get_contents( "php://input" ), true );
+      if ( $method === 'get' ) {
+        $data = $_GET;
       } else {
-        return json_decode( file_get_contents( "php://input" ), true );
-      }
-
-      return [];
-
-    }
-
-    /**
-     * Get input data from GET requests.
-     *
-     * @param string $key Input field key name.
-     * @return string
-     */
-    public static function get( $key = false ) {
-      if( $key === false ) {
-        return $_GET;
-      } else {
-          if ( isset( $_GET[ $key ] ) ) {
-            return App::strTrim( $_GET[ $key ] );
-          } else {
-            return '';
-          }
-      }
-    }
-
-    /**
-     * Get input data form POST requests.
-     *
-     * @param string $key Input field key name.
-     * @return string
-     */
-    public static function post( $key = false ) {
-      if( $key === false ) {
-        return $_POST;
-      } else {
-        if ( isset( $_POST[ $key ] ) ) {
-          return App::strTrim( $_POST[ $key ] );
+        // Encode data based on content type
+        if ( $contentType === 'application/x-www-form-urlencoded' ) {
+          if ( $method === 'post' ) $data = $_POST;
+          else $data = json_decode( file_get_contents( "php://input" ), true );
         } else {
-          return '';
+          $data = json_decode( file_get_contents( "php://input" ), true );
         }
       }
-    }
 
-    /**
-     * Get input data form PUT requests.
-     *
-     * @param string $key Input field key name.
-     * @return string
-     */
-    public static function put( $key ) {
-      if( App::requestType() === 'put' ) {
-        if( ! isset( $_POST[ $key ] ) ) return '';
-        return App::strTrim( $_POST[ $key ] );
+      // Get data by field name.
+      if ( $fieldName !== false ) {
+        return isset( $data[ $fieldName ] ) ? $data[ $fieldName ] : '';
+      } else {
+        return $data;
       }
-      return '';
-    }
 
-    /**
-     * Get input data form DELETE requests.
-     *
-     * @param string $key Input field key name.
-     * @return string
-     */
-    public static function delete( $key ) {
-      if( App::requestType() === 'delete' ) {
-        if( ! isset( $_POST[ $key ] ) ) return '';
-        return App::strTrim( $_POST[ $key ] );
-      }
-      return '';
     }
-
-    /**
-     * Get input data form COPY requests.
-     *
-     * @param string $key Input field key name.
-     * @return string
-     */
-    public static function copy( $key ) {
-      if( App::requestType() === 'copy' ) {
-        if( ! isset( $_POST[ $key ] ) ) return '';
-        return App::strTrim( $_POST[ $key ] );
-      }
-      return '';
-    }
-
-    /**
-     * Get input data form OPTIONS requests.
-     *
-     * @param string $key Input field key name.
-     * @return string
-     */
-    public static function options( $key ) {
-      if( App::requestType() === 'options' ) {
-        if( ! isset( $_POST[ $key ] ) ) return '';
-        return App::strTrim( $_POST[ $key ] );
-      }
-      return '';
-    }
-
-    /**
-     * Get input data form PROPFIND requests.
-     *
-     * @param string $key Input field key name.
-     * @return string
-     */
-    public static function propfind( $key ) {
-      if( App::requestType() === 'propfind' ) {
-        if( ! isset( $_POST[ $key ] ) ) return '';
-        return App::strTrim( $_POST[ $key ] );
-      }
-      return '';
-    }
-
-    /**
-     * Get input data form PATCH requests.
-     *
-     * @param string $key Input field key name.
-     * @return string
-     */
-    public static function patch( $key ) {
-      if( App::requestType() === 'patch' ) {
-        if( ! isset( $_POST[ $key ] ) ) return '';
-        return App::strTrim( $_POST[ $key ] );
-      }
-      return '';
-    }
+    
   }
