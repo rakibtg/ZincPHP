@@ -13,8 +13,8 @@
     * Alias to Validator class validate() method.
     *
     */
-    public static function validate ( $toValid = [], $queryStringType = 'get', $exitAfterExecution = true ) {
-      return ( new ZincValidator() )->validate( $toValid, $queryStringType, $exitAfterExecution );
+    public static function validate ( $toValid = [], $exitAfterExecution = true ) {
+      return ( new ZincValidator() )->validate( $toValid, $exitAfterExecution );
     }
 
     /**
