@@ -1,5 +1,5 @@
 <?php
-  require_once './app/core/zinc_dbm/ZincDBManager.php';
+  require_once './app/core/zinc_cli/zincphp_dbm/ZincDBManager.php';
   
   $zincDBManager = new ZincDBManager();
   $migratable = $zincDBManager->listAllMigrations();

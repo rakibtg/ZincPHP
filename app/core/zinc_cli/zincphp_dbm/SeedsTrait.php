@@ -47,7 +47,7 @@
         // Check if seeder file already exists.
         if ( ! file_exists( $seederFile ) ) {
           // Create the seeder file to seeders directory.
-          $rawSeeder = file_get_contents( './app/core/zinc_structures/new_seed.php.example' );
+          $rawSeeder = file_get_contents( './app/core/zinc_cli/zincphp_structures/new_seed.php.example' );
           // Rename the class.
           $rawSeeder = str_replace( '{{SEED_NAME}}', $seederName, $rawSeeder );
           // Add table name.

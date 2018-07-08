@@ -72,13 +72,13 @@
     if ( $thisArg === 'seeder' || $thisArg === 'seed' ) require_once './app/core/zinc_cli/seed/seeder.php';
 
     // Run test command.
-    if ( $thisArg === 'run:test' ) require_once './app/core/zincphp_tester/runTest.php';
+    if ( $thisArg === 'run:test' ) require_once './app/core/zinc_cli/zincphp_tester/runTest.php';
 
     // Make a new library.
     if ( $thisArg === 'make:library' ) require_once './app/core/zinc_cli/zincphp_library/makeLibrary.php';
 
     // Live output console logs.
-    if ( $thisArg === 'run:consoler' ) require_once './app/core/zincphp_consoler/consoler.cli.php';
+    if ( $thisArg === 'run:consoler' ) require_once './app/core/zinc_cli/zincphp_consoler/consoler.cli.php';
 
     // Default ZincPHP CLI welcome message.
     require_once './app/core/zinc_cli/static/default_message.php';

@@ -17,7 +17,7 @@
     }
   }
   // Create the new environment.json file.
-  $default_env = json_decode( file_get_contents( './app/core/zinc_structures/environment.json.example' ) );
+  $default_env = json_decode( file_get_contents( './app/core/zinc_cli/zincphp_structures/environment.json.example' ) );
   $default_env->secret_keys = bin2hex( App::randomString( 64 ) );
   file_put_contents( './app/environment.json', json_encode( $default_env, JSON_PRETTY_PRINT ) );
   echo \ZincPHP\CLI\Helper\success( "Environment document has created." );

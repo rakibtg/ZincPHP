@@ -54,7 +54,7 @@
   }
   if( ! file_exists( $migrationFileName ) ) {
     // Copy new migration template to migrations directory.
-    $rawMigratable = file_get_contents( './app/core/zinc_structures/new_migration.php.example' );
+    $rawMigratable = file_get_contents( './app/core/zinc_cli/zincphp_structures/new_migration.php.example' );
     // Rename the class.
     $rawMigratable = str_replace( '{{Migration}}', $migrationName, $rawMigratable );
     // Add table name.

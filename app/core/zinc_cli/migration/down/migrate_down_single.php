@@ -1,5 +1,5 @@
 <?php
-  require_once './app/core/zinc_dbm/ZincDBManager.php';
+  require_once './app/core/zinc_cli/zincphp_dbm/ZincDBManager.php';
   $zincDBManager = new ZincDBManager();
   if( $zincDBManager->isMigrationFileExists( $argv[2] ) ) {
     $migratableFile = $zincDBManager->prepareMigrationFileName( $argv[2] );
