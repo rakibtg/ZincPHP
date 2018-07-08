@@ -38,15 +38,6 @@
     private $customErrors = [];
 
     /**
-     * Determines from what type of request we should receive the data.
-     * Default value is GET,  that means by default it would expect data from 
-     * query string, if default value is given from the block, then this is optional.
-     *
-     * @var array
-     */
-    private $queryStringType = '';
-
-    /**
      * Keep a record of all the field name that are invalid.
      * 
      * @var array
@@ -83,18 +74,12 @@
      * Take input from block to process and validate an array of data.
      * 
      * @param  array      $toValid
-     * @param  string     $queryStringType
      * @param  boolean    $exitAfterExecution
      */
-    public function validate( $toValid = [], $queryStringType = 'get', $exitAfterExecution = true ) {
+    public function validate( $toValid = [], $exitAfterExecution = true ) {
 
       // Set how to output the error or return it.
       $this->exitAfterExecution = $exitAfterExecution;
-
-      // Set query string.
-      $_qs = trim( strtolower( $queryStringType ) );
-      $this->queryStringType = $_qs;
-      unset( $_qs );
 
       // Start validation process.
       if( ! empty( $toValid ) ) {
@@ -116,47 +101,7 @@
           } else {
             // No value found from block.
             // Get data from requests aka user input.
-            if( $this->queryStringType == 'get' ) {
-
-              // Get user inputs from query string.
-              $this->validables[ $fieldName ][ 'value' ] = App::get( $fieldName );
-
-            } else if ( $this->queryStringType == 'post' ) {
-
-              // Get user inputs from post data.
-              $this->validables[ $fieldName ][ 'value' ] = App::post( $fieldName );
-
-            } else if ( $this->queryStringType == 'put' ) {
-
-              // Get user inputs from put data.
-              $this->validables[ $fieldName ][ 'value' ] = App::put( $fieldName );
-
-            } else if ( $this->queryStringType == 'delete' ) {
-
-              // Get user inputs from delete data.
-              $this->validables[ $fieldName ][ 'value' ] = App::delete( $fieldName );
-
-            } else if ( $this->queryStringType == 'patch' ) {
-
-              // Get user inputs from patch data.
-              $this->validables[ $fieldName ][ 'value' ] = App::patch( $fieldName );
-
-            } else if ( $this->queryStringType == 'options' ) {
-
-              // Get user inputs from options data.
-              $this->validables[ $fieldName ][ 'value' ] = App::options( $fieldName );
-
-            } else if ( $this->queryStringType == 'propfind' ) {
-
-              // Get user inputs from propfind data.
-              $this->validables[ $fieldName ][ 'value' ] = App::propfind( $fieldName );
-
-            } else if ( $this->queryStringType == 'copy' ) {
-
-              // Get user inputs from copy data.
-              $this->validables[ $fieldName ][ 'value' ] = App::copy( $fieldName );
-              
-            } 
+            $this->validables[ $fieldName ][ 'value' ] = App::input( $fieldName );
           }
 
           // Work with custom error messages.
