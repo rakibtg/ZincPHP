@@ -1,0 +1,18 @@
+{
+    "environment": "development",
+    "name": "ZincPHP",
+    "database_config": {
+        "driver"    : "mysql",
+        "host"      : "localhost",
+        "database"  : "",
+        "username"  : "root",
+        "password"  : "root",
+        "charset"   : "utf8",
+        "collation" : "utf8_unicode_ci",
+        "prefix"    : ""
+    },
+    "cors_allowed": [
+        "http:\/\/127.0.0.1:3000"
+    ],
+    "secret_keys": ""
+}

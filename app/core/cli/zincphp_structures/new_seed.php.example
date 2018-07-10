@@ -1,0 +1,26 @@
+<?php
+
+  /**
+   * {{SEED_NAME}} Database Seeder.
+   * To insert single item use insert() method.
+   * To insert multiple item pass an array to insert() method.
+   * 
+   */
+
+  class {{SEED_NAME}} extends ZincDBManager {
+
+    /**
+     * Runs the seeder.
+     *
+     * @param   object   $db   ZincPHP MySQL database instance.
+     *                         $db is instantiated in its parent extended class.
+     */
+    function run ( $db ) {
+
+      $db->table( '{{SEED_TABLE}}' )->insert( [
+
+      ] );
+
+    }
+
+  }
