@@ -1,5 +1,7 @@
 <?php
 
+  use \ZincPHP\CLI\Helper as CLI;
+
   /**
    * Methods required for database migration.
    *
@@ -121,8 +123,8 @@
      *
      */
     function noMigratables() {
-      echo \ZincPHP\CLI\Helper\warn( "Nothing to migrate." );
-      \ZincPHP\CLI\Helper\nl();
+      echo CLI\warn( "Nothing to migrate." );
+      CLI\nl();
       exit();
     }
 
@@ -168,28 +170,28 @@
             // Check if this was a single migration, then show an error.
             // Also ask the user if he/she want to call the down() then up() to force migrate.
             if ( $migrateAll === false ) {
-              print \ZincPHP\CLI\Helper\danger( "Error: Migration file " . basename( $migratableFile ) . " already migrated." );
-              \ZincPHP\CLI\Helper\nl();
-              print \ZincPHP\CLI\Helper\warn( "Hint: Delete the table/column manually." );
-              \ZincPHP\CLI\Helper\nl();
+              print CLI\danger( "Error: Migration file " . basename( $migratableFile ) . " already migrated." );
+              CLI\nl();
+              print CLI\warn( "Hint: Delete the table/column manually." );
+              CLI\nl();
               // Ask the user if he want to execute the query.
               print "Do you want to force migrate? (y/n) ";
               $handle = fopen( "php://stdin", "r" );
               $cont   = trim( fgets( $handle ) );
               if( strtolower( $cont ) === 'y' ) {
-                echo \ZincPHP\CLI\Helper\warn( "Force migrating:" ) . basename( $migratableFile );
-                \ZincPHP\CLI\Helper\nl();
+                echo CLI\warn( "Force migrating:" ) . basename( $migratableFile );
+                CLI\nl();
                 // Run the migration again.
                 $this->runMigrateUp( $migratableFile );
               } else {
                 echo 'Force migration canceled.';
-                \ZincPHP\CLI\Helper\nl();
+                CLI\nl();
               }
             }
           }
         } else {
-          print \ZincPHP\CLI\Helper\danger( "Error: Migration file " . basename( $migratableFile ) . " file was not found." );
-          \ZincPHP\CLI\Helper\nl();
+          print CLI\danger( "Error: Migration file " . basename( $migratableFile ) . " file was not found." );
+          CLI\nl();
         }
       }
 
@@ -207,7 +209,7 @@
 
     function runMigrateUp ( $migratableFile ) {
       // Current migration file of this iteration is new, try to migrate it.
-      print \ZincPHP\CLI\Helper\warn( "Trying to Migrate:" ) . basename( $migratableFile );
+      print CLI\warn( "Trying to Migrate:" ) . basename( $migratableFile );
       // Add the migration file runtime.
       require_once $migratableFile;
       // Get the class name for this migration file.
@@ -222,21 +224,21 @@
         // Add current migration as migrated.
         $this->addAsMigrated( $migratableFile );
         // Display success message.
-        print \ZincPHP\CLI\Helper\success(" (✔ Success)");
-        \ZincPHP\CLI\Helper\nl();
+        print CLI\success(" (✔ Success)");
+        CLI\nl();
       } else {
         // Migration was failed.
-        print \ZincPHP\CLI\Helper\danger( " (Failed)" );
-        \ZincPHP\CLI\Helper\nl();
+        print CLI\danger( " (Failed)" );
+        CLI\nl();
         // Check if the error message is a string.
         if ( is_string( $__migrateUp ) ) {
           // Error message is a string, show it.
           print '> ' . $__migrateUp;
         } else {
           // We know why this happens
-          print \ZincPHP\CLI\Helper\danger( 'Hint: You may forgot to add the "query()" method in your migration file.' );
+          print CLI\danger( 'Hint: You may forgot to add the "query()" method in your migration file.' );
         }
-        \ZincPHP\CLI\Helper\nl();
+        CLI\nl();
       }
       // Delete current migration object at the end of this loop iteration so later
       // it dont cause any issue.

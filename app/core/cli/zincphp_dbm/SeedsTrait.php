@@ -1,5 +1,7 @@
 <?php
 
+  use \ZincPHP\CLI\Helper as CLI;
+
   trait SeedsTrait {
 
     /**
@@ -35,10 +37,10 @@
           // Create the seeders directory.
           if ( ! mkdir( './app/seeders' ) ) {
             // No seeder file name was provided.
-            print \ZincPHP\CLI\Helper\danger( '✘ Unable to create the seeders directory.' );
-            \ZincPHP\CLI\Helper\nl();
+            print CLI\danger( '✘ Unable to create the seeders directory.' );
+            CLI\nl();
             echo 'Please check if PHP has write permission, try to create the seeders directory at "./app/seeders"';
-            \ZincPHP\CLI\Helper\nl();
+            CLI\nl();
             exit();
           }
         }
@@ -54,20 +56,20 @@
           $rawSeeder = str_replace( '{{SEED_TABLE}}', $tableName, $rawSeeder );
           // Save migration file.
           if( file_put_contents( $seederFile, $rawSeeder ) ) {
-            print \ZincPHP\CLI\Helper\success( "✔ Seeder file($seederName) was created" );
-            \ZincPHP\CLI\Helper\nl();
+            print CLI\success( "✔ Seeder file($seederName) was created" );
+            CLI\nl();
             print "Migration File Path: " . $seederFile;
-            \ZincPHP\CLI\Helper\nl();
+            CLI\nl();
           }
         } else {
           // No seeder file name was provided.
-          print \ZincPHP\CLI\Helper\danger( '✘ Seeder file already exists!' );
-          \ZincPHP\CLI\Helper\nl();
+          print CLI\danger( '✘ Seeder file already exists!' );
+          CLI\nl();
         }
       } else {
         // No seeder file name was provided.
-        print \ZincPHP\CLI\Helper\danger( '✘ Please provide a valid seeder name' );
-        \ZincPHP\CLI\Helper\nl();
+        print CLI\danger( '✘ Please provide a valid seeder name' );
+        CLI\nl();
       }
     }
 
@@ -95,31 +97,31 @@
             require_once $seedFile;
             // Execute the run method of the seeder.
             $seedResponse = ( new $className() )->run( $qb );
-            print \ZincPHP\CLI\Helper\warn( "Trying to seed:" );
+            print CLI\warn( "Trying to seed:" );
             print $className;
             if ( $seedResponse !== false ) {
-              print \ZincPHP\CLI\Helper\success( ' (✔ Success)' );
-              \ZincPHP\CLI\Helper\nl();
+              print CLI\success( ' (✔ Success)' );
+              CLI\nl();
             } else {
               // Failed to seed.
-              print \ZincPHP\CLI\Helper\danger( ' (✘ Failed)' );
-              \ZincPHP\CLI\Helper\nl();
+              print CLI\danger( ' (✘ Failed)' );
+              CLI\nl();
               print 'Please do not skip any column in the seed values.';
-              \ZincPHP\CLI\Helper\nl();
+              CLI\nl();
             }
           } else {
             // Seeder file was not found.
-            print \ZincPHP\CLI\Helper\warn( '❗ Seeder file('. basename( $this->prepareSeederFileName( $seedFile ) ) .') was not found' );
-            \ZincPHP\CLI\Helper\nl();
+            print CLI\warn( '❗ Seeder file('. basename( $this->prepareSeederFileName( $seedFile ) ) .') was not found' );
+            CLI\nl();
           }
         }
       } else {
         // No seeders found.
-        print \ZincPHP\CLI\Helper\warn( '❗ Nothing to seed' );
-        \ZincPHP\CLI\Helper\nl();
+        print CLI\warn( '❗ Nothing to seed' );
+        CLI\nl();
         print 'To make a seeder, run this: ';
-        print \ZincPHP\CLI\Helper\warn( 'php zinc make:seed TableNameSeeder' );
-        \ZincPHP\CLI\Helper\nl();
+        print CLI\warn( 'php zinc make:seed TableNameSeeder' );
+        CLI\nl();
       }
       exit();
     }

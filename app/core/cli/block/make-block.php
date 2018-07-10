@@ -1,5 +1,7 @@
 <?php
 
+  use \ZincPHP\CLI\Helper as CLI;
+
   /**
    * Make a new block.
    * Check block name validity.
@@ -8,14 +10,14 @@
 
   // Check valid block name.
   if( ! isset( $argv[ 2 ] ) ) {
-    echo \ZincPHP\CLI\Helper\danger( "> Error: No block was created, please provide a block name and request type." );
-    \ZincPHP\CLI\Helper\nl();
+    echo CLI\danger( "> Error: No block was created, please provide a block name and request type." );
+    CLI\nl();
     exit();
   }
   $blockPath = trim( $argv[ 2 ] );
   if( empty( $blockPath ) ) {
-    echo \ZincPHP\CLI\Helper\danger( "> Error: No block was created, please provide a block name and request type." );
-    \ZincPHP\CLI\Helper\nl();
+    echo CLI\danger( "> Error: No block was created, please provide a block name and request type." );
+    CLI\nl();
     exit();
   }
 
@@ -24,7 +26,7 @@
   $blockPath = ltrim( $blockPath, '/' );
 
   // Defining the block path.
-  $blockPath = \ZincPHP\CLI\Helper\joinpaths( getcwd(), 'blocks', $blockPath );
+  $blockPath = CLI\joinpaths( getcwd(), 'blocks', $blockPath );
 
   // Make directories for the block path, if they dont exists.
   if( ! file_exists( $blockPath ) ) {
@@ -90,10 +92,10 @@
   }
 
   if( $showError ) {
-    echo \ZincPHP\CLI\Helper\danger( "> Error: To make a block please mention the request type" );
-    \ZincPHP\CLI\Helper\nl();
-    echo \ZincPHP\CLI\Helper\success( "> Available request types are: " );
-    \ZincPHP\CLI\Helper\nl();
+    echo CLI\danger( "> Error: To make a block please mention the request type" );
+    CLI\nl();
+    echo CLI\success( "> Available request types are: " );
+    CLI\nl();
     echo "
       --get       Creates a block that listens to get request
       --post      Creates a block that listens to post request
@@ -108,7 +110,7 @@
       --options   Creates a block that listens to options request
       --propfind  Creates a block that listens to propfind request
     ";
-    \ZincPHP\CLI\Helper\nl();
+    CLI\nl();
     exit();
   } else {
     // All done, exit here.
@@ -135,13 +137,13 @@
     // Add request type with the block name.
     $blockName = $requestType . '.' .$blockName . '.php';
     // Check if the block already exists.
-    if( file_exists( \ZincPHP\CLI\Helper\joinpaths( $blockPath, $blockName ) ) ) {
-      echo \ZincPHP\CLI\Helper\danger( "> " . $rawBlockName . ' block for "'.$requestType.'" request already exists!' );
-      \ZincPHP\CLI\Helper\nl();
+    if( file_exists( CLI\joinpaths( $blockPath, $blockName ) ) ) {
+      echo CLI\danger( "> " . $rawBlockName . ' block for "'.$requestType.'" request already exists!' );
+      CLI\nl();
     } else {
       // Create the block.
-      copy( './app/core/cli/zincphp_structures/new_block.php.example', \ZincPHP\CLI\Helper\joinpaths( $blockPath, $blockName ) );
-      echo \ZincPHP\CLI\Helper\success( "> " . $rawBlockName . ' block has created for "'.$requestType.'" request as ' . $blockName );
-      \ZincPHP\CLI\Helper\nl();
+      copy( './app/core/cli/zincphp_structures/new_block.php.example', CLI\joinpaths( $blockPath, $blockName ) );
+      echo CLI\success( "> " . $rawBlockName . ' block has created for "'.$requestType.'" request as ' . $blockName );
+      CLI\nl();
     }
   }

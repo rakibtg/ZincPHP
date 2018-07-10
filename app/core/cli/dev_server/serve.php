@@ -1,5 +1,7 @@
 <?php
 
+  use \ZincPHP\CLI\Helper as CLI;
+
   $_host = '127.0.0.1';   // Default host
   $_port = '8585';        // Default port
   foreach( $argv as $index => $arg ) {
@@ -8,18 +10,18 @@
       if( strtolower( trim( $arg ) ) == '--port' ) $_port = $argv[ $index + 1 ];
     }
   }
-  // \ZincPHP\CLI\Helper\nl();
-  echo \ZincPHP\CLI\Helper\success( '> ZincPHP development server is running' );
+
+  echo CLI\success( '> ZincPHP development server is running' );
   if ( PHP_OS != 'WINNT' ) {
-    echo \ZincPHP\CLI\Helper\warn( ' ᕕ(^.^)ᕗ ' );
+    echo CLI\warn( ' ᕕ(^.^)ᕗ ' );
   } else {
-    echo \ZincPHP\CLI\Helper\warn( ' (^.^) ' );
+    echo CLI\warn( ' (^.^) ' );
   }
   
-  \ZincPHP\CLI\Helper\nl();
-  \ZincPHP\CLI\Helper\nl();
+  CLI\nl();
+  CLI\nl();
   echo 'Local Server: http://' . $_host . ':' . $_port;
-  \ZincPHP\CLI\Helper\nl();
-  chdir( \ZincPHP\CLI\Helper\joinpaths( getcwd(), '/public' ) );
+  CLI\nl();
+  chdir( CLI\joinpaths( getcwd(), '/public' ) );
   shell_exec( 'php -S ' . $_host . ':' . $_port );
   exit();

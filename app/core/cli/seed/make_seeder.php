@@ -1,16 +1,18 @@
 <?php
 
+  use \ZincPHP\CLI\Helper as CLI;
+
   // Try to create a new seeder file.
 
   // Validate the seeder file name.
   if( ! isset( $argv[ 2 ] ) ) {
-    echo \ZincPHP\CLI\Helper\danger( "✘ No seeder name found" );
-    echo \ZincPHP\CLI\Helper\nl();
+    echo CLI\danger( "✘ No seeder name found" );
+    echo CLI\nl();
     exit();
   }
   if( empty( $argv[ 2 ] ) ) {
-    echo \ZincPHP\CLI\Helper\warn( "✘ Seeder name cant be empty" );
-    echo \ZincPHP\CLI\Helper\nl();
+    echo CLI\warn( "✘ Seeder name cant be empty" );
+    echo CLI\nl();
     exit();
   }
 
@@ -36,10 +38,10 @@
       
       // Check if the provided table name for this seeder was invalid.
       if( $tableName === false ) {
-        echo \ZincPHP\CLI\Helper\danger( "✘  Ops! Table name is not valid and can not be empty");
-        echo \ZincPHP\CLI\Helper\nl();
-        echo \ZincPHP\CLI\Helper\warn( "Hint: Use the argument '--table' properly. E.g: --table=users");
-        echo \ZincPHP\CLI\Helper\nl();
+        echo CLI\danger( "✘  Ops! Table name is not valid and can not be empty");
+        echo CLI\nl();
+        echo CLI\warn( "Hint: Use the argument '--table' properly. E.g: --table=users");
+        echo CLI\nl();
         exit();
       }
     }

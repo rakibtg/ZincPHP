@@ -1,12 +1,15 @@
 <?php
+  
+  use \ZincPHP\CLI\Helper as CLI;
+
   require_once './app/core/cli/zincphp_dbm/ZincDBManager.php';
   
   $zincDBManager = new ZincDBManager();
   $migratable = $zincDBManager->listAllMigrations();
   
   if( empty( $migratable ) ) {
-    echo \ZincPHP\CLI\Helper\warn( "Nothing to migrate." );
-    \ZincPHP\CLI\Helper\nl();
+    echo CLI\warn( "Nothing to migrate." );
+    CLI\nl();
     exit();
   } else {
     $nothingToMigrate = true;
@@ -15,7 +18,7 @@
   // Migrate each file.
   foreach( $migratable as $migratableFile ) {
     if( ! $zincDBManager->ifMigrated( $migratableFile ) ) {
-      print \ZincPHP\CLI\Helper\warn( "Trying to Migrate:" ) . basename( $migratableFile );
+      print CLI\warn( "Trying to Migrate:" ) . basename( $migratableFile );
       require_once $migratableFile;
       $className = trim( rtrim( basename( $migratableFile ), '.php' ) );
       $__migrate = new $className( $zincDBManager );
@@ -28,8 +31,8 @@
   }
 
   if( $nothingToMigrate ) {
-    echo \ZincPHP\CLI\Helper\warn( "Nothing to migrate." );
-    \ZincPHP\CLI\Helper\nl();
+    echo CLI\warn( "Nothing to migrate." );
+    CLI\nl();
     exit();
   }
   exit(); // End cli execution.

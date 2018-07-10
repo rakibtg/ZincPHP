@@ -1,5 +1,7 @@
 <?php
 
+  use \ZincPHP\CLI\Helper as CLI;
+
   require_once __DIR__ . '/TestsTraits.php';
   require_once __DIR__ . '/ExpectationsTrait.php';
 
@@ -170,9 +172,9 @@
     public function runTest( $requester ) {
 
       print "Testing:\t" . $this->blockPath . " (" . strtoupper( $this->requestMethod ) . " request)";
-      \ZincPHP\CLI\Helper\nl();
+      CLI\nl();
       print "Test File:\t" . $this->testFileName;
-      \ZincPHP\CLI\Helper\nl();
+      CLI\nl();
 
       $this->makeRequest( $requester );
       $this->testStatus();
@@ -184,7 +186,7 @@
       // print_r($this->testFiles);
       // print_r($this->fetchedResponse[ 'content' ]);
 
-      \ZincPHP\CLI\Helper\nl();
+      CLI\nl();
       sleep( 0.30 ); // Safes from any unexpected attack.
 
       return $this->testSuccess; // returns true on successful test, if fails then returns false.

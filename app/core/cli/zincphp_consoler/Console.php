@@ -1,5 +1,7 @@
 <?php
 
+  use \ZincPHP\CLI\Helper as CLI;
+
   class Console {
 
     /**
@@ -49,15 +51,15 @@
       foreach( $logs as $logFile ) {
         $log = json_decode( file_get_contents( $logFile ) );
         if ( ! empty( $log->log_title ) ) {
-          echo \ZincPHP\CLI\Helper\success( trim( '➜ ' . trim( $log->log_title ) ) );
+          echo CLI\success( trim( '➜ ' . trim( $log->log_title ) ) );
           echo '| ';
         } else {
-          echo \ZincPHP\CLI\Helper\success( '➜' );
+          echo CLI\success( '➜' );
         }
-        echo \ZincPHP\CLI\Helper\warn( $log->logged_at );
+        echo CLI\warn( $log->logged_at );
         echo '| ';
-        echo \ZincPHP\CLI\Helper\danger( $log->data_type );
-        echo \ZincPHP\CLI\Helper\nl();
+        echo CLI\danger( $log->data_type );
+        echo CLI\nl();
         if ( $log->data_type === 'boolean' ) {
           if ( $log->logged_data === true ) echo 'true';
           else echo 'false';
@@ -68,7 +70,7 @@
         } else {
           echo $log->logged_data;
         }
-        echo \ZincPHP\CLI\Helper\nl();
+        echo CLI\nl();
         // Delete the log file.
         unlink( $logFile );
       }

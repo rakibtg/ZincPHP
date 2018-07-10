@@ -1,5 +1,7 @@
 <?php
 
+  use \ZincPHP\CLI\Helper as CLI;
+
   /**
     Expected Response Status - implemented
     Expected Content Type - implemented
@@ -19,8 +21,8 @@
         $flag = true;
         if ( isset( $this->fetchedResponse[ 'header' ][ 'http_code' ] ) ) {
           if ( $this->fetchedResponse[ 'header' ][ 'http_code' ] == $this->expectedResponseStatus ) {
-            echo \ZincPHP\CLI\Helper\success( "✔ HTTP response status code matched." );
-            \ZincPHP\CLI\Helper\nl();
+            echo CLI\success( "✔ HTTP response status code matched." );
+            CLI\nl();
           } else {
             $flag = false;
           }
@@ -29,10 +31,10 @@
           $flag = false;
         }
         if ( ! $flag ) {
-          echo \ZincPHP\CLI\Helper\danger( "✘ HTTP response status code doesnt matched." );
-          \ZincPHP\CLI\Helper\nl();
-          echo \ZincPHP\CLI\Helper\warn( "- Expected: " . $this->expectedResponseStatus . "\tFound: " . $this->fetchedResponse[ 'header' ][ 'http_code' ] );
-          \ZincPHP\CLI\Helper\nl();
+          echo CLI\danger( "✘ HTTP response status code doesnt matched." );
+          CLI\nl();
+          echo CLI\warn( "- Expected: " . $this->expectedResponseStatus . "\tFound: " . $this->fetchedResponse[ 'header' ][ 'http_code' ] );
+          CLI\nl();
         }
         if ( $this->testSuccess !== false ) $this->testSuccess = $flag;
       }
@@ -46,8 +48,8 @@
         $flag = true;
         if ( isset( $this->fetchedResponse[ 'header' ][ 'content_type' ] ) ) {
           if ( strpos( $this->fetchedResponse[ 'header' ][ 'content_type' ], $this->expectedContentTypeValue ) !== false ) {
-            echo \ZincPHP\CLI\Helper\success( "✔ Content type matched." );
-            \ZincPHP\CLI\Helper\nl();
+            echo CLI\success( "✔ Content type matched." );
+            CLI\nl();
           } else {
             $flag = false;
           }
@@ -56,10 +58,10 @@
           $this->fetchedResponse[ 'header' ][ 'content_type' ] = '';
         }
         if ( ! $flag ) {
-          echo \ZincPHP\CLI\Helper\danger( "✘ Content type doesnt matched." );
-          \ZincPHP\CLI\Helper\nl();
-          echo \ZincPHP\CLI\Helper\warn( "- Expected: " . $this->expectedContentTypeValue . "\tFound: " . $this->fetchedResponse[ 'header' ][ 'content_type' ] );
-          \ZincPHP\CLI\Helper\nl();
+          echo CLI\danger( "✘ Content type doesnt matched." );
+          CLI\nl();
+          echo CLI\warn( "- Expected: " . $this->expectedContentTypeValue . "\tFound: " . $this->fetchedResponse[ 'header' ][ 'content_type' ] );
+          CLI\nl();
         }
         if ( $this->testSuccess !== false ) $this->testSuccess = $flag;
       }
@@ -82,11 +84,11 @@
             $flag = false;
           }
           if ( $flag === true ) {
-            echo \ZincPHP\CLI\Helper\success( "✔ Empty response found as expected." );
-            \ZincPHP\CLI\Helper\nl();
+            echo CLI\success( "✔ Empty response found as expected." );
+            CLI\nl();
           } else {
-            echo \ZincPHP\CLI\Helper\danger( "✘ Empty response was not found as expected." );
-            \ZincPHP\CLI\Helper\nl();
+            echo CLI\danger( "✘ Empty response was not found as expected." );
+            CLI\nl();
           }
           if ( $this->testSuccess !== false ) $this->testSuccess = $flag;
         }
@@ -109,11 +111,11 @@
           if ( $this->expectedDataValue !== $this->fetchedResponse[ 'content' ] ) $flag = false;
         }
         if ( $flag === true ) {
-          echo \ZincPHP\CLI\Helper\success( "✔ Response data matched with expected data." );
-          \ZincPHP\CLI\Helper\nl();
+          echo CLI\success( "✔ Response data matched with expected data." );
+          CLI\nl();
         } else {
-          echo \ZincPHP\CLI\Helper\danger( "✘ Response data doesnt matched with expected data." );
-          \ZincPHP\CLI\Helper\nl();
+          echo CLI\danger( "✘ Response data doesnt matched with expected data." );
+          CLI\nl();
         }
         if ( $this->testSuccess !== false ) $this->testSuccess = $flag;
       }
@@ -132,14 +134,14 @@
         }
         $validated = $validator->validate( $this->responseDataValidator, '', false );
         if ( $validated[ 'status' ] === 'valid' ) {
-          echo \ZincPHP\CLI\Helper\success( "✔ Response data validated successfully." );
-          \ZincPHP\CLI\Helper\nl();
+          echo CLI\success( "✔ Response data validated successfully." );
+          CLI\nl();
         } else {
-          echo \ZincPHP\CLI\Helper\danger( "✘ Failed to validate response data, reasons: " );
-          \ZincPHP\CLI\Helper\nl();
+          echo CLI\danger( "✘ Failed to validate response data, reasons: " );
+          CLI\nl();
           foreach ( $validated[ 'message' ] as $er ) {
-            echo \ZincPHP\CLI\Helper\warn( "  - " . $er );
-            \ZincPHP\CLI\Helper\nl();
+            echo CLI\warn( "  - " . $er );
+            CLI\nl();
           }
           $flag = false;
         }

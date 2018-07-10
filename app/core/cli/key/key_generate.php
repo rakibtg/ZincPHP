@@ -1,6 +1,10 @@
 <?php
-  $env->secret_keys = bin2hex( random_bytes( 64 ) );
+  
+  use \ZincPHP\CLI\Helper as CLI;
+
+  $env->secret_keys = App::randomString( 100 );
   file_put_contents( './app/environment.json', json_encode( $env, JSON_PRETTY_PRINT ) );
   echo "Secrent key has generated";
-  \ZincPHP\CLI\Helper\nl();
+  
+  CLI\nl();
   exit();

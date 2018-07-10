@@ -1,4 +1,7 @@
 <?php
+
+  use \ZincPHP\CLI\Helper as CLI;
+
   require_once './app/core/cli/zincphp_dbm/ZincDBManager.php';
 
   class MigrateRefresh extends ZincDBManager {
@@ -8,14 +11,14 @@
 
       // Check if database is set to mysql.
       if ( $env->database_config->driver != 'mysql' ) {
-        echo \ZincPHP\CLI\Helper\danger( 
+        echo CLI\danger( 
           '❗ migrate:refresh command is only available for mysql database at this moment.' 
         );
-        echo \ZincPHP\CLI\Helper\nl();        
+        echo CLI\nl();        
       }
 
       // Show user warning message.
-      echo \ZincPHP\CLI\Helper\danger( 
+      echo CLI\danger( 
         'Are you sure you want to empty the database "'.$env->database_config->database.'"? (y/n)' 
       );
       $handle = fopen( "php://stdin", "r" );
@@ -24,18 +27,18 @@
         $success = false;
         // Drop the database.
         echo 'Cleaning "'.$env->database_config->database.'" database';
-        echo \ZincPHP\CLI\Helper\nl();
+        echo CLI\nl();
         $this->rawQuery = 'DROP database `'.$env->database_config->database.'`;';
         $_q = $this->query();
         if( $_q === true ) {
-          echo \ZincPHP\CLI\Helper\success( '✅ ' );
+          echo CLI\success( '✅ ' );
           echo 'Database dropped.';
-          echo \ZincPHP\CLI\Helper\nl();
+          echo CLI\nl();
           $success = true;
         } else {
-          echo \ZincPHP\CLI\Helper\danger( '⛔️ ' );
+          echo CLI\danger( '⛔️ ' );
           echo 'Failed: ' . $_q;
-          echo \ZincPHP\CLI\Helper\nl();
+          echo CLI\nl();
         }
 
         // Create the database, create connection.
@@ -50,14 +53,14 @@
         // Create database
         $sql = "CREATE DATABASE `".$env->database_config->database."`";
         if ($conn->query($sql) === TRUE) {
-          echo \ZincPHP\CLI\Helper\success( '✅ ' );
+          echo CLI\success( '✅ ' );
           echo 'Database created.';
-          echo \ZincPHP\CLI\Helper\nl();
+          echo CLI\nl();
           $success = true;
         } else {
-          echo \ZincPHP\CLI\Helper\danger( '⛔️ ' );
+          echo CLI\danger( '⛔️ ' );
           echo 'Failed: ' . $conn->error;
-          echo \ZincPHP\CLI\Helper\nl();
+          echo CLI\nl();
         }
 
         $conn->close();
@@ -70,7 +73,7 @@
           }
           
           echo '➡️  Migrating the database';
-          echo \ZincPHP\CLI\Helper\nl();
+          echo CLI\nl();
 
           // Migrate again.
           $this->migrateUp();
@@ -78,17 +81,17 @@
           // Check do we have to seed too.
           if( in_array( '--seed', $argv ) ) {
             echo '➡️  Trying to seed data.';
-            echo \ZincPHP\CLI\Helper\nl();
+            echo CLI\nl();
             $this->seed( false );
           }
 
         } else {
-          echo \ZincPHP\CLI\Helper\danger( 'Failed to clean the database.' );
-          echo \ZincPHP\CLI\Helper\nl();
+          echo CLI\danger( 'Failed to clean the database.' );
+          echo CLI\nl();
         }
       } else {
         echo 'Action canceled';
-        echo \ZincPHP\CLI\Helper\nl();
+        echo CLI\nl();
       }
     }
 

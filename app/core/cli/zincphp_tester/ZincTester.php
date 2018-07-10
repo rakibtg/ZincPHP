@@ -1,5 +1,7 @@
 <?php
 
+  use \ZincPHP\CLI\Helper as CLI;
+
   require_once __DIR__ . '/../ZincHTTP.php';
   require_once __DIR__ . '/../ZincValidator.php';
 
@@ -96,17 +98,17 @@
         }
       }
 
-      \ZincPHP\CLI\Helper\nl();
+      CLI\nl();
       echo 'Starting test, make sure the dev server is running at ' . $this->devServer;
-      \ZincPHP\CLI\Helper\nl();
+      CLI\nl();
 
       if ( count( $this->testables ) > 0 ) {
         // We have some test files.
-        echo \ZincPHP\CLI\Helper\success( 
+        echo CLI\success( 
           $this->blocksCount . " blocks and " . $this->testFilesCount . " files to test." 
         );
-        \ZincPHP\CLI\Helper\nl();
-        \ZincPHP\CLI\Helper\nl();
+        CLI\nl();
+        CLI\nl();
 
         sleep(2); // Safes from any unexpected attack.
 
@@ -137,15 +139,15 @@
         echo "➜ All tests completed";
         // Check if all tests are passed.
         if ( $this->allTestsPassed === true ) {
-          echo \ZincPHP\CLI\Helper\success( " (✔ PASSED)" );
+          echo CLI\success( " (✔ PASSED)" );
         } else {
-          echo \ZincPHP\CLI\Helper\danger( " (✘ FAILED)" );
+          echo CLI\danger( " (✘ FAILED)" );
         }
-        \ZincPHP\CLI\Helper\nl();
-        \ZincPHP\CLI\Helper\nl();
+        CLI\nl();
+        CLI\nl();
       } else {
-        echo \ZincPHP\CLI\Helper\danger( "No tests found!" );
-        \ZincPHP\CLI\Helper\nl();
+        echo CLI\danger( "No tests found!" );
+        CLI\nl();
       }
     }
 

@@ -1,11 +1,13 @@
 <?php
 
+  use \ZincPHP\CLI\Helper as CLI;
+
   /**
    * Get all argument values as an assosiative array.
    *
    * @var array   $arguments
    */
-  $arguments = \ZincPHP\CLI\Helper\getArgumentVariables( $argv );
+  $arguments = CLI\getArgumentVariables( $argv );
 
   /**
    * Cache the library directory path.
@@ -25,15 +27,15 @@
 
   // Checking for empty.
   if ( empty( $libraryName ) ) {
-    echo \ZincPHP\CLI\Helper\danger( "> Error: Library name is not valid." );
-    \ZincPHP\CLI\Helper\nl();
+    echo CLI\danger( "> Error: Library name is not valid." );
+    CLI\nl();
     exit();
   }
 
   // checking for whitespaces
   if ( preg_match( '/\s/', $libraryName ) ) {
-    echo \ZincPHP\CLI\Helper\danger( "> Error: Library name should not have any whitespaces." );
-    \ZincPHP\CLI\Helper\nl();
+    echo CLI\danger( "> Error: Library name should not have any whitespaces." );
+    CLI\nl();
     exit();
   }
 
@@ -53,8 +55,8 @@
 
   // Check if there is already a library.
   if ( file_exists( $libraryFilePath ) ) {
-    echo \ZincPHP\CLI\Helper\danger( "> Library file already exists." );
-    \ZincPHP\CLI\Helper\nl();
+    echo CLI\danger( "> Library file already exists." );
+    CLI\nl();
     exit();
   }
 
@@ -101,10 +103,10 @@
   file_put_contents( $libraryFilePath, $template );
 
   // Success.
-  echo \ZincPHP\CLI\Helper\success( "✔ Library created successfully." );
-  \ZincPHP\CLI\Helper\nl();
+  echo CLI\success( "✔ Library created successfully." );
+  CLI\nl();
   echo "Path: " . $libraryFilePath;
-  \ZincPHP\CLI\Helper\nl();
+  CLI\nl();
 
   // Release the CLI
   exit();
