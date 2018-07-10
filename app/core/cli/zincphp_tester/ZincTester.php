@@ -2,8 +2,8 @@
 
   use \ZincPHP\CLI\Helper as CLI;
 
-  require_once __DIR__ . '/../ZincHTTP.php';
-  require_once __DIR__ . '/../ZincValidator.php';
+  require_once __DIR__ . '/../../http_requests/ZincHTTP.php';
+  require_once __DIR__ . '/../../validator/ZincValidator.php';
 
   class ZincTester {
 
@@ -57,7 +57,7 @@
             if ( $_testDir[ count( $_testDir ) - 1 ] === 'tests' ) {
               $testable[ 'block' ] = $_testDir[ count( $_testDir ) - 2 ];
               $testable[ 'path'  ] = $path;
-              $testable[ 'files' ] = [];
+              $testable[ 'files' ]  = [];
               $testableFiles = scandir( $path );
               foreach( $testableFiles as $tf ) {
                 if( $tf != '.' && $tf != '..' && substr( trim( $tf ), -9 ) == '.test.php' ) {
@@ -72,8 +72,8 @@
           }
         }
       }
-      $this->blocksCount = count( $testableFilesList );
-      $this->testables = $testableFilesList;
+      $this->blocksCount  = count( $testableFilesList );
+      $this->testables    = $testableFilesList;
       return $testableFilesList;
     }
 
@@ -113,7 +113,7 @@
         sleep(2); // Safes from any unexpected attack.
 
         // Create new instance of the zinc http module.
-        $requester = new ZincHTTP();
+        $requester = new \ZincPHP\http\ZincHTTP();
 
         // We have some testables blocks.
         foreach ( $this->testables as $testBlock ) {

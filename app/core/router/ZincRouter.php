@@ -1,5 +1,7 @@
 <?php
 
+  namespace ZincPHP\Route;
+
   /**
    * Route HTTP requests to proper block.
    *

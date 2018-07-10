@@ -1,5 +1,7 @@
 <?php 
 
+namespace ZincPHP\Database;
+
 /**
  * ZincDB is a helper core class of ZincPHP framework that basically
  * makes a connection between the pixie package.

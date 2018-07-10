@@ -1,5 +1,5 @@
 {
-    "environment": "development",
+    "environment": "local",
     "name": "ZincPHP",
     "database_config": {
         "driver"    : "mysql",

@@ -17,6 +17,8 @@
     }
 */
 
+namespace ZincPHP\http;
+
 class ZincHTTP {
 
   /**

@@ -127,7 +127,7 @@
     public function dataValidator() {
       if ( $this->testHas( 'responseDataValidator' ) ) {
         $flag = true;
-        $validator = new ZincValidator;
+        $validator = new \ZincPHP\validator\ZincValidator;
         // Generate the validator rules with the value.
         foreach ( $this->responseDataValidator as $key => $rule ) {
           $this->responseDataValidator[ $key ][ 'value' ] = $this->getResponseData( $key );

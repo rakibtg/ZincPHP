@@ -8,6 +8,8 @@
    * @link https://github.com/rakibtg/ZincPHP
    */
 
+  namespace ZincPHP\validator;
+
   class ZincValidator {
 
     /**

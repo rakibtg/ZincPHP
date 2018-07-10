@@ -1,12 +1,14 @@
 <?php
 
-  require_once __DIR__ . '/ZincEnvironment.php';
-  require_once __DIR__ . '/app_getter/App.php';
-  require_once __DIR__ . '/ZincDB.php';
-  require_once __DIR__ . '/jwt/ZincJWT.php';
-  require_once __DIR__ . '/ZincValidator.php';
-  require_once __DIR__ . '/ZincHTTP.php';
-  require_once __DIR__ . '/ZincRouter.php';
+  namespace ZincPHP\Zinc;
+
+  require_once __DIR__ . '/../environment/ZincEnvironment.php';
+  require_once __DIR__ . '/../app_getter/App.php';
+  require_once __DIR__ . '/../database/ZincDB.php';
+  require_once __DIR__ . '/../jwt/ZincJWT.php';
+  require_once __DIR__ . '/../validator/ZincValidator.php';
+  require_once __DIR__ . '/../http_requests/ZincHTTP.php';
+  require_once __DIR__ . '/../router/ZincRouter.php';
 
   class Zinc {
 
@@ -27,7 +29,7 @@
      * This method will allow specific domain for Cross-origin resource sharing.
      */
     public function bootCors() {
-      $env = App::environment();
+      $env = \App::environment();
       $requestMethod = strtolower( trim( $_SERVER[ 'REQUEST_METHOD' ] ) );
 
       if( ! empty( $env->cors_allowed ) ) {
@@ -36,7 +38,7 @@
           foreach( $env->cors_allowed as $_dmn ) {
             if( $http_origin == $_dmn ) {
               header( 'Access-Control-Allow-Origin: ' . $http_origin );
-              header( 'Access-Control-Allow-Methods: ' . 'GET, POST, PUT ,DELETE, PATCH' );
+              header( 'Access-Control-Allow-Methods: ' . 'GET, POST, PUT, DELETE, PATCH' );
               header( 'Access-Control-Allow-Headers: Origin, Content-Type, Authorization' );
               if ( $requestMethod == 'options' ) {
                 // This request is a CORS preflight.
@@ -49,7 +51,7 @@
     }
 
     public function bootRoute() {
-      $this->router = new ZincRouter;
+      $this->router = new \ZincPHP\Route\ZincRouter;
       $this->router->boot( $this );
     }
 

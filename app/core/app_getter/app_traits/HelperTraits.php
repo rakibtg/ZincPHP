@@ -8,7 +8,7 @@
      * @return array The environment settings as a PHP data object.
      */
     public static function environment() {
-      return ZincEnvironment::getInstance()->readEnvFile();
+      return \ZincPHP\environment\ZincEnvironment::getInstance()->readEnvFile();
     }
 
     /**

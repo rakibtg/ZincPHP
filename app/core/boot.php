@@ -14,4 +14,4 @@
    *
    * @return void
    */
-  $zinc = new Zinc();
+  $zinc = new \ZincPHP\Zinc\Zinc();

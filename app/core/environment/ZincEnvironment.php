@@ -5,6 +5,8 @@
    * 
    */
 
+  namespace ZincPHP\environment;
+
   class ZincEnvironment {
 
     /**
@@ -27,7 +29,7 @@
      * @return object
      */
     public static function getInstance() {
-      if ( ! self::$instance ) self::$instance = new ZincEnvironment();
+      if ( ! self::$instance ) self::$instance = new \ZincPHP\environment\ZincEnvironment();
       return self::$instance;
     }
 
@@ -38,7 +40,7 @@
      */
     public function readEnvFile() {
       if ( ! $this->env ) {
-        $envPath = __DIR__ . '/../environment.json';
+        $envPath = __DIR__ . '/../../environment.json';
         // Import and set environment variables from environment document.
         if( ! file_exists( $envPath ) ) {
           App::responseError( 'Environment document was not found! 

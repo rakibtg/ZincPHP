@@ -14,7 +14,7 @@
     *
     */
     public static function validate ( $toValid = [], $exitAfterExecution = true ) {
-      return ( new ZincValidator() )->validate( $toValid, $exitAfterExecution );
+      return ( new \ZincPHP\validator\ZincValidator() )->validate( $toValid, $exitAfterExecution );
     }
 
     /**
@@ -22,7 +22,7 @@
     *
     */
     public static function JWT() {
-      return new ZincPHP\core\ZincJWT();
+      return new \ZincPHP\core\ZincJWT();
     }
 
     /**
@@ -30,7 +30,7 @@
     *
     */
     public static function makeRequest() {
-      return new ZincHTTP;
+      return new \ZincPHP\http\ZincHTTP;
     }
 
     /**
@@ -39,8 +39,8 @@
     * @param $table   string    The name of the table.
     */
     public static function db ( $table = false ) {
-      if ( $table ) return ZincDB::getInstance()->newQB()->table( $table );
-      else return ZincDB::getInstance()->newQB();
+      if ( $table ) return \ZincPHP\Database\ZincDB::getInstance()->newQB()->table( $table );
+      else return \ZincPHP\Database\ZincDB::getInstance()->newQB();
     }
 
     /**
