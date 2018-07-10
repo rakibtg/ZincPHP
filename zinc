@@ -1,6 +1,6 @@
 #!/usr/bin/php
 
-<?php require_once './app/core/zinc_cli/cli_loader.php';
+<?php require_once './app/core/cli/cli_loader.php';
 
   /*
 
