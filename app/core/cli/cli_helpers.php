@@ -58,6 +58,24 @@
     echo "\n";
   }
 
+  /**
+   * Generate a safe file name for blocks, migrations, seeders and libraries.
+   * If user typed a .php extention with a block name, then it would remove that (.php)
+   * extension to be used as a block name. Later the extension would be added as requires.
+   * 
+   */
+  function safeFileName( $fileName = '' ) {
+    $_fn = trim( $fileName );
+    if ( empty( $_fn ) ) return $_fn;
+    // Get the basename.
+    $_fn = basename( $_fn );
+    // If the .php extension is with the name, then remove it.
+    if ( substr( trim( $_fn ), -4 ) == '.php' ) {
+      return substr( $_fn, 0, -4 );
+    }
+    return $_fn;
+  }
+
   function trimds( $s ) {
     return rtrim( $s, DIRECTORY_SEPARATOR );
   }
