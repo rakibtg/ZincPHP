@@ -21,8 +21,17 @@
     exit();
   }
 
+  // Check if .php extension is with the block name.
+  if ( substr( trim( $blockPath ), -4 ) == '.php' ) {
+    echo CLI\danger( "> Error: A block name should not end with PHP extionsion(.php)" );
+    CLI\nl();
+    echo CLI\success( "> Use this instead: " . CLI\safeFileName( $blockPath ) );
+    CLI\nl();
+    exit();
+  }
+  
   // Extract file name for the block.
-  $blockName = makeBlockName( $blockPath );
+  $blockName = CLI\safeFileName( $blockPath );
   $blockPath = ltrim( $blockPath, '/' );
 
   // Defining the block path.
@@ -106,25 +115,13 @@
       Other block types:
       ------------------
       --patch     Creates a block that listens to patch request
-      --copy      Creates a block that listens to copy request
       --options   Creates a block that listens to options request
-      --propfind  Creates a block that listens to propfind request
     ";
     CLI\nl();
     exit();
   } else {
     // All done, exit here.
     exit();
-  }
-
-  /**
-   * Make block name from the user defined make:block argument value.
-   *
-   */
-  function makeBlockName( $userDefinedBlockName ) {
-    $blockName = basename( $userDefinedBlockName );
-    $blockName = rtrim( $blockName, '.php' );
-    return trim( $blockName );
   }
 
   /**
