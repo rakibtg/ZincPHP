@@ -16,4 +16,10 @@
       ->query();
     }
 
+    function down() {
+      return $this->db
+        ->dropTable( 'memories' )
+      ->query();
+    }
+
   }

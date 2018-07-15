@@ -17,7 +17,9 @@
     }
 
     function down() {
-      return $this->db->dropTable( 'RawColumnTest' );
+      return $this->db
+        ->dropTable( 'RawColumnTest' )
+      ->query();
     }
     
   }

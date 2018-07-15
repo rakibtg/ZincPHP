@@ -3,7 +3,7 @@
   /**
    * Yet another migration class.
    * To learn more about migrations go here: http://...
-   * 
+   *
    */
 
   class Storiesmigration extends ZincPHPMigrater {
@@ -14,6 +14,12 @@
         ->string( 'title' )
         ->text( 'content' )
         ->integer( 'author' )
+      ->query();
+    }
+
+    function down() {
+      return $this->db
+        ->dropTable( 'stories' )
       ->query();
     }
 

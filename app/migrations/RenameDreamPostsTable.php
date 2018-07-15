@@ -14,8 +14,4 @@
       return $this->db->selectTable( 'RawColumnTest' )->renameColumn( 'holly_molly', 'ohYeahs', 'VARCHAR' )->query();
     }
 
-    function down() {
-      return $this->db->dropTable( 'RenameDreamPostsTable' );
-    }
-    
   }

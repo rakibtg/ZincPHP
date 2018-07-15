@@ -13,7 +13,13 @@
         ->increments( 'id' )
         ->string('name')
         ->integer('guest_id')->unsigned()
-        ->foreignKey('guest_id', 'MyGuests', 'id')
+        // ->foreignKey('guest_id', 'MyGuests', 'id')
+      ->query();
+    }
+
+    function down() {
+      return $this->db
+        ->dropTable( 'users-info' )
       ->query();
     }
 

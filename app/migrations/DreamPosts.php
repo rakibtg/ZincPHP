@@ -12,4 +12,10 @@
       ->query();
     }
 
+    function down() {
+      return $this->db
+        ->dropTable( 'dream_posts' )
+      ->query();
+    }
+
   }

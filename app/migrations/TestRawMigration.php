@@ -22,4 +22,10 @@
       ->query();
     }
 
+    function down() {
+      return $this->db
+        ->dropTable( 'MyGuests' )
+      ->query();
+    }
+
   }
