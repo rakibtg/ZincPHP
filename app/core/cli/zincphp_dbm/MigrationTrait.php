@@ -112,7 +112,7 @@
       $fileHash = md5( trim( $filePath ) );
       $migList  = $this->readMigrationList();
       if( in_array( $fileHash, $migList ) ) {
-        unset( $migList[ $fileHash ] );
+        unset( $migList[ array_search( $fileHash, $migList ) ] );
         // Save updated migration list to the json file.
         file_put_contents( './app/core/cli/migration/migrationlist.json', json_encode( $migList ) );
       }
@@ -245,5 +245,72 @@
       unset( $__migrate );
 
     } // End of runMigrateUp() method.
+
+    // Migrate down a migration.
+    function migrateDown( $migratableFile = false ) {
+      // Descide which migration file needed to be ejected.
+      if ( $migratableFile === false ) {
+        // Eject all existing migrations.
+        $migratable = $this->listAllMigrations();
+        $migrateAll = true; // Flag
+      } else {
+        $migratable = ( array ) $this->prepareMigrationFileName( $migratableFile );
+        $migrateAll = false; // Flag
+      }
+
+      // Check if there is any migratables that are ejectable.
+      $nothingToMigrate = true;
+      if ( empty( $migratable) ) {
+        echo CLI\warn( "No migrate to eject." );
+        CLI\nl();
+        exit();
+      }
+
+      // Start ejecting migrations.
+      foreach ( $migratable as $migratableFile ) {
+        if ( $this->isMigrationFileExists( $migratableFile ) ) {
+          if ( $this->ifMigrated( $migratableFile ) ) {
+            // File migrated.
+            $this->runMigrateDown( $migratableFile );
+            $nothingToMigrate = false;
+          } else {
+            // File was not migrated.
+            print CLI\danger( "Error: " . basename( $migratableFile ) . " not migrated yet." );
+            CLI\nl();
+          }
+        } else {
+          print CLI\danger( "Error: Migration file " . basename( $migratableFile ) . " file was not found." );
+          CLI\nl();
+        }
+      }
+
+    } // End of migrateDown() method.
+
+    function runMigrateDown( $migratableFile ) {
+      echo CLI\warn( 'Trying to eject: ' ) . basename( $migratableFile );
+      // Import the migration file.
+      require_once $migratableFile;
+      // Get the class name for the migrataion file.
+      $className = trim( pathinfo( basename( $migratableFile ), PATHINFO_FILENAME ) );
+      // Call the class with the dynamically generated name.
+      // Also, pass the current db manager object, so in the migration class we can use all the methods.
+      $__migrate = new $className( $this );
+      // Run the down method.
+      try {
+        $__migrateDown  = $__migrate->down();
+        if ( $__migrateDown ) {
+          $this->removeFromMigrationList( $migratableFile );
+          print CLI\success(" (✔ Success)");
+          CLI\nl();
+        } else {
+          print CLI\danger(" (Failed)");
+          CLI\nl();
+        }
+        CLI\nl();
+      } catch ( \Error $e ) {
+        print CLI\danger( " ⚠️  down() method not found" );
+        CLI\nl();
+      }
+    }
 
   }
