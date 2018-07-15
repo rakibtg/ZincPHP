@@ -9,8 +9,8 @@
   require_once __DIR__ . '/TablesTrait.php';
   require_once __DIR__ . '/ZincPHPMigrater.php';
   require_once __DIR__ . '/SeedsTrait.php';
-  require_once __DIR__ . '/../zinc/Zinc.php';
-  require_once __DIR__ . '/../app_getter/App.php';
+  require_once __DIR__ . '/../../zinc/Zinc.php';
+  require_once __DIR__ . '/../../app_getter/App.php';
 
   class ZincDBManager {
 
