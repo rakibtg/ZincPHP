@@ -54,14 +54,9 @@
       require_once './app/core/cli/migration/migrate_up.php';
     }
 
+    // Migrate down.
     if( $thisArg == 'migrate:down' ) {
-      if( isset( $argv[ 2 ] ) ) {
-        // Migrate a single table.
-        require_once './app/core/cli/migration/down/migrate_down_single.php';
-      } else {
-        // Migrate all tables.
-        require_once './app/core/cli/migration/down/migrate_down_all.php';
-      }
+      require_once './app/core/cli/migration/migrate_down.php';
     }
 
     // Clean the database and migrate again.
