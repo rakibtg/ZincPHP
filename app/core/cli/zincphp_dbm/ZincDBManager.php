@@ -1,7 +1,7 @@
 <?php
 
   // Autoload files using Composer autoload
-  if ( file_exists( __DIR__ . '/../../../vendor/autoload.php' ) ) require_once __DIR__ . '/../../../vendor/autoload.php';
+  if ( file_exists( __DIR__ . '/../../../../vendor/autoload.php' ) ) require_once __DIR__ . '/../../../../vendor/autoload.php';
 
   require_once __DIR__ . '/ColumnsTrait.php';
   require_once __DIR__ . '/ModifiersTrait.php';
