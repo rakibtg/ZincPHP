@@ -31,11 +31,7 @@
 
     function __construct() {
       // Get the current route path.
-      if ( isset( $_GET[ 'route' ] ) ) {
-        $this->route = App::strTrim( $_GET[ 'route' ] );
-      } else {
-        $this->route = '';
-      }
+      $this->route = \App::strTrim( \App::input('route') );
     }
 
     /**
