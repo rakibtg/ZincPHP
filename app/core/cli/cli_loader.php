@@ -1,7 +1,7 @@
 <?php
 
   namespace ZincPHP\CLI;
-  require_once './app/core/app_getter/App.php';
+  require_once './app/core/app/App.php';
   require_once './app/core/cli/cli_helpers.php';
 
   // Check if we have the variable json doc.
