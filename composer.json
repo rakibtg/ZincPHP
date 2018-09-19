@@ -13,6 +13,9 @@
     "require": {
         "php": ">=5.6",
         "usmanhalalit/pixie": "^2.0",
-        "firebase/php-jwt": "^5.0"
+        "firebase/php-jwt": "^5.0",
+        "illuminate/database": "^5.7",
+        "illuminate/pagination": "^5.7",
+        "illuminate/http": "^5.7"
     }
 }
