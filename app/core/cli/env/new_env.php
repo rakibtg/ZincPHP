@@ -1,7 +1,7 @@
 <?php
 
   use \ZincPHP\CLI\Helper as CLI;
-  require_once './app/core/app_getter/App.php';
+  require_once './app/core/app/App.php';
 
   // Check if a env file already exists.
   if( file_exists( './app/environment.json' ) ) {
