@@ -1,10 +1,11 @@
 <?php 
 
 namespace ZincPHP\Database;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 /**
  * ZincDB is a helper core class of ZincPHP framework that basically
- * makes a connection between the pixie package.
+ * makes a connection between the "Illuminate Database" package.
  * 
  */
 
@@ -29,11 +30,19 @@ class ZincDB {
     return self::$instance;
   }
 
-  public function newQB() {
+  public function provider() {
     if ( ! $this->queryBuilder ) {
-      $zpEnv = (array) App::environment()->database_config;
-      $connection = new \Pixie\Connection( $zpEnv[ 'driver' ], $zpEnv );
-      $this->queryBuilder = new \Pixie\QueryBuilder\QueryBuilderHandler( $connection );
+
+      $capsule = new Capsule;
+      $capsule->addConnection( (array) \App::environment()->database_config );
+      $capsule->setAsGlobal();
+
+      // Pagination page resolver
+      \Illuminate\Pagination\Paginator::currentPageResolver(function () {
+        return (int) ( \App::input( 'page' ) ?? 1);
+      });
+      $this->queryBuilder = $capsule;
+
     }
     return $this->queryBuilder;
   }
