@@ -3,12 +3,13 @@
   namespace ZincPHP\Zinc;
 
   require_once __DIR__ . '/../environment/ZincEnvironment.php';
-  require_once __DIR__ . '/../app_getter/App.php';
+  require_once __DIR__ . '/../app/App.php';
   require_once __DIR__ . '/../database/ZincDB.php';
   require_once __DIR__ . '/../jwt/ZincJWT.php';
   require_once __DIR__ . '/../validator/ZincValidator.php';
   require_once __DIR__ . '/../http_requests/ZincHTTP.php';
   require_once __DIR__ . '/../router/ZincRouter.php';
+  require_once __DIR__ . '/../input/ZincInput.php';
 
   class Zinc {
 
