@@ -10,6 +10,7 @@
   require_once __DIR__ . '/../http_requests/ZincHTTP.php';
   require_once __DIR__ . '/../router/ZincRouter.php';
   require_once __DIR__ . '/../input/ZincInput.php';
+  require_once __DIR__ . '/../response/ZincResponse.php';
 
   class Zinc {
 
