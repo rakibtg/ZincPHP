@@ -39,8 +39,13 @@
     * @param $table   string    The name of the table.
     */
     public static function db( $table = false ) {
-      if( $table ) return \ZincPHP\Database\ZincDB::getInstance()->provider()->table( $table );
-      else return \ZincPHP\Database\ZincDB::getInstance()->provider();
+      if( $table ) return \ZincPHP\Database\ZincDB::getInstance()
+        ->provider()
+        ->getConnection()
+        ->table( $table );
+      else return \ZincPHP\Database\ZincDB::getInstance()
+        ->provider()
+        ->getConnection();
     }
 
     /**
