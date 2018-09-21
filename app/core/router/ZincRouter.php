@@ -63,7 +63,7 @@
     public function goToCurrentBlock() {
 
       // Request method
-      $requestMethod = App::requestType();
+      $requestMethod = \App::requestType();
 
       // Check if block exist.
       $segments = '/';
@@ -81,7 +81,7 @@
         $this->loadBlock();
       } else {
         // No block was found, return not found error.
-        App::responseError( 'Block not found.' );
+        \App::response()->data( 'Block not found.' )->error()->pretty()->send();
       }
     }
 
@@ -110,7 +110,7 @@
         require_once $this->blockName;
       } else {
         // No block was found, return not found error.
-        App::responseError( 'Block not found.' );
+        \App::response()->data( 'Block not found.' )->error()->pretty()->send();
       }
     }
 
