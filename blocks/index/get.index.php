@@ -8,10 +8,10 @@
 
   $greetings = [
     'greetings' => 'Welcome to ZincPHP',
-    'to_do' => 'To edit this response, go to \'get.index.php\' inside \'blocks\' directory'
+    'to_do' => 'To edit this response, go to `get.index.php` inside `blocks` directory'
   ];
 
-  App::response()
+  \App::response()
     ->data( $greetings )
     ->pretty()
     ->send();
