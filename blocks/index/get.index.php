@@ -11,4 +11,7 @@
     'to_do' => 'To edit this response, go to \'get.index.php\' inside \'blocks\' directory'
   ];
 
-  App::response()->data( $greetings )->pretty()->send();
+  App::response()
+    ->data( $greetings )
+    ->pretty()
+    ->send();
