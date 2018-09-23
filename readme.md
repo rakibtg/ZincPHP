@@ -1,6 +1,6 @@
 <p align="center">
 
-  <img width="250" height="250" src='https://getzincphp.github.io/assets/zincphp-logo.png'/>
+  <img width="300" height="300" src='https://getzincphp.github.io/assets/zincphp-logo.png'/>
 
 </p>
 
