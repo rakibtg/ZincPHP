@@ -42,7 +42,7 @@
     public function boot( $zincObject ) {
 
       /**
-       * Initializing the Zinc object to the app protected varible.
+       * Initializing the Zinc object to the app protected variable.
        * So, every features are accessible from the route.
        */
       $this->app = $zincObject;
