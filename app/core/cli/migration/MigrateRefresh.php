@@ -2,19 +2,19 @@
 
   use \ZincPHP\CLI\Helper as CLI;
 
-  require_once './app/core/cli/zincphp_dbm/ZincDBManager.php';
+  require_once __DIR__ . '/../zincphp_dbm/ZincDBManager.php';
 
-  class MigrateRefresh extends ZincDBManager {
+  class MigrateRefresh extends \ZincPHP\Database\Manager\ZincDBManager {
 
     function ask( $argv ) {
-      $env = App::environment();
+      $env = \App::environment();
 
       // Check if database is set to mysql.
       if ( $env->database_config->driver != 'mysql' ) {
         echo CLI\danger( 
           '❗ migrate:refresh command is only available for mysql database at this moment.' 
         );
-        echo CLI\nl();        
+        echo CLI\nl();
       }
 
       // Show user warning message.
@@ -28,17 +28,19 @@
         // Drop the database.
         echo 'Cleaning "'.$env->database_config->database.'" database';
         echo CLI\nl();
-        $this->rawQuery = 'DROP database `'.$env->database_config->database.'`;';
-        $_q = $this->query();
-        if( $_q === true ) {
+        try {
+          \App::db()->raw( 'DROP database `'.$env->database_config->database.'`;' );
           echo CLI\success( '✅ ' );
           echo 'Database dropped.';
           echo CLI\nl();
           $success = true;
-        } else {
-          echo CLI\danger( '⛔️ ' );
-          echo 'Failed: ' . $_q;
-          echo CLI\nl();
+        } catch( Exception $e ) {
+          CLI\nl();
+          CLI\nl();
+          print CLI\danger( "Error Message:" );
+          echo $e->getMessage();
+          CLI\nl();
+          CLI\nl();
         }
 
         // Create the database, create connection.
@@ -51,19 +53,38 @@
         } 
 
         // Create database
-        $sql = "CREATE DATABASE `".$env->database_config->database."`";
-        if ($conn->query($sql) === TRUE) {
+        try {
+          \App::db()->raw( "CREATE DATABASE `".$env->database_config->database."`" );
           echo CLI\success( '✅ ' );
           echo 'Database created.';
           echo CLI\nl();
           $success = true;
-        } else {
-          echo CLI\danger( '⛔️ ' );
-          echo 'Failed: ' . $conn->error;
-          echo CLI\nl();
+        } catch( Exception $e ) {
+          CLI\nl();
+          CLI\nl();
+          print CLI\danger( "Error Message:" );
+          echo $e->getMessage();
+          CLI\nl();
+          CLI\nl();
         }
 
         $conn->close();
+
+        // Use database
+        try {
+          \App::db()->raw( "USE `".$env->database_config->database."`" );
+          echo CLI\success( '✅ ' );
+          echo 'Database selected.';
+          echo CLI\nl();
+          $success = true;
+        } catch( Exception $e ) {
+          CLI\nl();
+          CLI\nl();
+          print CLI\danger( "Error Message:" );
+          echo $e->getMessage();
+          CLI\nl();
+          CLI\nl();
+        }
       
         if( $success === true ) {
 
@@ -99,7 +120,5 @@
 
   // Ask the user if he/she want to really empty the database.
   ( new MigrateRefresh() )->ask( $argv );
-
-  
 
   exit();
