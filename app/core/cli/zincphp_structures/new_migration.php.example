@@ -7,14 +7,17 @@
     -> ZincPHP will add the auto incremented `id` column by default.
   */
 
-  function up( $schema ) {
-    $schema->create( '{{MigrationRawName}}', function ( $table ) {
-      
-      $table->timestamps();
-    });
-  }
+  class {{Migration}} {
 
-  function down( $schema ) {
-    // Drop the table.
-    $schema->drop( '{{MigrationRawName}}' );
+    function up( $schema ) {
+      $schema->create( '{{MigrationRawName}}', function ( $table ) {
+        
+        $table->timestamps();
+      });
+    }
+
+    function down( $schema ) {
+      // Drop the table.
+      $schema->drop( '{{MigrationRawName}}' );
+    }
   }
