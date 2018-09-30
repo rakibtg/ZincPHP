@@ -1,9 +1,9 @@
 <?php
 
-  class TestMigration {
+  class UsersFeedCache {
 
     function up( $schema ) {
-      $schema->create('users', function ($table) {
+      $schema->create('users_feed_cache', function ($table) {
         $table->increments('id');
         $table->string('name');
         $table->string('email')->unique();
