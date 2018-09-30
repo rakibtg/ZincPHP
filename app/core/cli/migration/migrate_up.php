@@ -1,6 +1,6 @@
 <?php
 
-  require_once './app/core/cli/zincphp_dbm/ZincDBManager.php';
+  require_once __DIR__ . '/../zincphp_dbm/ZincDBManager.php';
 
   // Check do we need to migrate a single file or all available migrations.
   if ( isset( $argv[ 2 ] ) ) {
