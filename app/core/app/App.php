@@ -38,14 +38,25 @@
     *
     * @param $table   string    The name of the table.
     */
-    public static function db( $table = false ) {
-      if( $table ) return \ZincPHP\Database\ZincDB::getInstance()
-        ->provider()
-        ->getConnection()
-        ->table( $table );
-      else return \ZincPHP\Database\ZincDB::getInstance()
-        ->provider()
-        ->getConnection();
+    public static function db( $table = false, $provider = false ) {
+      if( $table ) {
+        return \ZincPHP\Database\ZincDB::getInstance()
+          ->provider()
+          ->getConnection()
+          ->table( $table );
+      } else if( $provider === true ) {
+        return \ZincPHP\Database\ZincDB::getInstance()->provider();
+      } else {
+        return \ZincPHP\Database\ZincDB::getInstance()->provider()->getConnection();
+      }
+    }
+
+    /**
+     * Alias for database schema methods.
+     *
+     */
+    public static function schema() {
+      return self::db( $table = false, $provider = true )->schema();
     }
 
     /**
