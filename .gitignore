@@ -3,3 +3,4 @@ blocks/test/
 .DS_Store
 migrationlist.json
 /vendor/
+.phpintel
