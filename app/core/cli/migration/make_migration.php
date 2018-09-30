@@ -40,8 +40,8 @@
     $tableName = strtolower( trim( $argv[ 2 ] ) );
   }
 
-  // Generate and formet the migration file name.
-  $migrationName = strtolower( trim( $argv[ 2 ] ) );
+  // Generate and format the migration file name.
+  $migrationName = trim( $argv[ 2 ] );
   $migrationName = ucfirst( str_replace( '-', ' ', $migrationName ) );
   $migrationName = ucfirst( str_replace( '_', ' ', $migrationName ) );
   $migrationName = explode( ' ', $migrationName );
@@ -50,13 +50,13 @@
   }
   $migrationName = implode( $migrationName );
   $migrationFileName = CLI\joinpaths( getcwd(), 'app/migrations', $migrationName . '.php' );
-  // If the migration folder dosent exists then create it.
+  // If the migration folder doesn't exists then create it.
   if( ! file_exists( 'app/migrations' ) ) {
     mkdir( 'app/migrations' );
   }
   if( ! file_exists( $migrationFileName ) ) {
     // Copy new migration template to migrations directory.
-    $rawMigratable = file_get_contents( './app/core/cli/zincphp_structures/new_migration.php.example' );
+    $rawMigratable = file_get_contents( __DIR__ . '/../zincphp_structures/new_migration.php.example' );
     // Rename the class.
     $rawMigratable = str_replace( '{{Migration}}', $migrationName, $rawMigratable );
     // Add table name.
