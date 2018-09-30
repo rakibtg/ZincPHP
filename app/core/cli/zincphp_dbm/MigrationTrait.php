@@ -213,13 +213,19 @@
       // Add the migration file runtime.
       require_once $migratableFile;
       try {
-        up( \App::schema() );
+        // Get the class name for this migration file.
+        $className = trim( pathinfo( basename( $migratableFile ), PATHINFO_FILENAME ) );
+        // Call the class with the dynamically generated name.
+        // Also, pass the current db manager object, so in the migration class we can use all the methods.
+        $__migrate = new $className( $this );
+        // Do migrate.
+        $__migrateUp  = $__migrate->up( \App::schema() );
         // Migration was successful, adding current migration as migrated.
         $this->addAsMigrated( $migratableFile );
         // Display success message.
         print CLI\success(" (✔ Success)");
         CLI\nl();
-      } catch (Exception $e) {
+      } catch ( Exception $e ) {
         print CLI\danger( " (✘ Failed)" );
         CLI\nl();
         CLI\nl();
