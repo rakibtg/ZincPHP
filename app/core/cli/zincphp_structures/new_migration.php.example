@@ -1,23 +1,20 @@
 <?php
 
-  /**
-   * A migration example class.
-   *
-   * Using timestamps() method will create a "created_at" and "updated_at" column.
-   *
-   * Using commonColumns() method will create four common columns,
-   * -> "is_active", "created_by", "created_at" and "updated_at"!
-   * 
-   */
+  /*
+    A migration file has two method one is up() and down().
+    -> up() method is responsible to create/update tables.
+    -> down() method is responsible to undo changes occurred by up() method.
+    -> ZincPHP will add the auto incremented `id` column by default.
+  */
 
-  class {{Migration}} extends ZincPHPMigrater {
+  function up( $schema ) {
+    $schema->create( '{{MigrationRawName}}', function ( $table ) {
+      
+      $table->timestamps();
+    });
+  }
 
-    function up () {
-      return $this->db->createTable( '{{MigrationRawName}}' )
-        ->increments( 'id' )
-
-        ->timestamps()
-      ->query();
-    }
-
+  function down( $schema ) {
+    // Drop the table.
+    $schema->drop( '{{MigrationRawName}}' );
   }
