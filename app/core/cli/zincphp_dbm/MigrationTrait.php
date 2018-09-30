@@ -212,37 +212,22 @@
       print CLI\warn( "Trying to Migrate:" ) . basename( $migratableFile );
       // Add the migration file runtime.
       require_once $migratableFile;
-      // Get the class name for this migration file.
-      $className = trim( pathinfo( basename( $migratableFile ), PATHINFO_FILENAME ) );
-      // Call the class with the dynamically generated name.
-      // Also, pass the current db manager object, so in the migration class we can use all the methods.
-      $__migrate = new $className( $this );
-      // Do migrate.
-      $__migrateUp  = $__migrate->up();
-      if( $__migrateUp === true ) {
-        // Migration was successfull.
-        // Add current migration as migrated.
+      try {
+        up( \App::schema() );
+        // Migration was successful, adding current migration as migrated.
         $this->addAsMigrated( $migratableFile );
         // Display success message.
         print CLI\success(" (✔ Success)");
         CLI\nl();
-      } else {
-        // Migration was failed.
-        print CLI\danger( " (Failed)" );
+      } catch (Exception $e) {
+        print CLI\danger( " (✘ Failed)" );
         CLI\nl();
-        // Check if the error message is a string.
-        if ( is_string( $__migrateUp ) ) {
-          // Error message is a string, show it.
-          print '> ' . $__migrateUp;
-        } else {
-          // We know why this happens
-          print CLI\danger( 'Hint: You may forgot to add the "query()" method in your migration file.' );
-        }
+        CLI\nl();
+        print CLI\danger( "Error Message:" );
+        echo $e->getMessage();
+        CLI\nl();
         CLI\nl();
       }
-      // Delete current migration object at the end of this loop iteration so later
-      // it dont cause any issue.
-      unset( $__migrate );
 
     } // End of runMigrateUp() method.
 
