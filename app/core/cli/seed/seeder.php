@@ -7,5 +7,5 @@
 
   */
 
-  require_once './app/core/cli/zincphp_dbm/ZincDBManager.php';
+  require_once __DIR__ . '/../zincphp_dbm/ZincDBManager.php';
   ( new ZincDBManager() )->seed( $argv );
