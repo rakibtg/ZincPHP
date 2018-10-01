@@ -93,20 +93,18 @@
           if ( file_exists( $seedFile ) ) {
             // Find the class name of the seeder.
             $className = trim( pathinfo( basename( $seedFile ), PATHINFO_FILENAME ) );
-            // Instantiate the seeder class.
-            require_once $seedFile;
-            // Execute the run method of the seeder.
-            $seedResponse = ( new $className() )->run( $qb );
             print CLI\warn( "Trying to seed:" );
             print $className;
-            if ( $seedResponse !== false ) {
+            try {
+              require_once $seedFile;
               print CLI\success( ' (✔ Success)' );
               CLI\nl();
-            } else {
-              // Failed to seed.
+            } catch( Exception $e ) {
               print CLI\danger( ' (✘ Failed)' );
               CLI\nl();
-              print 'Please do not skip any column in the seed values.';
+              print CLI\danger( "Error Message: " );
+              echo $e->getMessage();
+              CLI\nl();
               CLI\nl();
             }
           } else {
