@@ -8,4 +8,4 @@
   */
 
   require_once __DIR__ . '/../zincphp_dbm/ZincDBManager.php';
-  ( new ZincDBManager() )->seed( $argv );
+  ( new \ZincPHP\Database\Manager\ZincDBManager() )->seed( $argv );
