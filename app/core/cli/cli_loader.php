@@ -1,15 +1,17 @@
 <?php
 
   namespace ZincPHP\CLI;
-  require_once './app/core/app/App.php';
-  require_once './app/core/cli/cli_helpers.php';
+  require_once __DIR__ . '/../app/App.php';
+  require_once __DIR__ . '/cli_helpers.php';
+
+  $envPath = __DIR__ . '/../../environment.json';
 
   // Check if we have the variable json doc.
-  if( ! file_exists( './app/environment.json' ) ) {
+  if( ! file_exists( $envPath ) ) {
     $env = false;
   } else {
     // Import data from environment json doc.
-    $env = json_decode( file_get_contents('./app/environment.json' ) );
+    $env = json_decode( file_get_contents( $envPath ) );
   }
 
   /**
