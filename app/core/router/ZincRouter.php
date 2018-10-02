@@ -31,7 +31,7 @@
 
     function __construct() {
       // Get the current route path.
-      $this->route = \App::strTrim( \App::input('route') );
+      $this->route = \App::strTrim( $this->fetchUrl() );
     }
 
     /**
@@ -54,6 +54,31 @@
         // Block was detected in the query string.
         $this->goToCurrentBlock();
       }
+    }
+
+    /**
+     * Fetch destination from the URL.
+     * 
+     * @return  string  URI Segments
+     */
+    public function fetchUrl() {
+      // If we dont use Apache/Ngnix then we will get the URI from PATH_INFO
+      if( isset( $_SERVER[ 'PATH_INFO' ] ) ) {
+        if( ! empty( $_SERVER[ 'PATH_INFO' ] ) ) return $_SERVER[ 'PATH_INFO' ];
+      }
+      // If we use clean url then lets use the REQUEST_URI
+      if( isset( $_SERVER[ 'REQUEST_URI' ] ) ) {
+        if( ! empty( $_SERVER[ 'REQUEST_URI' ] ) ) {
+          $uri = $_SERVER[ 'REQUEST_URI' ];
+          // Remove trailing index.php
+          $prefix = "/index.php";
+          if ( substr( $uri, 0, strlen( $prefix ) ) == $prefix ) {
+            $uri = substr( $uri, strlen( $prefix ) );
+          }
+          return $uri == '/' ? '' : $uri;
+        }
+      }
+      return ''; // Finally return empty string, if no URI segments was found.
     }
 
     /**
