@@ -17,7 +17,7 @@
   }
 
   // Instantiate Zinc Database Manager.
-  // require_once __DIR__ . '/../zincphp_dbm/ZincDBManager.php';
+  require_once __DIR__ . '/../zincphp_dbm/ZincDBManager.php';
   $dbManager = new \ZincPHP\Database\Manager\ZincDBManager();
 
   // Table name flag.
