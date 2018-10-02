@@ -182,7 +182,7 @@
      */
     public static function dir( $path = false ) {
       $returnable = preg_replace(
-        '/'. preg_quote( "app".DIRECTORY_SEPARATOR."core".DIRECTORY_SEPARATOR."app_traits".DIRECTORY_SEPARATOR, '/' ) . '$/',
+        '/'. preg_quote( "app".DIRECTORY_SEPARATOR."core".DIRECTORY_SEPARATOR."app".DIRECTORY_SEPARATOR."app_traits".DIRECTORY_SEPARATOR, '/' ) . '$/',
         '',
         __DIR__ . DIRECTORY_SEPARATOR
       );
