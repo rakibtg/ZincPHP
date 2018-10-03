@@ -77,6 +77,9 @@
     // Live output console logs.
     if ( $thisArg === 'run:consoler' ) require_once './app/core/cli/zincphp_consoler/consoler.cli.php';
 
+    // View environments details.
+    if( $thisArg === 'env' ) require_once __DIR__ . '/env/env_view.php';
+
     // Default ZincPHP CLI welcome message.
     require_once './app/core/cli/static/default_message.php';
 
