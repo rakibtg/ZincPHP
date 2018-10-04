@@ -29,7 +29,7 @@
         echo 'Cleaning "'.$env->database_config->database.'" database';
         echo CLI\nl();
         try {
-          \App::db()->raw( 'DROP database `'.$env->database_config->database.'`;' );
+          \App::db()->statement( 'DROP database `'.$env->database_config->database.'`;' );
           echo CLI\success( '✅ ' );
           echo 'Database dropped.';
           echo CLI\nl();
@@ -43,18 +43,9 @@
           CLI\nl();
         }
 
-        // Create the database, create connection.
-        $conn = new mysqli( 
-          $env->database_config->host, $env->database_config->username, $env->database_config->password 
-        );
-        // Check connection
-        if ($conn->connect_error) {
-          die( "Connection failed: " . $conn->connect_error );
-        } 
-
         // Create database
         try {
-          \App::db()->raw( "CREATE DATABASE `".$env->database_config->database."`" );
+          \App::db()->statement( "CREATE DATABASE `".$env->database_config->database."`" );
           echo CLI\success( '✅ ' );
           echo 'Database created.';
           echo CLI\nl();
@@ -68,23 +59,7 @@
           CLI\nl();
         }
 
-        $conn->close();
-
-        // Use database
-        try {
-          \App::db()->raw( "USE `".$env->database_config->database."`" );
-          echo CLI\success( '✅ ' );
-          echo 'Database selected.';
-          echo CLI\nl();
-          $success = true;
-        } catch( Exception $e ) {
-          CLI\nl();
-          CLI\nl();
-          print CLI\danger( "Error Message:" );
-          echo $e->getMessage();
-          CLI\nl();
-          CLI\nl();
-        }
+        \App::RAWConnection();
       
         if( $success === true ) {
 

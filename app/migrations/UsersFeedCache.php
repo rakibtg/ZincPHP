@@ -12,7 +12,7 @@
     }
 
     function down( $schema ) {
-      // Drop the table.
+      $schema->drop( 'users_feed_cache' );
     }
 
   }

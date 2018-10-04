@@ -60,6 +60,22 @@
     }
 
     /**
+     * Returns a new connection each time.
+     *
+     */
+    public static function RAWConnection() {
+      return \ZincPHP\Database\ZincDB::freshConnection();
+    }
+
+    /**
+     * Returns a seeder connection each time.
+     *
+     */
+    public static function seed( $table ) {
+      return self::RAWConnection()->table( $table );
+    }
+
+    /**
      * Log data on runtime and display instantly in the console.
      * 
      * @param  void

@@ -86,9 +86,6 @@
       // Check if we have seeders to seed.
       if ( ! empty( $seeders ) ) {
         // Creating a new instance of the query builder.
-        $zpEnv = (array) \App::environment()->database_config;
-        $connection = new \Pixie\Connection( $zpEnv[ 'driver' ], $zpEnv );
-        $qb = new \Pixie\QueryBuilder\QueryBuilderHandler( $connection );
         foreach ( $seeders as $seedFile ) {
           if ( file_exists( $seedFile ) ) {
             // Find the class name of the seeder.

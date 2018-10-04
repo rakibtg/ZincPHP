@@ -1,13 +1,15 @@
 <?php
 
   /**
-   * {{SEED_NAME}} Database Seeder.
+   * UsersSeeder Database Seeder.
    * To insert single item use an associative array in insert method.
    * To insert multiple items pass a list of associative array in insert method.
-   * \App::seed() has access to all methods of \App::db().
    * 
    */
 
-  \App::seed( '{{SEED_TABLE}}' )->insert([
-    // Seed data goes here...
+  \App::seed( 'users_feed_cache' )->insert([
+    [
+      'name' => 'Kazi',
+      'email' => 'hi@rakibtg.com'
+    ]
   ]);
