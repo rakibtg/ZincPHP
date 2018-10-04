@@ -32,19 +32,20 @@ class ZincDB {
 
   public function provider() {
     if ( ! $this->queryBuilder ) {
-
-      $capsule = new Capsule;
-      $capsule->addConnection( (array) \App::environment()->database_config );
-      $capsule->setAsGlobal();
-
-      // Pagination page resolver
-      \Illuminate\Pagination\Paginator::currentPageResolver(function () {
-        return (int) ( \App::input( 'page' ) ?? 1);
-      });
-      $this->queryBuilder = $capsule;
-
+      $this->queryBuilder = self::freshConnection();
     }
     return $this->queryBuilder;
+  }
+
+  public static function freshConnection() {
+    $capsule = new Capsule;
+    $capsule->addConnection( (array) \App::environment()->database_config );
+    $capsule->setAsGlobal();
+    // Pagination page resolver
+    \Illuminate\Pagination\Paginator::currentPageResolver(function () {
+      return (int) ( \App::input( 'page' ) ?? 1);
+    });
+    return $capsule;
   }
 
 }
