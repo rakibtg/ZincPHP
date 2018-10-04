@@ -11,7 +11,7 @@
 
     function up( $schema ) {
       $schema->create( '{{MigrationRawName}}', function ( $table ) {
-        
+        // Define your table columns here.
         $table->timestamps();
       });
     }
