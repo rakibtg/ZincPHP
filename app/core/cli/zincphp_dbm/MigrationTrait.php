@@ -288,18 +288,14 @@
       $__migrate = new $className( $this );
       // Run the down method.
       try {
-        $__migrateDown  = $__migrate->down();
-        if ( $__migrateDown ) {
-          $this->removeFromMigrationList( $migratableFile );
-          print CLI\success(" (✔ Success)");
-          CLI\nl();
-        } else {
-          print CLI\danger(" (Failed)");
-          CLI\nl();
-        }
+        $__migrateDown  = $__migrate->down( \App::schema() );
+        $this->removeFromMigrationList( $migratableFile );
+        print CLI\success(" (✔ Success)");
         CLI\nl();
       } catch ( \Error $e ) {
-        print CLI\danger( " ⚠️  down() method not found" );
+        print CLI\danger(" (✘ Failed)");
+        CLI\nl();
+        print CLI\danger( "✘ " . $e->getMessage() );
         CLI\nl();
       }
     }
