@@ -281,7 +281,7 @@
       echo CLI\warn( 'Trying to eject: ' ) . basename( $migratableFile );
       // Import the migration file.
       require_once $migratableFile;
-      // Get the class name for the migrataion file.
+      // Get the class name for the migration file.
       $className = trim( pathinfo( basename( $migratableFile ), PATHINFO_FILENAME ) );
       // Call the class with the dynamically generated name.
       // Also, pass the current db manager object, so in the migration class we can use all the methods.
