@@ -1,5 +1,6 @@
 <?php
 
+  namespace ZincPHP\Console;
   use \ZincPHP\CLI\Helper as CLI;
 
   class Console {
