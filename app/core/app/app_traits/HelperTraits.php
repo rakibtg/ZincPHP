@@ -106,7 +106,7 @@
         }
         if(( $_SERVER["SERVER_PORT"] != 80 )) $url .= ':' . $_SERVER["SERVER_PORT"];
         if( trim( $uri ) == '/' ) return $url;
-        else return $url . '/?route=' . $uri;
+        else return $url . '' . $uri;
     }
 
     /**
