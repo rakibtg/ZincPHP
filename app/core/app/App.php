@@ -83,8 +83,9 @@
      */
     public static function console() {
       // Require the console class.
-      require_once __DIR__ . '/cli/zincphp_consoler/Console.php';
-      return new Console();
+      require_once __DIR__ . '/../cli/zincphp_consoler/Console.php';
+      // return new Console();
+      return new \ZincPHP\Console\Console();
     }
 
   }
