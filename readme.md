@@ -5,7 +5,7 @@
 </p>
 
 <h1 align="center">ZincPHP</h1>
-<h2 align="center">A Micro Framework for REST'ful API in PHP</h2>
+<h2 align="center">A Micro Framework to build REST API for PHP</h2>
 
 ## Development status: 
  - Under active development
