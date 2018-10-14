@@ -23,5 +23,5 @@
   echo 'Local Server: http://' . $_host . ':' . $_port;
   CLI\nl();
   chdir( CLI\joinpaths( getcwd(), '/public' ) );
-  shell_exec( 'php -S ' . $_host . ':' . $_port );
+  shell_exec( 'php -S ' . $_host . ':' . $_port . ' index.php' );
   exit();
