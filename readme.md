@@ -5,21 +5,21 @@
 </p>
 
 <h1 align="center">ZincPHP</h1>
-<h2 align="center">Micro PHP Framework for creating RESTful API</h2>
+<h2 align="center">A Micro Framework for REST'ful API in PHP</h2>
 
 ## Development status: 
  - Under active development
  - Not ready to be used in production
  - A side project
  - Working on the documentations, automatic RESTful API testing
- - For any discussion about this framework please direct message me on Twitter at [@rakibtg](https://www.twitter.com/rakibtg "Twitter profile") or mail me at rakibtg@gmail.com 
+ - For any discussion about this framework please direct message me on Twitter at [@rakibtg](https://www.twitter.com/rakibtg "Twitter profile") or mail me at rakibtg<•at•>gmail<•dot•>com 
 ---
 
 <p align="center">
 <img src='https://i.imgur.com/4SK3Znp.png'/>
 </p>
 
-ZincPHP is a lightweight and dependency free PHP framework specially created for REST-ful architecture.
+ZincPHP is a lightweight micro framework for PHP, specially created for REST-ful architecture.
 
 The mission of ZincPHP is to be a simple, reliable, minimal and fast micro-framework. ZincPHP has everything you will need to make a complete REST-ful API backend server.
 
@@ -97,7 +97,7 @@ Want to test the Alpha version of ZincPHP? Great, let's do it.
   php zinc make:block welcome --get
   ```
   Once you run this above command a block file will be created at `/myApp/blocks/welcome/get.welcome.php`
-- Go to the block file and for our testing purpose we will just send a "Hello World" message. To send a response we will use the `App::response()` method in the block file like this
+- Go to the block file and for our testing purpose we will just send a "Hello World" message. To send a response we will use the `\App::response()` method in the block file like this
   ```
   <?php
 
@@ -106,7 +106,9 @@ Want to test the Alpha version of ZincPHP? Great, let's do it.
     * 
     */
 
-    App::response( 'Hello World' );
+    \App::response()
+      ->data('Hello World')
+      ->send();
 
   ```
 - Now start the ZincPHP development server
@@ -115,13 +117,13 @@ Want to test the Alpha version of ZincPHP? Great, let's do it.
   ```
   By default the server will use the `8585` port, but you can use custom port using this argument `--port 2020` as well as the host `--host 0.0.0.0`
 
-- Now go to this url in any web browser: `http://127.0.0.1:8585?route=welcome`
+- Now go to this url in any web browser: `http://127.0.0.1:8585/welcome`
 
 - You would have a beautiful JSON response as the output on the browser!
-- There is a lot more that we can do, but for now here is a simple tips, if you would like to take an input then use this: `App::input( 'username' )`
+- There is a lot more that we can do, but for now here is a simple tips, if you would like to take an input then use this: `\App::input( 'username' )`
 - More detail and documentations would be live very soon :)
 
 ## Development Status
-ZincPHP is still in development, maintained and developed by [@rakibtg](https://www.twitter.com/rakibtg "Twitter profile"), I would love to have your contributions.
+ZincPHP is still in development, maintained and developed by [@rakibtg](https://www.twitter.com/rakibtg "Twitter profile").
 
-To use the development version of ZincPHP, please clone the repo and we would love to have your pull requests. ❤️
+To use the development version of ZincPHP, please clone the repo and send love with your pull requests. ❤️
