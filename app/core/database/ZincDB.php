@@ -25,6 +25,13 @@ class ZincDB {
    */
   private $queryBuilder = null;
 
+  /**
+   * A flag for booting eloquent.
+   * 
+   * @var boolean $isBootedEloquent
+   */
+  private static $isBootedEloquent = false;
+
   public static function getInstance() {
     if ( ! self::$instance ) self::$instance = new ZincDB();
     return self::$instance;
@@ -35,6 +42,16 @@ class ZincDB {
       $this->queryBuilder = self::freshConnection();
     }
     return $this->queryBuilder;
+  }
+
+  public static function bootModel() {
+    if(!self::$isBootedEloquent) {
+      self::getInstance()
+        ->getInstance()
+        ->provider()
+        ->bootEloquent();
+      self::$isBootedEloquent = true;
+    }
   }
 
   public static function freshConnection() {
