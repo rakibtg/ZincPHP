@@ -60,9 +60,9 @@
      * @return  any     ...      Available data from request.
      */
     public static function requestFormula( $method = 'put', $key = false ) {
-      if ( App::requestType() === $method ) {
-          if ( $key === false ) return App::restRequests();
-          $_data = App::restRequests();
+      if ( \App::requestType() === $method ) {
+          if ( $key === false ) return \App::restRequests();
+          $_data = \App::restRequests();
           if ( isset( $_data[ $key ] ) ) return strTrim( $_data[ $key ] );
       }
       return '';
@@ -75,18 +75,18 @@
      * @return string  The random string.
      */
     public static function randomString( $length = 10 ) {
-      $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      $keySpace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
       $str = '';
       if( function_exists( 'mb_strlen' ) ) {
-        $max = mb_strlen( $keyspace, '8bit' ) - 1;
+        $max = mb_strlen( $keySpace, '8bit' ) - 1;
       } else {
-        $max = strlen( $keyspace );
+        $max = strlen( $keySpace );
       }
       for ( $i = 0; $i < $length; ++$i ) {
         if ( function_exists( 'random_int' ) ) {
-          $str .= $keyspace[ random_int( 0, $max ) ];
+          $str .= $keySpace[ random_int( 0, $max ) ];
         } else {
-          $str .= $keyspace[ mt_rand( 0, $max ) ];
+          $str .= $keySpace[ mt_rand( 0, $max ) ];
         }
       }
       return $str;
@@ -115,7 +115,7 @@
      * @return string
      */
     public static function current_url() {
-        return App::url() . $_SERVER["REQUEST_URI"];
+        return \App::url() . $_SERVER["REQUEST_URI"];
     }
 
     /**
