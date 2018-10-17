@@ -54,6 +54,14 @@
     }
 
     /**
+     * Boot a model.
+     * 
+     */
+    public static function bootModel() {
+      \ZincPHP\Database\ZincDB::bootModel();
+    }
+
+    /**
      * Alias for database schema methods.
      *
      */
