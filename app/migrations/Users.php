@@ -11,7 +11,9 @@
 
     function up( $schema ) {
       $schema->create( 'users', function ( $table ) {
-        
+        $table->string('name');
+        $table->string('email');
+        $table->text('bio');
         $table->timestamps();
       });
     }
