@@ -20,6 +20,9 @@
       // Check if the model file exists or not.
       if(!file_exists($modelPath)) throw new Exception("Model not found at " . $modelPath);
 
+      // Boot model connections.
+      \App::bootModel();
+
       // Import the model file.
       require_once $modelPath;
       return new $modelClassName();
