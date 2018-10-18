@@ -190,4 +190,22 @@
       return $returnable;
     }
 
+    /**
+     * Custom error exception handler.
+     * 
+     */
+    public static function exception( $e ) {
+      $data = [
+        'message' => $e->getMessage(),
+        'file'    => $e->getFile(),
+        'line'    => $e->getLine(),
+        'code'    => $e->getCode(),
+        'trace'   => $e->getTrace()
+      ];
+      self::response()
+        ->data( $data )
+        ->error()
+        ->send();
+    }
+
   }
