@@ -6,12 +6,22 @@
    * @link https://getzincphp.github.io/docs/latest/Blocks
    */
 
-  $users = \App::model( 'v1/User' );
+  
 
-  $greetings = [
-    'greetings' => 'Working on models to work in ZincPHP! 😍',
-    'model' => $users->paginate(20)
-  ];
+  try {
+    $users = \App::model( 'v1/User' );
+  } catch ( Exception $e ) {
+    \App::exception( $e );
+  }
+
+  try{
+    $greetings = [
+      'greetings' => 'Working on models...',
+      'model' => $users->paginate(20)
+    ];
+  } catch ( Exception $e ) {
+    \App::exception( $e );
+  }
   /*
     $i1 = \App::model( 'v1/User' );
     $i1->name = uniqid();
