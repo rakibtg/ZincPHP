@@ -27,7 +27,7 @@
     file_get_contents( './app/core/cli/zincphp_structures/environment.json.example' ) 
   );
 
-  $default_env->secret_keys = App::randomString( 100 );
+  $default_env->secret_keys = \App::randomString( 100 );
   file_put_contents( './app/environment.json', json_encode( $default_env, JSON_PRETTY_PRINT ) );
   echo CLI\success( "Environment document has created." );
 
