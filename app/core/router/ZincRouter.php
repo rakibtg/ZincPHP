@@ -75,6 +75,8 @@
           if ( substr( $uri, 0, strlen( $prefix ) ) == $prefix ) {
             $uri = substr( $uri, strlen( $prefix ) );
           }
+          // Remove query strings from the URL
+          $uri = explode( '?', $uri )[ 0 ];
           return $uri == '/' ? '' : $uri;
         }
       }
