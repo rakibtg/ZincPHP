@@ -3,7 +3,7 @@
   namespace ZincPHP\Zinc;
 
   require_once __DIR__ . '/../environment/ZincEnvironment.php';
-  require_once __DIR__ . '/../app/App.php';
+  require_once __DIR__ . '/../intellect/App.php';
   require_once __DIR__ . '/../database/ZincDB.php';
   require_once __DIR__ . '/../database/ZincModel.php';
   require_once __DIR__ . '/../jwt/ZincJWT.php';
