@@ -1,3 +1,5 @@
 <?php
   
-  App::response( [ 'status' => 'hello from put block' ] );
+  \App::response()
+    ->data( 'hello from put block' )
+    ->send();
