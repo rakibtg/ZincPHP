@@ -1,7 +1,7 @@
-<?php use Illuminate\Database\Eloquent\Model as Eloquent;
+<?php
 
-  class User extends Eloquent
-  {
-    // protected $table = 'users';
-    
+  class User extends ZincModel {
+    public function posts() {
+      return $this->hasMany( \App::model('v1/Post'), 'author' );
+    }
   }

@@ -1,3 +1,5 @@
 <?php
   
-  App::response( 'hello from options block' );
+  \App::response()
+    ->data( 'hello from options block' )
+    ->send();

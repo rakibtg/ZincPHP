@@ -1,3 +1,5 @@
 <?php
   
-  App::response( 'hello from copy block' );
+  \App::response()
+    ->data( 'hello from copy block' )
+    ->send();

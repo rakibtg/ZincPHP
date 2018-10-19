@@ -103,7 +103,7 @@
           } else {
             // No value found from block.
             // Get data from requests aka user input.
-            $this->validables[ $fieldName ][ 'value' ] = App::input( $fieldName );
+            $this->validables[ $fieldName ][ 'value' ] = \App::input( $fieldName );
           }
 
           // Work with custom error messages.

@@ -17,7 +17,7 @@
   try{
     $greetings = [
       'greetings' => 'Working on models...',
-      'model' => $users->paginate(20)
+      'model' => $users->with('posts')->paginate(5),
     ];
   } catch ( Exception $e ) {
     \App::exception( $e );
@@ -41,6 +41,21 @@
     $i3->bio = uniqid();
     $i3->save();
   */
+
+  // Create user.
+  $i1 = \App::model( 'v1/User' );
+  $i1->name = uniqid();
+  $i1->email = uniqid() . '@gmail.com';
+  $i1->bio = uniqid();
+  $i1->save();
+
+  // Create post for this user.
+  $post = \App::model('v1/Post');
+  $post->author = $i1->id;
+  $post->title = uniqid();
+  $post->save();
+
+  // Fetch info.
   \App::response()
     ->data( $greetings )
     ->pretty()

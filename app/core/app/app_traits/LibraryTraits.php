@@ -16,23 +16,19 @@
       if ( ! is_array( $libraryName ) ) $libraryName = ( array ) $libraryName;
 
       // Cache library path.
-      $libpath = App::dir( 'libraries' );
-
+      $libPath = self::dir( 'libraries' );
 
       // Import each library.
       foreach ( $libraryName as $lib ) {
 
         // Location of current library.
-        $liblocation = $libpath . '/' . $lib . '/' . basename( trim( $lib, '/' ) ) . '.php';
+        $libLocation = $libPath . '/' . $lib . '/' . basename( trim( $lib, '/' ) ) . '.php';
 
         // Check if library exists.
-        if ( ! file_exists( $liblocation ) ) App::responseError(
-          'Error: Library not found. Looking for "'.$liblocation.'"',
-          500
-        );
+        if ( ! file_exists( $libLocation ) ) throw new Exception( 'Error: Library not found. Looking for "'.$libLocation.'"' );
 
         // Import this library.
-        require_once $liblocation;
+        require_once $libLocation;
 
       }
     }

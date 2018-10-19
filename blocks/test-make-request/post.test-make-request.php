@@ -1,3 +1,5 @@
 <?php
   
-  App::response( 'hello from post block' );
+  \App::response()
+    ->data( 'hello from post block' )
+    ->send();

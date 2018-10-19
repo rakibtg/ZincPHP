@@ -1,3 +1,5 @@
 <?php
   
-  App::response( 'hello from patch block' );
+  \App::response()
+    ->data( 'hello from patch block' )
+    ->send();

@@ -1,3 +1,5 @@
 <?php
   
-  App::response( 'hello from delete block' );
+  \App::response()
+    ->data( 'hello from delete block' )
+    ->send();

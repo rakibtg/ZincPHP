@@ -14,14 +14,14 @@
    *
    * @var string  $libraryPath
    */
-  $libraryPath = App::dir( 'libraries' );
+  $libraryPath = \App::dir( 'libraries' );
 
   /**
    * Library name.
    *
    * @var string  $libraryName
    */
-  $libraryName = App::strTrim( $argv[ 2 ] );
+  $libraryName = \App::strTrim( $argv[ 2 ] );
 
   // Validate the library name.
 
@@ -82,9 +82,9 @@
    * @var string  $libraryNamespace
    */
   if ( ! isset( $arguments[ 'namespace' ] ) ) $arguments[ 'namespace' ] = '';
-  if ( ! empty( App::strTrim( $arguments[ 'namespace' ] ) ) ) {
+  if ( ! empty( \App::strTrim( $arguments[ 'namespace' ] ) ) ) {
     // Use the custom namespace.
-    $libraryNamespace = App::strTrim( $arguments[ 'namespace' ] );
+    $libraryNamespace = \App::strTrim( $arguments[ 'namespace' ] );
   } else {
     // Use the default namespace.
     $libraryNamespace = str_replace( '/', '\\', $libraryName );

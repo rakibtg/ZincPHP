@@ -7,20 +7,19 @@
     -> ZincPHP will add the auto incremented `id` column by default.
   */
 
-  class Users {
+  class CreatePostTable {
 
     function up( $schema ) {
-      $schema->create( 'users', function ( $table ) {
+      $schema->create( 'posts', function ( $table ) {
         $table->increments('id');
-        $table->string('name');
-        $table->string('email');
-        $table->text('bio');
+        $table->integer('author');
+        $table->string('title');
         $table->timestamps();
       });
     }
 
     function down( $schema ) {
       // Drop the table.
-      $schema->drop( 'users' );
+      $schema->drop( 'posts' );
     }
   }

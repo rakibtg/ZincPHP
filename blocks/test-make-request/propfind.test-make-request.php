@@ -1,3 +1,5 @@
 <?php
   
-  App::response( 'hello from propfind block' );
+  \App::response()
+    ->data( 'hello from propfind block' )
+    ->send();

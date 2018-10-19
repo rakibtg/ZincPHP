@@ -60,9 +60,9 @@
      * @return  any     ...      Available data from request.
      */
     public static function requestFormula( $method = 'put', $key = false ) {
-      if ( \App::requestType() === $method ) {
-          if ( $key === false ) return \App::restRequests();
-          $_data = \App::restRequests();
+      if ( self::requestType() === $method ) {
+          if ( $key === false ) return self::restRequests();
+          $_data = self::restRequests();
           if ( isset( $_data[ $key ] ) ) return strTrim( $_data[ $key ] );
       }
       return '';
@@ -115,7 +115,7 @@
      * @return string
      */
     public static function current_url() {
-        return \App::url() . $_SERVER["REQUEST_URI"];
+        return self::url() . $_SERVER["REQUEST_URI"];
     }
 
     /**
