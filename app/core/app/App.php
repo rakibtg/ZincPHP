@@ -47,9 +47,12 @@
           ->getConnection()
           ->table( $table );
       } else if( $provider === true ) {
-        return \ZincPHP\Database\ZincDB::getInstance()->provider();
+        return \ZincPHP\Database\ZincDB::getInstance()
+          ->provider();
       } else {
-        return \ZincPHP\Database\ZincDB::getInstance()->provider()->getConnection();
+        return \ZincPHP\Database\ZincDB::getInstance()
+          ->provider()
+          ->getConnection();
       }
     }
 
@@ -66,7 +69,8 @@
      *
      */
     public static function schema() {
-      return self::db( $table = false, $provider = true )->schema();
+      return self::db( $table = false, $provider = true )
+        ->schema();
     }
 
     /**
@@ -82,7 +86,8 @@
      *
      */
     public static function seed( $table ) {
-      return self::RAWConnection()->table( $table );
+      return self::RAWConnection()
+        ->table( $table );
     }
 
     /**

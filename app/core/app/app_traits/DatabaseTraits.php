@@ -11,8 +11,8 @@
       $modelPath = trim((string) $modelPath);
 
       // Generate the absolute path of the model file.
-      if($modelPath[0] !== "/") $modelPath = \App::dir("models") . '/' . $modelPath;
-      else $modelPath = \App::dir("models") . $modelPath;
+      if($modelPath[0] !== "/") $modelPath = self::dir("models") . '/' . $modelPath;
+      else $modelPath = self::dir("models") . $modelPath;
 
       $modelClassName = basename($modelPath);
       $modelPath = $modelPath . ".php";
@@ -21,7 +21,7 @@
       if(!file_exists($modelPath)) throw new Exception("Model not found at " . $modelPath);
 
       // Boot model connections.
-      \App::bootModel();
+      self::bootModel();
 
       // Import the model file.
       require_once $modelPath;
