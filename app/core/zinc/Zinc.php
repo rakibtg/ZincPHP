@@ -5,6 +5,7 @@
   require_once __DIR__ . '/../environment/ZincEnvironment.php';
   require_once __DIR__ . '/../app/App.php';
   require_once __DIR__ . '/../database/ZincDB.php';
+  require_once __DIR__ . '/../database/ZincModel.php';
   require_once __DIR__ . '/../jwt/ZincJWT.php';
   require_once __DIR__ . '/../validator/ZincValidator.php';
   require_once __DIR__ . '/../http_requests/ZincHTTP.php';
@@ -44,7 +45,9 @@
               header( 'Access-Control-Allow-Headers: Origin, Content-Type, Authorization' );
               if ( $requestMethod == 'options' ) {
                 // This request is a CORS preflight.
-                App::response('');
+                \App::response()
+                  ->data( '' )
+                  ->send();
               }
             }
           }
