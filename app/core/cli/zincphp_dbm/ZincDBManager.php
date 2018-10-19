@@ -8,7 +8,7 @@
   require_once __DIR__ . '/MigrationTrait.php';
   require_once __DIR__ . '/SeedsTrait.php';
   require_once __DIR__ . '/../../zinc/Zinc.php';
-  require_once __DIR__ . '/../../app/App.php';
+  require_once __DIR__ . '/../../intellect/App.php';
 
   class ZincDBManager {
 
