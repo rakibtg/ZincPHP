@@ -4,13 +4,13 @@
     A migration file has two method one is up() and down().
     -> up() method is responsible to create/update tables.
     -> down() method is responsible to undo changes occurred by up() method.
-    -> ZincPHP will add the auto incremented `id` column by default.
   */
 
   class {{Migration}} {
 
     function up( $schema ) {
       $schema->create( '{{MigrationRawName}}', function ( $table ) {
+        $table->increments('id');
         // Define your table columns here.
         $table->timestamps();
       });
