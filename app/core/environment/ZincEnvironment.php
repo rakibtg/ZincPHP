@@ -41,12 +41,11 @@
     public function readEnvFile() {
       if ( ! $this->env ) {
         $envPath = __DIR__ . '/../../environment.json';
+
         // Import and set environment variables from environment document.
-        if( ! file_exists( $envPath ) ) {
-          App::responseError( 'Environment document was not found! 
-            Run \'php zinc env:new\' command to create a new environment document.' );
-          exit();
-        }
+        if( ! file_exists( $envPath ) ) throw new Exception( 'Environment document was not found! 
+        Run \'php zinc env:new\' command to create a new environment document.' );
+
         // Set environment settings
         $this->env = json_decode( file_get_contents( $envPath ) );
       }
