@@ -14,5 +14,8 @@
     "cors_allowed": [
         "http:\/\/127.0.0.1:3000"
     ],
-    "secret_keys": ""
+    "secret_keys": "",
+    "cli": {
+        "container_name": "docker_container_name"
+    }
 }
