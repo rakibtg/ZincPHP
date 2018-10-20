@@ -8,7 +8,8 @@
      * @return array The environment settings as a PHP data object.
      */
     public static function environment() {
-      return \ZincPHP\environment\ZincEnvironment::getInstance()->readEnvFile();
+      return \ZincPHP\environment\ZincEnvironment::getInstance()
+        ->readEnvFile();
     }
 
     /**
@@ -206,6 +207,58 @@
         ->data( $data )
         ->error()
         ->send();
+    }
+
+    /**
+     * Method to generate the response of a request.
+     * 
+     */
+    public static function response() {
+      return new ZincPHP\Response\ZincResponse();
+    }
+
+    /**
+     * Method to import one or more than one user defined libraries into a block.
+     *
+     * @param   array $libraryName List of libraries to import.
+     * @return  void
+     */
+    public static function import ( $libraryName = [] ) {
+
+      if ( empty( $libraryName ) ) return false;
+
+      // Cast library name to an array.
+      if ( ! is_array( $libraryName ) ) $libraryName = ( array ) $libraryName;
+
+      // Cache library path.
+      $libPath = self::dir( 'libraries' );
+
+      // Import each library.
+      foreach ( $libraryName as $lib ) {
+
+        // Location of current library.
+        $libLocation = $libPath . '/' . $lib . '/' . basename( trim( $lib, '/' ) ) . '.php';
+
+        // Check if library exists.
+        if ( ! file_exists( $libLocation ) ) throw new Exception( 'Error: Library not found. Looking for "'.$libLocation.'"' );
+
+        // Import this library.
+        require_once $libLocation;
+
+      }
+    }
+
+    /**
+     * Get input data from the available request method.
+     *
+     * @param   string $field The filed name, if not given then return all data of the request.
+     * @return  string Returns null if the key is not found by default.
+     */
+    public static function input( $field = false ) {
+      $_input = \ZincPHP\Input\ZincInput::getInstance()
+        ->provider();
+      if( $field ) return $_input->input( $field );
+      else return $_input;
     }
 
   }
