@@ -1,0 +1,7 @@
+<?php
+
+  namespace ZincPHP\models\{{ModelNamespace}};
+
+  class {{ModelClass}} extends \ZincPHP\model\ZincModel {
+    {{ModelTable}}
+  }
