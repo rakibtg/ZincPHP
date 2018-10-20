@@ -80,6 +80,9 @@
     // View environments details.
     if( $thisArg === 'env' ) require_once __DIR__ . '/env/env_view.php';
 
+    // Create a new model file.
+    if( $thisArg === 'make:model' ) require_once __DIR__ . '/zincphp_model/makeModel.php';
+
     // Default ZincPHP CLI welcome message.
     require_once './app/core/cli/static/default_message.php';
 
