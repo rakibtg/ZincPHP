@@ -1,3 +1,3 @@
 <?php
-
-  class ZincModel extends Illuminate\Database\Eloquent\Model {}
+  namespace ZincPHP\model;
+  class ZincModel extends \Illuminate\Database\Eloquent\Model {}
