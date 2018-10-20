@@ -3,7 +3,7 @@
   use \ZincPHP\CLI\Helper as CLI;
 
   /**
-   * Get all argument values as an assosiative array.
+   * Get all argument values as an associative array.
    *
    * @var array   $arguments
    */
@@ -32,9 +32,9 @@
     exit();
   }
 
-  // checking for whitespaces
+  // checking for white-spaces
   if ( preg_match( '/\s/', $libraryName ) ) {
-    echo CLI\danger( "> Error: Library name should not have any whitespaces." );
+    echo CLI\danger( "> Error: Library name should not have any white-spaces." );
     CLI\nl();
     exit();
   }
