@@ -1,15 +1,11 @@
 <?php
 
   require_once __DIR__ . '/intellect_traits/HelperTraits.php';
-  require_once __DIR__ . '/intellect_traits/InputTraits.php';
-  require_once __DIR__ . '/intellect_traits/ResponseTraits.php';
-  require_once __DIR__ . '/intellect_traits/LibraryTraits.php';
   require_once __DIR__ . '/intellect_traits/DatabaseTraits.php';
 
   class App {
 
-    use HelperTraits, InputTraits, 
-        ResponseTraits, LibraryTraits, DatabaseTraits;
+    use HelperTraits, DatabaseTraits;
 
     /**
     * Alias to Validator class validate() method.
