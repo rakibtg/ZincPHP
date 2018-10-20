@@ -24,7 +24,7 @@
 
     /**
      * Checks if a variable exists, else
-     * returns null.
+     * returns empty string.
      *
      * @param    any      $str Any variable.
      * @return   string
