@@ -1,13 +1,5 @@
 <?php
 
-  /**
-   * A sample greeting block.
-   * 
-   * @link https://getzincphp.github.io/docs/latest/Blocks
-   */
-
-  
-
   try {
     $users = \App::model( 'v1/User' );
   } catch ( Exception $e ) {
@@ -22,6 +14,7 @@
   } catch ( Exception $e ) {
     \App::exception( $e );
   }
+
   /*
     $i1 = \App::model( 'v1/User' );
     $i1->name = uniqid();
