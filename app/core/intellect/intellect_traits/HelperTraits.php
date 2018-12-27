@@ -206,6 +206,7 @@
       self::response()
         ->data( $data )
         ->error()
+        ->pretty()
         ->send();
     }
 
