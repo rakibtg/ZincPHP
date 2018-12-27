@@ -74,10 +74,10 @@
     }
 
     protected function statusType() {
-      if( $this->success ) return 'success';
-      else if ( $this->failed ) return 'failed';
-      else if( $this->status === 200 )  return 'success';
-      else return 'failed';
+      if( $this->success ) return true;
+      else if ( $this->failed ) return false;
+      else if( $this->status === 200 )  return true;
+      else return false;
     }
 
     protected function makeResponse() {
@@ -88,7 +88,7 @@
           'body'         => $this->data,
           'status'       => $this->status,
           'content_type' => $this->contentType,
-          'status_type'  => $this->statusType()
+          'success'      => $this->statusType()
         ];
 
         if( $this->pretty === true ) $data = json_encode( $data, JSON_PRETTY_PRINT );
