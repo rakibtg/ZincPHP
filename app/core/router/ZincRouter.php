@@ -83,6 +83,37 @@
       return ''; // Finally return empty string, if no URI segments was found.
     }
 
+    public function initializeMiddleware() {
+      $definations = \App::dir('middlewares') 
+        . '/' 
+        . 'init.middleware.php';
+      if(file_exists($definations)) {
+        require_once $definations;
+        if(isset($init)) { // $init variable lives in the init.middleware.php file.
+          return $init;
+        }
+      }
+      return false;
+    }
+
+    public function handleMiddleware($segments) {
+      $init = $this->initializeMiddleware();
+      if( $init !== false ) {
+        $currentBlock = trim(\App::string($segments)->trim('/'));
+        if(isset($init[$currentBlock])) {
+          foreach($init[$currentBlock] as $middlewareFile) {
+            // Include the middleware function.
+            require_once \App::dir('middlewares') 
+              . '/' 
+              . $middlewareFile 
+              . '.php';
+            // Call the middleware function.
+            ($middlewareFile)();
+          }
+        }
+      }
+    }
+
     /**
      * Go to the block based on its request type.
      *
@@ -99,16 +130,34 @@
         $segments = $segments . $uri . '/';
       }
 
+      // Remove extra // from the segments.
+      $segments = \App::string($segments)
+        ->trim('/')
+        ->prepend('/');
+
       // Add the request type with the block name (with the basename of the block path)
-      $this->blockName = '../blocks' . rtrim( $segments, '/' ).'/'.$requestMethod.'.'.basename( $segments ).'.php';
+      $this->blockName = 
+        \App::dir('blocks') 
+          . $segments 
+          . '/' 
+          . $requestMethod
+          . '.'
+          . basename( $segments )
+          . '.php';
 
       // Search the matched block.
       if( file_exists( $this->blockName ) ) {
+        // Handle middlwares.
+        $this->handleMiddleware($segments);
         // A block file was found, load the block.
         $this->loadBlock();
       } else {
         // No block was found, return not found error.
-        \App::response()->data( 'Block not found.' )->error()->pretty()->send();
+        \App::response()
+          ->data( 'Block not found.' )
+          ->error()
+          ->pretty()
+          ->send();
       }
     }
 
