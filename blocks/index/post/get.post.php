@@ -1,16 +1,36 @@
 <?php
 
+  namespace ZincPHP\Blocks\index\post;
 
+  class PostBlock {
 
-  class GetX {
-    function printEverything() {
-      $inputs = \App::input()->all();
+    public function onMount()
+    {
+      echo 'from onMount';
+    }
 
-      \App::response()
-        ->data($inputs)
-        ->pretty()
-        ->send();
+    public function onUnMount()
+    {
+      echo 'from onUnMount';
+    }
+
+    public function middleware()
+    {
+      echo 'from middleware';
+    }
+
+    public function validation()
+    {
+      echo 'from validation';
+    }
+
+    public function library()
+    {
+      echo 'from library';
+    }
+
+    public function response()
+    {
+      \App::response()->data( \App::input()->all() )->send();
     }
   }
-
-  (new GetX())->printEverything();
