@@ -15,6 +15,7 @@
         "firebase/php-jwt": "^5.0",
         "illuminate/database": "^5.7",
         "illuminate/pagination": "^5.7",
-        "illuminate/http": "^5.7"
+        "illuminate/http": "^5.7",
+        "danielstjules/stringy": "^3.1"
     }
 }
