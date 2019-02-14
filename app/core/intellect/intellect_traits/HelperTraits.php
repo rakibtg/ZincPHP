@@ -262,4 +262,14 @@
       else return $_input;
     }
 
+    /**
+     * A string manipulation library with multibyte support.
+     * 
+     * @param   string $str The string need to be manipulated.
+     * @return  string 
+     */
+    public static function string( $str ) {
+      return \ZincPHP\String\ZincString::create( $str );
+    }
+
   }
