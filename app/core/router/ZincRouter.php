@@ -180,10 +180,27 @@
      * @return  none
      *
      */
-    public function loadBlock() {
+    /* public function loadBlock() {
       if( file_exists( $this->blockName ) ) {
         // The block exists.
         require_once $this->blockName;
+      } else {
+        // No block was found, return not found error.
+        \App::response()->data( 'Block not found.' )->error()->pretty()->send();
+      }
+    } */
+
+    public function loadBlock () {
+      if( file_exists( $this->blockName ) ) {
+        require_once $this->blockName;
+        $blockObject = new \ZincPHP\Blocks\index\post\PostBlock();
+        $blockObject->onMount();
+        $blockObject->onUnMount();
+        $blockObject->middleware();
+        $blockObject->validation();
+        $blockObject->library();
+        $blockObject->response();
+        // $this->endApp();
       } else {
         // No block was found, return not found error.
         \App::response()->data( 'Block not found.' )->error()->pretty()->send();
