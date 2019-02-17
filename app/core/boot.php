@@ -1,8 +1,10 @@
 <?php
 
   // Autoload files using Composer autoload
-  if ( file_exists( __DIR__ . '/../../vendor/autoload.php' ) ) require_once __DIR__ . '/../../vendor/autoload.php';
-
+  $autoLoader = __DIR__ . '/../../vendor/autoload.php';
+  if ( file_exists( $autoLoader ) ) {
+    require_once $autoLoader;
+  }
   require_once __DIR__ . '/zinc/Zinc.php';
 
   /**
@@ -14,4 +16,5 @@
    *
    * @return void
    */
-  $zinc = new \ZincPHP\Zinc\Zinc();
+
+  new \ZincPHP\Zinc\Zinc();
