@@ -6,6 +6,7 @@
   require_once __DIR__ . '/../intellect/App.php';
   require_once __DIR__ . '/../database/ZincDB.php';
   require_once __DIR__ . '/../database/ZincModel.php';
+  require_once __DIR__ . '/../block/ZincBlock.php';
   require_once __DIR__ . '/../jwt/ZincJWT.php';
   require_once __DIR__ . '/../validator/ZincValidator.php';
   require_once __DIR__ . '/../http_requests/ZincHTTP.php';
@@ -16,7 +17,7 @@
 
   class Zinc {
 
-    public $router;         // Route to proper blocks.
+    public $router; // Route to proper blocks.
 
     function __construct() {
 
@@ -45,7 +46,7 @@
               header( 'Access-Control-Allow-Methods: ' . 'GET, POST, PUT, DELETE, PATCH, OPTIONS' );
               header( 'Access-Control-Allow-Headers: Origin, Content-Type, Authorization' );
               if ( $requestMethod == 'options' ) {
-                // This request is a CORS preflight.
+                // This request is a CORS pre-flight.
                 \App::response()
                   ->data( '' )
                   ->send();
@@ -57,7 +58,7 @@
     }
 
     public function bootRoute() {
-      $this->router = new \ZincPHP\Route\ZincRouter;
+      $this->router = new \ZincPHP\Route\ZincRouter();
       $this->router->boot( $this );
     }
 
