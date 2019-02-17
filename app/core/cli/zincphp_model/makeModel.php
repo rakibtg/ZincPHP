@@ -6,7 +6,8 @@
   $arguments = CLI\getArgumentVariables( $argv );
 
   // Model name.
-  $modelName = \App::strTrim( $argv[2] );
+  $modelName = \App::string( $argv[2] )
+    ->trim();
 
   // Validate model name.
   if(empty($modelName)) {

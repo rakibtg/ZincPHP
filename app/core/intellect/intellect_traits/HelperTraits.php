@@ -23,18 +23,6 @@
     }
 
     /**
-     * Checks if a variable exists, else
-     * returns empty string.
-     *
-     * @param    any      $str Any variable.
-     * @return   string
-     */
-    public static function strTrim( $str ) {
-      if( ! isset( $str ) ) return '';
-      return trim( $str );
-    }
-
-    /**
      * Returns the request type.
      *
      * @return string Request type.
@@ -64,7 +52,7 @@
       if ( self::requestType() === $method ) {
           if ( $key === false ) return self::restRequests();
           $_data = self::restRequests();
-          if ( isset( $_data[ $key ] ) ) return strTrim( $_data[ $key ] );
+          if ( isset( $_data[ $key ] ) ) return self::string( $_data[ $key ] )->trim();
       }
       return '';
     }
@@ -183,7 +171,16 @@
      */
     public static function dir( $path = false ) {
       $returnable = preg_replace(
-        '/'. preg_quote( "app".DIRECTORY_SEPARATOR."core".DIRECTORY_SEPARATOR."intellect".DIRECTORY_SEPARATOR."intellect_traits".DIRECTORY_SEPARATOR, '/' ) . '$/',
+        '/'. preg_quote( 
+          "app"
+          . DIRECTORY_SEPARATOR
+          . "core"
+          . DIRECTORY_SEPARATOR
+          . "intellect"
+          . DIRECTORY_SEPARATOR
+          . "intellect_traits"
+          . DIRECTORY_SEPARATOR, 
+        '/' ) . '$/',
         '',
         __DIR__ . DIRECTORY_SEPARATOR
       );
@@ -214,8 +211,8 @@
      * Method to generate the response of a request.
      * 
      */
-    public static function response() {
-      return new ZincPHP\Response\ZincResponse();
+    public static function response($data = []) {
+      return new ZincPHP\Response\ZincResponse($data);
     }
 
     /**
@@ -225,27 +222,19 @@
      * @return  void
      */
     public static function import ( $libraryName = [] ) {
-
       if ( empty( $libraryName ) ) return false;
-
       // Cast library name to an array.
       if ( ! is_array( $libraryName ) ) $libraryName = ( array ) $libraryName;
-
       // Cache library path.
       $libPath = self::dir( 'libraries' );
-
       // Import each library.
       foreach ( $libraryName as $lib ) {
-
         // Location of current library.
         $libLocation = $libPath . '/' . $lib . '/' . basename( trim( $lib, '/' ) ) . '.php';
-
         // Check if library exists.
         if ( ! file_exists( $libLocation ) ) throw new Exception( 'Error: Library not found. Looking for "'.$libLocation.'"' );
-
         // Import this library.
         require_once $libLocation;
-
       }
     }
 
@@ -263,7 +252,7 @@
     }
 
     /**
-     * A string manipulation library with multibyte support.
+     * A string manipulation library with multi-byte support.
      * 
      * @param   string $str The string need to be manipulated.
      * @return  string 
