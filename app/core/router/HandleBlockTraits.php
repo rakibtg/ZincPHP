@@ -47,7 +47,9 @@
         $blockObject->validation()
       );
 
-      $blockObject->library();
+      $this->handleLibraries(
+        $blockObject->library()
+      );
 
       $blockObject->response()->send();
 
