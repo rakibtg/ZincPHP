@@ -73,12 +73,7 @@
       if( file_exists( $this->blockAbsolutePath ) ) {
         $this->handleBlock();
       } else {
-        // No block was found!
-        \App::response()
-          ->data( 'Block not found.' )
-          ->error()
-          ->pretty()
-          ->send();
+        \App::exception('Block not found.');
       }
     }
 
