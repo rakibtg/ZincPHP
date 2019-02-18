@@ -19,12 +19,12 @@
     }
 
     public function validation() {
-      // return [
-      //   'fullName'  => 'required|lengthMax:35',
-      //   'userName'  => 'required|lengthMax:30',
-      //   'email'     => 'required|lengthMax:60|email',
-      //   'password'  => 'required|lengthBetween:8:100',
-      // ];
+      return [
+        'fullName'  => 'lengthMax:35',
+        'userName'  => 'lengthMax:30',
+        'email'     => 'lengthMax:60|email',
+        'password'  => 'lengthBetween:8:100',
+      ];
     }
 
     public function library() {
