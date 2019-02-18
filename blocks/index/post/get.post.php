@@ -2,35 +2,42 @@
 
   namespace ZincPHP\Blocks\index\post;
 
-  class PostBlock {
+  class GetPost extends \ZincPHP\block\ZincBlock {
 
-    public function onMount()
-    {
-      echo 'from onMount';
+    public function onMount() {
+      // This code will be executed before mounting this block.
     }
 
-    public function onUnMount()
-    {
-      echo 'from onUnMount';
+    public function onUnMount() {
+      // This code will be executed at the end, before exiting the app.
     }
 
-    public function middleware()
-    {
-      echo 'from middleware';
+    public function middleware() {
+      return [
+        'tommatto'
+      ];
     }
 
-    public function validation()
-    {
-      echo 'from validation';
+    public function validation() {
+      return [
+        'fullName'  => 'required|lengthMax:35',
+        'userName'  => 'required|lengthMax:30',
+        'email'     => 'required|lengthMax:60|email',
+        'password'  => 'required|lengthBetween:8:100',
+      ];
     }
 
-    public function library()
-    {
-      echo 'from library';
+    public function library() {
+      return [
+        'Auth/GeneratePayload',
+      ];
     }
 
-    public function response()
-    {
-      \App::response()->data( \App::input()->all() )->send();
+    public function response() {
+      $data = \App::input()->all();
+
+      $init = false;
+
+      return \App::response($data)->pretty();
     }
   }
