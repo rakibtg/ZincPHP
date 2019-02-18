@@ -61,7 +61,7 @@
 
     function __construct() {
       // Get the current route path.
-      $this->route = \App::string( $this->makeSegments() )
+      $this->route = (string) \App::string( $this->makeSegments() )
         ->trim();
       $this->requestType = \App::requestType();
     }
@@ -81,7 +81,7 @@
         // No block was given.
         $this->route = 'index';
         // $this->goToDefaultBlock();
-      } 
+      }
       // Prepare segments.
       $segments = '/';
       // For security purposes recasting the url.
