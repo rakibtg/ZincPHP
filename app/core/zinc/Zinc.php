@@ -14,6 +14,7 @@
   require_once __DIR__ . '/../input/ZincInput.php';
   require_once __DIR__ . '/../response/ZincResponse.php';
   require_once __DIR__ . '/../string/ZincString.php';
+  require_once __DIR__ . '/../middleware/ZincMiddleware.php';
 
   class Zinc {
 
