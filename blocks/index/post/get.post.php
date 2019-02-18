@@ -19,25 +19,25 @@
     }
 
     public function validation() {
-      return [
-        'fullName'  => 'required|lengthMax:35',
-        'userName'  => 'required|lengthMax:30',
-        'email'     => 'required|lengthMax:60|email',
-        'password'  => 'required|lengthBetween:8:100',
-      ];
+      // return [
+      //   'fullName'  => 'required|lengthMax:35',
+      //   'userName'  => 'required|lengthMax:30',
+      //   'email'     => 'required|lengthMax:60|email',
+      //   'password'  => 'required|lengthBetween:8:100',
+      // ];
     }
 
     public function library() {
       return [
-        'Auth/GeneratePayload',
+        'Greetings',
       ];
     }
 
     public function response() {
+      \App::input()->merge([
+        'ok' => (new \Greetings\Greetings())->hello()
+      ]);
       $data = \App::input()->all();
-
-      $init = false;
-
       return \App::response($data)->pretty();
     }
   }
