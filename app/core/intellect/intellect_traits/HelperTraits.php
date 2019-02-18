@@ -19,7 +19,10 @@
      * @return void
      */
     public static function pr( $arr = [] ) {
+      echo '<pre>';
       print_r( $arr );
+      echo '</pre>';
+      exit();
     }
 
     /**
@@ -193,17 +196,21 @@
      * 
      */
     public static function exception( $e ) {
-      $data = [
-        'message' => $e->getMessage(),
-        'file'    => $e->getFile(),
-        'line'    => $e->getLine(),
-        'code'    => $e->getCode(),
-        'trace'   => $e->getTrace()
-      ];
-      self::response()
-        ->data( $data )
+      if( gettype($e) === 'string' ) {
+        $data = [ 'message' => $e ];
+      } else {
+        $data = [
+          'message' => $e->getMessage(),
+          'file'    => $e->getFile(),
+          'line'    => $e->getLine(),
+          'code'    => $e->getCode(),
+          'trace'   => $e->getTrace()
+        ];
+      }
+      self::response($data)
         ->error()
         ->pretty()
+        ->exit()
         ->send();
     }
 
