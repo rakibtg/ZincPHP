@@ -4,5 +4,5 @@
     // \App::response()
     //   ->data(['message' => 'Please login!'])
     //   ->send();
-    \App::input()->merge(['name' => 'Kazi Mehedi Hasan']);
+    \App::input()->merge(['name' => 'Confused Einestien']);
   }
