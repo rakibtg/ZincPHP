@@ -61,11 +61,14 @@
     public function _returnError() {
       if( ! empty( $this->errorMessageList ) ) {
         if( $this->exitAfterExecution === true ) {
-          http_response_code( 400 );
-          echo json_encode( [ 'status' => 'falied', 'message' => $this->errorMessageList ] );
-          exit();
+          \App::response(['message' => $this->errorMessageList])
+            ->status(400)
+            ->exit()
+            ->pretty()
+            ->send();
         }
       }
+      // Don't exit the program instead return the list of error messages.
       return [ 
         'status'  => ( empty( $this->errorMessageList ) ) ? 'valid' : 'failed', 
         'message' => $this->errorMessageList 
