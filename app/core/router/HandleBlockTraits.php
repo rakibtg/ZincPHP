@@ -51,7 +51,9 @@
         $blockObject->library()
       );
 
-      $blockObject->response()->send();
+      $this->handleResponse(
+        $blockObject->response()
+      );
 
       // Mount the onUnMount life cycle class of the block.
       try {
