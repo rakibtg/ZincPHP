@@ -1,8 +1,8 @@
 <?php
 
   namespace ZincPHP\Route;
-  require_once __DIR__ . '/HandleBlock.php';
-  require_once __DIR__ . '/HandleMiddleware.php';
+  require_once __DIR__ . '/HandleBlockTraits.php';
+  require_once __DIR__ . '/HandleMiddlewareTraits.php';
 
   /**
    * Route HTTP requests to proper block.
@@ -45,9 +45,6 @@
      */
     protected $blockLabel;
 
-    private $blockHandler;
-    private $middlewareHandler;
-
     /**
      * Current route query string data.
      * @var string
@@ -59,7 +56,6 @@
       $this->route = \App::string( $this->makeSegments() )
         ->trim();
       $this->requestType = \App::requestType();
-      $this->blockHandler = new HandleBlock();
     }
 
     /**
@@ -85,7 +81,7 @@
         $segments = $segments . $uri . '/';
       }
       // Remove extra // from the segments.
-      $this->segments = \App::string($segments)
+      $this->segments = (string) \App::string($segments)
         ->trim('/')
         ->prepend('/');
       // Get the block label.
@@ -126,66 +122,6 @@
         }
       }
       return ''; // Finally return empty string, if no URI segments was found.
-    }
-
-    // public function initializeMiddleware() {
-    //   $definations = \App::dir('middlewares') 
-    //     . '/' 
-    //     . 'init.middleware.php';
-    //   if(file_exists($definations)) {
-    //     require_once $definations;
-    //     if(isset($init)) { // $init variable lives in the init.middleware.php file.
-    //       return $init;
-    //     }
-    //   }
-    //   return false;
-    // }
-
-    // public function handleMiddleware($segments) {
-    //   $init = $this->initializeMiddleware();
-    //   if( $init !== false ) {
-    //     $currentBlock = trim(\App::string($segments)->trim('/'));
-    //     if(isset($init[$currentBlock])) {
-    //       foreach($init[$currentBlock] as $middlewareFile) {
-    //         // Include the middleware function.
-    //         require_once \App::dir('middlewares') 
-    //           . '/' 
-    //           . $middlewareFile 
-    //           . '.php';
-    //         // Call the middleware function.
-    //         ($middlewareFile)();
-    //       }
-    //     }
-    //   }
-    // }
-
-    /**
-     * Go to the block based on its request type.
-     *
-     * @param     none
-     * @return    none
-     */
-    public function goToCurrentBlock() {
-
-      // Search the matched block.
-      if( file_exists( $this->blockAbsolutePath ) ) {
-        // Handle middleware.
-        $this->handleMiddleware($this->segments);
-        // A block file was found, load the block.
-        $this->blockHandler->load(
-          $this->blockAbsolutePath,
-          $this->segments,
-          $this->requestType,
-          $this->blockLabel
-        );
-      } else {
-        // No block was found, return not found error.
-        \App::response()
-          ->data( 'Block not found.' )
-          ->error()
-          ->pretty()
-          ->send();
-      }
     }
 
   }
