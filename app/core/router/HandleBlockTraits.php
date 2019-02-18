@@ -43,8 +43,12 @@
         \App::exception( $e );
       }      
 
-      $blockObject->validation();
+      $this->handleValidation(
+        $blockObject->validation()
+      );
+
       $blockObject->library();
+
       $blockObject->response()->send();
 
       // Mount the onUnMount life cycle class of the block.
