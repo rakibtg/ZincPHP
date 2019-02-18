@@ -1,7 +1,9 @@
 <?php
 
   namespace ZincPHP\CLI;
-  require_once __DIR__ . '/../intellect/App.php';
+
+  require_once __DIR__ . '/../../../vendor/autoload.php';
+  require_once __DIR__ . '/../zinc/Zinc.php';
   require_once __DIR__ . '/cli_helpers.php';
 
   $envPath = __DIR__ . '/../../environment.json';
