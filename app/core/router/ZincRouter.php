@@ -3,6 +3,7 @@
   namespace ZincPHP\Route;
   require_once __DIR__ . '/HandleBlockTraits.php';
   require_once __DIR__ . '/HandleMiddlewareTraits.php';
+  require_once __DIR__ . '/HandleValidationTraits.php';
 
   /**
    * Route HTTP requests to proper block.
@@ -11,7 +12,9 @@
 
   class ZincRouter {
 
-    use HandleBlockTraits, HandleMiddlewareTraits;
+    use HandleBlockTraits, 
+        HandleMiddlewareTraits,
+        HandleValidationTraits;
 
     /**
      * The entire app object, that contains every ZincPHP methods.
