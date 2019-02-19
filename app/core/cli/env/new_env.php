@@ -4,7 +4,7 @@
   require_once './app/core/intellect/App.php';
 
   // Check if a env file already exists.
-  if( file_exists( './app/environment.json' ) ) {
+  if( file_exists( \App::dir('environment.json') ) ) {
     echo "environment.json already exists, do you want to overwrite?(Y/n) ";
 
     $handle = fopen( "php://stdin", "r" );
@@ -28,7 +28,7 @@
   );
 
   $default_env->secret_keys = \App::randomString( 100 );
-  file_put_contents( './app/environment.json', json_encode( $default_env, JSON_PRETTY_PRINT ) );
+  file_put_contents( \App::dir('environment.json'), json_encode( $default_env, JSON_PRETTY_PRINT ) );
   echo CLI\success( "Environment document has created." );
 
   CLI\nl();
