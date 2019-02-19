@@ -6,7 +6,7 @@
   require_once __DIR__ . '/../zinc/Zinc.php';
   require_once __DIR__ . '/cli_helpers.php';
 
-  $envPath = __DIR__ . '/../../environment.json';
+  $envPath = \App::dir('environment.json');
 
   // Check if we have the variable json doc.
   if( ! file_exists( $envPath ) ) {
