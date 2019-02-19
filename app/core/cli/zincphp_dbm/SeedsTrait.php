@@ -10,7 +10,7 @@
      * @return  array  List of seeder files.
      */
     function listAllSeeds() {
-      $files = glob( './app/seeders/*.php' );
+      $files = glob( \App::dir('seeders') . '/*.php' );
       usort( $files, function ( $a, $b ) {
         return filemtime($a) > filemtime($b);
       } );
@@ -23,7 +23,7 @@
      * @return  string    ...          Proper path of the migration file.
      */
     function prepareSeederFileName( $fileName ) {
-      return './app/seeders/' . trim( pathinfo( basename( $fileName ), PATHINFO_FILENAME ) ) . '.php';
+      return \App::dir('seeders') . '/' . trim( pathinfo( basename( $fileName ), PATHINFO_FILENAME ) ) . '.php';
     }
 
     /**
@@ -33,13 +33,13 @@
     function makeSeed( $seederName = '', $tableName = '' ) {
       if ( ! empty( $seederName ) ) {
         // Check if seeders directory exists in the app directory.
-        if ( ! file_exists( './app/seeders' ) ) {
+        if ( ! file_exists( \App::dir('seeders') ) ) {
           // Create the seeders directory.
-          if ( ! mkdir( './app/seeders' ) ) {
+          if ( ! mkdir( \App::dir('seeders') ) ) {
             // No seeder file name was provided.
             print CLI\danger( '✘ Unable to create the seeders directory.' );
             CLI\nl();
-            echo 'Please check if PHP has write permission, try to create the seeders directory at "./app/seeders"';
+            echo 'Please check if PHP has write permission, try to create the seeders directory at "'.\App::dir('seeders').'"';
             CLI\nl();
             exit();
           }

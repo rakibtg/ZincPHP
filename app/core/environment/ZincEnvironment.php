@@ -40,7 +40,7 @@
      */
     public function readEnvFile() {
       if ( ! $this->env ) {
-        $envPath = __DIR__ . '/../../environment.json';
+        $envPath = \App::dir('environment.json');
 
         // Import and set environment variables from environment document.
         if( ! file_exists( $envPath ) ) throw new Exception( 'Environment document was not found! 
