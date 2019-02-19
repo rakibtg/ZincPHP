@@ -14,11 +14,11 @@
      *
      */
     function listAllMigrations() {
-      $migratableFiles = scandir( './app/migrations' );
+      $migratableFiles = scandir( \App::dir('migrations') );
       $toMigrate = [];
       foreach( $migratableFiles as $mf ) {
         if( $mf != '.' && $mf != '..' && substr( trim( $mf ), -4 ) == '.php' ) {
-          $toMigrate[] = './app/migrations/' . $mf;
+          $toMigrate[] = \App::dir('migrations') . '/' . $mf;
         }
       }
       return $toMigrate;
@@ -45,7 +45,7 @@
      */
     function prepareMigrationFileName( $fileName ) {
       $fileName = trim( $fileName );
-      return './app/migrations/' . trim( pathinfo( basename( $fileName ), PATHINFO_FILENAME ) ) . '.php';
+      return \App::dir('migrations') . '/' . trim( pathinfo( basename( $fileName ), PATHINFO_FILENAME ) ) . '.php';
     }
 
     /**

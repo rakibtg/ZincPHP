@@ -49,10 +49,10 @@
     $migrationName[ $key ] = trim( ucfirst( $mn ) );
   }
   $migrationName = implode( $migrationName );
-  $migrationFileName = CLI\joinpaths( getcwd(), 'app/migrations', $migrationName . '.php' );
+  $migrationFileName = \App::dir('migrations/' . $migrationName . '.php');
   // If the migration folder doesn't exists then create it.
-  if( ! file_exists( 'app/migrations' ) ) {
-    mkdir( 'app/migrations' );
+  if( ! file_exists( \App::dir('migrations') ) ) {
+    mkdir( \App::dir('migrations') );
   }
   if( ! file_exists( $migrationFileName ) ) {
     // Copy new migration template to migrations directory.
