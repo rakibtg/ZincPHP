@@ -2,7 +2,6 @@
   
   <h1>ZincPHP gets a new home!</h1>
   <h2>IMPORTANT: ZINCPHP HAS MOVED TO HERE https://github.com/getzincphp </h2>
-
-  <img width="300" height="300" src='https://i.imgur.com/cZfh98m.png'/>
+  <h3>Get the framework here: https://github.com/getzincphp/zincphp</h3>
 
 </p>
